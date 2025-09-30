@@ -65,6 +65,8 @@ namespace TaskMate.Core
 
     public class DeadLineTask()
     {
+        private DateOnly _deadLineDate = new DateOnly();
+        public DateOnly DeadLineDate { get; set; }
 
     }
 }
