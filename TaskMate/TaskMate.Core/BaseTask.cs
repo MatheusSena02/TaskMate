@@ -28,10 +28,10 @@ namespace TaskMate.Core
         private string _description = String.Empty;
         public string Description { get; set; } = String.Empty;
 
-        private List<TaskItem> _substask = new List<TaskItem>();
-        public List<TaskItem> Subtask { get;} = new List<TaskItem>();
+        private List<BaseTask> _substask = new List<BaseTask>();
+        public List<BaseTask> Subtask { get;} = new List<BaseTask>();
 
-        public TaskItem(string title, string description = "")
+        public BaseTask(string title, string description = "")
         {
             try
             {
@@ -42,7 +42,7 @@ namespace TaskMate.Core
                 _title = title;
                 this._description = description;
                 _status = false;
-                _description = description;
+                _id = Guid.NewGuid();
             }
             catch(Exception ex) 
             {
@@ -63,4 +63,8 @@ namespace TaskMate.Core
         }
     }
 
+    public class DeadLineTask()
+    {
+
+    }
 }
