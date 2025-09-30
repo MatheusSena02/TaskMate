@@ -63,10 +63,15 @@ namespace TaskMate.Core
         }
     }
 
-    public class DeadLineTask()
+    public class DeadLineTask(): BaseTask
     {
         private DateOnly _deadLineDate = new DateOnly();
         public DateOnly DeadLineDate { get; set; }
+
+        public DeadLineTask(string title, DateOnly deadLineDate, string description = "") : base(title, description)
+        {
+            _deadLineDate = deadLineDate;
+        }
 
     }
 }
