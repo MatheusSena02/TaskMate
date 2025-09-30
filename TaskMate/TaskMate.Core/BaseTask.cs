@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -57,21 +58,69 @@ namespace TaskMate.Core
             _status = true;
         }
 
+        public void UpdateTitle(string title)
+        {
+            if (String.IsNullOrEmpty(title))
+            {
+                _title = _title;
+            }
+            else
+            {
+                _title = title;
+            }
+        }
+
         public void UpdateDescription(string newDescription)
         {
-            _description = newDescription;
+            if (String.IsNullOrEmpty(newDescription))
+            {
+                _description = _description;
+            }
+            else
+            {
+                _description = newDescription;
+            }
+                
         }
     }
 
-    public class DeadLineTask(): BaseTask
+    public class DeadLineTask: BaseTask
     {
         private DateOnly _deadLineDate = new DateOnly();
         public DateOnly DeadLineDate { get; set; }
 
         public DeadLineTask(string title, DateOnly deadLineDate, string description = "") : base(title, description)
         {
-            _deadLineDate = deadLineDate;
+            this._deadLineDate = deadLineDate;
         }
 
+        public void UpdateDeadLineDateForDate(DateOnly newDeadLineDate)
+        {
+            _deadLineDate = newDeadLineDate;
+        }
+
+        public void UpdateDeadLineDateForDay(int numberOfDays)
+        {
+            _deadLineDate.AddDays(numberOfDays);
+        }
+    }
+
+    public class RecurringTask : BaseTask
+    {
+        private DateOnly _dateBeginning = new DateOnly();
+        public DateOnly DateBeginning { get; set; }
+
+        private DateOnly _endDate = new DateOnly();
+        public DateOnly EndDate { get; set; }
+
+        private List<DateOnly> _daysOfRepeat = new List<DateOnly>();
+        public List<DateOnly> DaysOfRepeat { get; set; }
+
+        public RecurringTask(string title, DateOnly dateBeginning, DateOnly endDate, List<DateOnly> daysOfRepeat, string description = "") : base(title, description)
+        {
+            _dateBeginning = dateBeginning;
+            _endDate = endDate;
+            _daysOfRepeat = daysOfRepeat;
+        }
     }
 }
