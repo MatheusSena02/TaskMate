@@ -8,16 +8,13 @@ namespace TaskMate.Core
 {
     public interface IRepository<T>
     {
-        T GetById(Guid id);
+        T? GetById(Guid id);
         List<T> GetAll();
         void Add(T item);
         void Remove(Guid id);
-        void Update(T item);
-        void Delete(Guid id);
-        void Save();
     }
 
-    public class TaskItem
+    public abstract class BaseTask
     {
         private string _title = String.Empty;
         public string Title { get; private set; } = String.Empty;
@@ -64,7 +61,6 @@ namespace TaskMate.Core
         {
             _description = newDescription;
         }
-
-
     }
+
 }
