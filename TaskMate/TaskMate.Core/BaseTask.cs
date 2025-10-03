@@ -118,14 +118,10 @@ namespace TaskMate.Core
         private DateOnly _endDate = new DateOnly();
         public DateOnly EndDate { get; set; }
 
-        private List<DateOnly> _daysOfRepeat = new List<DateOnly>();
-        public List<DateOnly> DaysOfRepeat { get; set; }
-
-        public RecurringTask(string title, DateOnly dateBeginning, DateOnly endDate, List<DateOnly> daysOfRepeat, string description = "") : base(title, description)
+        public RecurringTask(string title, DateOnly dateBeginning, DateOnly endDate, string description = "") : base(title, description)
         {
             _dateBeginning = dateBeginning;
             _endDate = endDate;
-            _daysOfRepeat = daysOfRepeat;
         }
 
         public void UpdateDaysOfRepeat(List<DateOnly> newDaysOfRepeat)
