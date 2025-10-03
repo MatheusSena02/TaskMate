@@ -1,36 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TaskMate.Core
 {
-    public interface IRepository<T>
-    {
-        T? GetById(Guid id);
-        List<T> GetAll();
-        void Add(T item);
-        void Remove(Guid id);
-    }
-
     public abstract class BaseTask
     {
         private string _title = String.Empty;
-        public string Title { get; private set; } = String.Empty;
+        public string Title { get; private set; }
 
-        private Guid _id = Guid.Empty;
+        private readonly Guid _id = Guid.Empty;
         public Guid Id { get { return _id; } }
 
         private bool _status;
         public bool Status { get; set; }
 
         private string _description = String.Empty;
-        public string Description { get; set; } = String.Empty;
+        public string Description { get; set; }
 
         private List<BaseTask> _substask = new List<BaseTask>();
-        public List<BaseTask> Subtask { get;} = new List<BaseTask>();
+        public List<BaseTask> Subtask { get; set; } = new List<BaseTask>();
 
         public BaseTask(string title, string description = "")
         {
@@ -45,14 +36,12 @@ namespace TaskMate.Core
                 _status = false;
                 _id = Guid.NewGuid();
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 Console.WriteLine(ex.StackTrace);
-
             }
         }
-
         public void MarkAsComplete()
         {
             _status = true;
@@ -60,11 +49,7 @@ namespace TaskMate.Core
 
         public void UpdateTitle(string title)
         {
-            if (String.IsNullOrEmpty(title))
-            {
-                _title = _title;
-            }
-            else
+            if (!String.IsNullOrEmpty(title))
             {
                 _title = title;
             }
@@ -72,68 +57,10 @@ namespace TaskMate.Core
 
         public void UpdateDescription(string newDescription)
         {
-            if (String.IsNullOrEmpty(newDescription))
-            {
-                _description = _description;
-            }
-            else
+            if (!String.IsNullOrEmpty(newDescription))
             {
                 _description = newDescription;
             }
-                
         }
     }
-
-    public class SimpleTask : BaseTask
-    {
-        public SimpleTask(string title, string description = "") : base(title, description)
-        {
-        }
-    }
-    public class DeadLineTask: BaseTask
-    {
-        private DateOnly _deadLineDate = new DateOnly();
-        public DateOnly DeadLineDate { get; set; }
-
-        public DeadLineTask(string title, DateOnly deadLineDate, string description = "") : base(title, description)
-        {
-            this._deadLineDate = deadLineDate;
-        }
-
-        public void UpdateDeadLineDateForDate(DateOnly newDeadLineDate)
-        {
-            _deadLineDate = newDeadLineDate;
-        }
-
-        public void UpdateDeadLineDateForDay(int numberOfDays)
-        {
-            _deadLineDate.AddDays(numberOfDays);
-        }
-    }
-    public class RecurringTask : BaseTask
-    {
-        private DateOnly _dateBeginning = new DateOnly();
-        public DateOnly DateBeginning { get; set; }
-
-        private DateOnly _endDate = new DateOnly();
-        public DateOnly EndDate { get; set; }
-
-        public RecurringTask(string title, DateOnly dateBeginning, DateOnly endDate, string description = "") : base(title, description)
-        {
-            _dateBeginning = dateBeginning;
-            _endDate = endDate;
-        }
-
-        public void UpdateDaysOfRepeat(List<DateOnly> newDaysOfRepeat)
-        {
-            _daysOfRepeat = newDaysOfRepeat;
-        }
-
-        public void UpdateEndDate(DateOnly newEndDate)
-        {
-            _endDate = newEndDate;
-        }
-    }
-
-
 }
