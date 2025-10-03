@@ -84,6 +84,12 @@ namespace TaskMate.Core
         }
     }
 
+    public class SimpleTask : BaseTask
+    {
+        public SimpleTask(string title, string description = "") : base(title, description)
+        {
+        }
+    }
     public class DeadLineTask: BaseTask
     {
         private DateOnly _deadLineDate = new DateOnly();
@@ -104,7 +110,6 @@ namespace TaskMate.Core
             _deadLineDate.AddDays(numberOfDays);
         }
     }
-
     public class RecurringTask : BaseTask
     {
         private DateOnly _dateBeginning = new DateOnly();
@@ -122,5 +127,17 @@ namespace TaskMate.Core
             _endDate = endDate;
             _daysOfRepeat = daysOfRepeat;
         }
+
+        public void UpdateDaysOfRepeat(List<DateOnly> newDaysOfRepeat)
+        {
+            _daysOfRepeat = newDaysOfRepeat;
+        }
+
+        public void UpdateEndDate(DateOnly newEndDate)
+        {
+            _endDate = newEndDate;
+        }
     }
+
+
 }
