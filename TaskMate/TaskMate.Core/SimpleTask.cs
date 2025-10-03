@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace TaskMate.Core
 {
-    public class SimpleTask
+    public class SimpleTask : BaseTask
     {
+        public SimpleTask(string title, DateOnly startingDate, string description = "") : base(title, startingDate, description)
+        {
+        }
     }
 }

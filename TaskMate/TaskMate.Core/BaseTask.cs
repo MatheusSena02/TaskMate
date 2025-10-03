@@ -9,49 +9,101 @@ namespace TaskMate.Core
     public abstract class BaseTask
     {
         private string _title = String.Empty;
-        public string Title { get; private set; }
-
-        private readonly Guid _id = Guid.Empty;
-        public Guid Id { get { return _id; } }
-
-        private bool _status;
-        public bool Status { get; set; }
-
-        private string _description = String.Empty;
-        public string Description { get; set; }
-
-        private List<BaseTask> _substask = new List<BaseTask>();
-        public List<BaseTask> Subtask { get; set; } = new List<BaseTask>();
-
-        public BaseTask(string title, string description = "")
+        public string Title
         {
-            try
+            get
             {
-                if (String.IsNullOrEmpty(title))
+                return _title;
+            }
+            set
+            {
+                if (String.IsNullOrEmpty(value))
                 {
                     throw new ArgumentException("The 'title' field cannot be null or empty");
-                }
-                _title = title;
-                this._description = description;
-                _status = false;
-                _id = Guid.NewGuid();
+                } 
+                this._title = value;
             }
-            catch (Exception ex)
+        }
+
+        private readonly Guid _id = Guid.Empty;
+        public Guid Id
+        {
+            get
             {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
+                return this._id;
             }
+        }
+
+        private bool _status;
+        public bool Status
+        {
+            get
+            {
+                return this._status;
+            }
+            set
+            {
+                this._status = value;
+            }
+        }
+
+        private string _description = String.Empty;
+        public string Description
+        {
+            get
+            {
+                return this._description;
+            }
+            set
+            {
+                this._description = value;
+            }
+        }
+
+        private List<BaseTask> _substasks = new List<BaseTask>();
+        public List<BaseTask> Subtasks
+        {
+            get
+            {
+                return this._substask;
+            }
+            set
+            {
+                _substask = value;
+            }
+        }
+
+        private DateOnly _startingDate; 
+        public DateOnly StartingDate
+        {
+            get
+            {
+                return _startingDate;
+            }
+            set
+            {
+                this._startingDate = value;
+            }
+        }
+
+        public BaseTask(string title, DateOnly startingDate, string description = "")
+        {
+            this._title = title;
+            this._startingDate = startingDate;
+            this._description = description;
+            this._status = false;
+            this._id = Guid.NewGuid();
         }
         public void MarkAsComplete()
         {
-            _status = true;
+            this._status = true;
         }
 
         public void UpdateTitle(string title)
         {
             if (!String.IsNullOrEmpty(title))
             {
-                _title = title;
+                this._title = title;
             }
         }
 
@@ -59,7 +111,7 @@ namespace TaskMate.Core
         {
             if (!String.IsNullOrEmpty(newDescription))
             {
-                _description = newDescription;
+                this._description = newDescription;
             }
         }
     }
