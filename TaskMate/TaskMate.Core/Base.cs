@@ -85,7 +85,7 @@ namespace TaskMate.Core
         }
     }
 
-    public class SimpleTask : Base
+    public class Simple : Base
     {
         public SimpleTask(string title, string description = "") : base(title, description)
         {
