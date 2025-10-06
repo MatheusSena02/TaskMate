@@ -94,6 +94,7 @@ namespace TaskMate.Core
             this._status = false;
             this._id = Guid.NewGuid();
         }
+
         public void MarkAsComplete()
         {
             this._status = true;
@@ -113,6 +114,14 @@ namespace TaskMate.Core
             {
                 this._description = newDescription;
             }
+        }
+
+        public void GetDetails()
+        {
+            Console.WriteLine($"Título: {Title}");
+            Console.WriteLine($"ID da tarefa: {Id}");
+            Console.WriteLine($"Status: {Status}");
+            Console.WriteLine($"Data de criação: {StartingDate}");
         }
     }
 }
