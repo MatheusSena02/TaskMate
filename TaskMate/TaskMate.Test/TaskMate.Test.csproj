@@ -7,4 +7,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TaskMate.Console\TaskMate.Console.csproj" />
+    <ProjectReference Include="..\TaskMate.Core\TaskMate.Core.csproj" />
+    <ProjectReference Include="..\TaskMate.Infrastructure\TaskMate.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

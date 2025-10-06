@@ -7,14 +7,6 @@ using System.Threading.Tasks;
 
 namespace TaskMate.Core
 {
-    public interface IRepository<T>
-    {
-        T? GetById(Guid id);
-        List<T> GetAll();
-        void Add(T item);
-        void Remove(Guid id);
-        void Clean();
-    }
 
     public abstract class Base
     {
@@ -113,7 +105,7 @@ namespace TaskMate.Core
         }
     }
 
-    public class RecurringTask : Base
+    public class RecurringTak : Base
     {
         private DateOnly _dateBeginning = new DateOnly();
         public DateOnly DateBeginning { get; set; }

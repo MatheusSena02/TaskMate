@@ -60,8 +60,8 @@ namespace TaskMate.Core
             }
         }
 
-        private List<BaseTask> _substasks = new List<BaseTask>();
-        public List<BaseTask> Subtasks
+        private List<BaseTask> _substask = new List<BaseTask>();
+        public List<BaseTask> Subtask
         {
             get
             {
