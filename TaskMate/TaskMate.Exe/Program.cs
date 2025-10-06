@@ -2,10 +2,15 @@
 
 Console.Write("Digite o nome: ");
 string title = Console.ReadLine();
+
 Console.Write("Digite a data: ");
 string dateInsert = Console.ReadLine();
 var startingDate = DateOnly.Parse(dateInsert);
 
-var testSimpleTask = new SimpleTask(title, startingDate);
-testSimpleTask.GetDetails();
+Console.Write("Digite a data de entrega: ");
+dateInsert = Console.ReadLine();
+var deadLineDate = DateOnly.Parse(dateInsert);
 
+Console.WriteLine("\n\n");
+var testDeadLineTask = new DeadLineTask(title, startingDate, deadLineDate);
+testDeadLineTask.GetDetails();

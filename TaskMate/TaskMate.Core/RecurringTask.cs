@@ -18,11 +18,11 @@ namespace TaskMate.Core
     {
         private Dictionary<int, RecurringOptions> _options = new()
         {
-                { 1, RecurringOptions.TODOS_OS_DIAS },
-                { 2, RecurringOptions.APENAS_DIAS_UTEIS },
-                { 3, RecurringOptions.APENAS_FINAL_DE_SEMANA },
-                { 4, RecurringOptions.SEGUNDA_QUARTA_SEXTA },
-                { 5, RecurringOptions.TERCA_QUINTA  }
+                { 0, RecurringOptions.TODOS_OS_DIAS },
+                { 1, RecurringOptions.APENAS_DIAS_UTEIS },
+                { 2, RecurringOptions.APENAS_FINAL_DE_SEMANA },
+                { 3, RecurringOptions.SEGUNDA_QUARTA_SEXTA },
+                { 4, RecurringOptions.TERCA_QUINTA  }
         };
 
         public Dictionary<int, RecurringOptions> Options { get { return _options; } }
