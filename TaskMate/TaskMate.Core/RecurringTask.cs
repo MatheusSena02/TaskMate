@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TaskMate.Core
 {
-    enum RecurringOptions
+    public enum RecurringOptions
     {
         TODOS_OS_DIAS,
         APENAS_DIAS_UTEIS,

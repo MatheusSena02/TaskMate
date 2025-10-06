@@ -116,7 +116,7 @@ namespace TaskMate.Core
             }
         }
 
-        public void GetDetails()
+        public virtual void GetDetails()
         {
             Console.WriteLine($"Título: {Title}");
             Console.WriteLine($"ID da tarefa: {Id}");
