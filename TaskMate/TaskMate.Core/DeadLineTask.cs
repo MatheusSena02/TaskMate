@@ -47,7 +47,7 @@ namespace TaskMate.Core
         {
             Console.WriteLine($"Título: {Title}");
             Console.WriteLine($"ID da tarefa: {Id}");
-            Console.WriteLine($"Status: {Status}");
+            Console.WriteLine($"Status: {TaskStatus}");
             Console.WriteLine($"Status do Prazo: {DeadLineStatus}");
             Console.WriteLine($"Data de criação: {StartingDate}");
             Console.WriteLine($"Data de entrega: {DeadLineDate}");

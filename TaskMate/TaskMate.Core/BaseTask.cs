@@ -6,6 +6,14 @@ using System.Threading.Tasks;
 
 namespace TaskMate.Core
 {
+    public enum statusOption
+    {
+        NAO_INICIADA,
+        EM_PROGRESSO,
+        CONCLUIDA,
+        ATRASADA
+    }
+
     public abstract class BaseTask
     {
         private string _title = String.Empty;
@@ -34,16 +42,24 @@ namespace TaskMate.Core
             }
         }
 
-        private bool _status;
-        public bool Status
+        private Dictionary<int, statusOption> _statusLibrary = new Dictionary<int, statusOption>
+        {
+            { 0, statusOption.NAO_INICIADA },
+            { 1, statusOption.EM_PROGRESSO },
+            { 2, statusOption.CONCLUIDA}
+        };
+        public Dictionary<int, statusOption> StatusLibrary { get { return this._statusLibrary; } }
+
+        private statusOption _taskStatus; 
+        public statusOption TaskStatus
         {
             get
             {
-                return this._status;
+                return this._taskStatus;
             }
             set
             {
-                this._status = value;
+                this._taskStatus = value;
             }
         }
 
@@ -91,13 +107,13 @@ namespace TaskMate.Core
             this._title = title;
             this._startingDate = startingDate;
             this._description = description;
-            this._status = false;
+            this._taskStatus = statusOption.NAO_INICIADA;
             this._id = Guid.NewGuid();
         }
 
         public void MarkAsComplete()
         {
-            this._status = true;
+            this._taskStatus = statusOption.CONCLUIDA;
         }
 
         public void UpdateTitle(string title)
@@ -120,7 +136,7 @@ namespace TaskMate.Core
         {
             Console.WriteLine($"Título: {Title}");
             Console.WriteLine($"ID da tarefa: {Id}");
-            Console.WriteLine($"Status: {Status}");
+            Console.WriteLine($"Status: {TaskStatus}");
             Console.WriteLine($"Data de criação: {StartingDate}");
         }
     }
