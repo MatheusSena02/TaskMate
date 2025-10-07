@@ -42,14 +42,6 @@ namespace TaskMate.Core
             }
         }
 
-        private Dictionary<int, statusOption> _statusLibrary = new Dictionary<int, statusOption>
-        {
-            { 0, statusOption.NAO_INICIADA },
-            { 1, statusOption.EM_PROGRESSO },
-            { 2, statusOption.CONCLUIDA}
-        };
-        public Dictionary<int, statusOption> StatusLibrary { get { return this._statusLibrary; } }
-
         private statusOption _taskStatus; 
         public statusOption TaskStatus
         {
