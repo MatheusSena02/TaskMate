@@ -20,8 +20,12 @@ namespace TaskMate.Core
             if(deadLineDate < DateOnly.FromDateTime(DateTime.Now)){
                 this.TaskStatus = statusOption.ATRASADA;
             }
-            this._deadLineDate = deadLineDate;
-            this.TaskStatus = statusOption.NAO_INICIADA;
+            else
+            {
+                this.TaskStatus = statusOption.NAO_INICIADA;
+            }
+                this._deadLineDate = deadLineDate;
+            
         }
 
         public void SetStartTask()
