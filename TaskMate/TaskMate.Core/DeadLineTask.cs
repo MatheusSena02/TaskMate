@@ -13,13 +13,15 @@ namespace TaskMate.Core
 
         public DeadLineTask(string title, DateOnly startingDate, DateOnly deadLineDate, string description = "") : base(title, startingDate, description)
         {
-            this._deadLineDate = deadLineDate;
+            if(deadLineDate < startingDate)
+            {
+                throw new ArgumentException("Invalid date range: End date precedes start date");
+            }
             if(deadLineDate < DateOnly.FromDateTime(DateTime.Now)){
                 this.TaskStatus = statusOption.ATRASADA;
-            }else
-            {
-                this.TaskStatus = statusOption.NAO_INICIADA;
             }
+            this._deadLineDate = deadLineDate;
+            this.TaskStatus = statusOption.NAO_INICIADA;
         }
 
         public void SetStartTask()
