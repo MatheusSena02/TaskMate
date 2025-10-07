@@ -17,12 +17,12 @@ namespace TaskMate.Infrastructure
             _taskList = new List<T>();
         }
 
-        public void Add(T item)
+        public void AddTask(T item)
         {
             _taskList.Add(item);
         }
 
-        public T GetById(Guid id)
+        public T GetTaskById(Guid id)
         {
             var requestTask = _taskList.FirstOrDefault(item => item is BaseTask task && task.Id == id);
             if (requestTask != null)
@@ -35,23 +35,32 @@ namespace TaskMate.Infrastructure
             }
         }
 
-        public List<T> GetAll()
+        public List<T> GetAllTasks()
         {
             return _taskList;
         }
 
-        public void Remove(Guid id)
+        public void RemoveTask(Guid id)
         {
-            var taskToRemove = GetById(id);
+            var taskToRemove = _taskList.FirstOrDefault(item => item is BaseTask task && task.Id == id);
             if (taskToRemove != null)
             {
                 _taskList.Remove(taskToRemove);
             }
         }
 
-        public void Clean()
+        public void CleanList()
         {
             _taskList.Clear();
+        }
+
+        public void CleanSubstaskList(Guid id) 
+        {
+            var SearchTask = _taskList.FirstOrDefault(item => item is BaseTask task && task.Id == id);
+            if(SearchTask is BaseTask task)
+            {
+                task.Subtask.Clear();
+            }
         }
     }
 }

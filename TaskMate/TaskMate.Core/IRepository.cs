@@ -8,10 +8,11 @@ namespace TaskMate.Core
 {
     public interface IRepository<T>
     {
-        T? GetById(Guid id);
-        List<T> GetAll();
-        void Add(T item);
-        void Remove(Guid id);
-        void Clean();
+        T? GetTaskById(Guid id);
+        List<T> GetAllTasks();
+        void AddTask(T item);
+        void RemoveTask(Guid id);
+        void CleanList();
+        void CleanSubstaskList(Guid id);
     }
 }
