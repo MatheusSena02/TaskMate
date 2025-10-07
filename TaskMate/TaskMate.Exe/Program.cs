@@ -1,16 +1,47 @@
 ﻿using TaskMate.Core;
 
-Console.Write("Digite o nome: ");
+Console.WriteLine("Teste da classe DeadLineTask");
+Console.Write("\nTítulo da tarefa: ");
 string title = Console.ReadLine();
+Console.Write("\nDescrição da tarefa: ");
+string description = Console.ReadLine();
+Console.Write("\nData de começo da tarefa: ");
+string inputDate  = Console.ReadLine();
+var startingDate = DateOnly.Parse(inputDate);
+Console.Write("\nData de término da tarefa: ");
+inputDate = Console.ReadLine();
+var endDate = DateOnly.Parse(inputDate);
+var deadLineTaskTest = new DeadLineTask(title, startingDate, endDate , description);
+Console.WriteLine();
+deadLineTaskTest.GetDetails();
+Console.WriteLine();
+deadLineTaskTest.SetStartTask();
+deadLineTaskTest.GetDetails();
+Console.Write("\nNova data de término da tarefa: ");
+inputDate = Console.ReadLine();
+var deadLineDate = DateOnly.Parse(inputDate);
+deadLineTaskTest.UpdateDeadLineDate(deadLineDate);
+deadLineTaskTest.GetDetails();
 
-Console.Write("Digite a data: ");
-string dateInsert = Console.ReadLine();
-var startingDate = DateOnly.Parse(dateInsert);
+//deadLineTaskTest.SetStartTask();
+//Console.WriteLine();
+//deadLineTaskTest.GetDetails();
+//Console.WriteLine();
+//deadLineTaskTest.MarkAsComplete();
+//deadLineTaskTest.GetDetails();
+//Console.WriteLine();
+//Console.Write("\nNovo título da tarefa: ");
+//string newTitle = Console.ReadLine();
+//deadLineTaskTest.UpdateTitle(newTitle);
+//deadLineTaskTest.GetDetails();
+//Console.Write("\nNova data de começo da tarefa: ");
+//inputDate = Console.ReadLine();
+//Console.WriteLine();
+//deadLineTaskTest.UpdateStartingDate(inputDate);
+//deadLineTaskTest.GetDetails();
+//Console.WriteLine();
+//Console.Write("\nNova descrição da tarefa: ");
+//description = Console.ReadLine();
+//deadLineTaskTest.UpdateDescription(description);
+//deadLineTaskTest.GetDetails();
 
-Console.Write("Digite a data de entrega: ");
-dateInsert = Console.ReadLine();
-var deadLineDate = DateOnly.Parse(dateInsert);
-
-Console.WriteLine("\n\n");
-var testDeadLineTask = new DeadLineTask(title, startingDate, deadLineDate);
-testDeadLineTask.GetDetails();

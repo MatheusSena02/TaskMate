@@ -124,10 +124,19 @@ namespace TaskMate.Core
             }
         }
 
+        public void UpdateStartingDate(string newStartingDate)
+        {
+            if (!String.IsNullOrEmpty(newStartingDate))
+            {
+                _startingDate = DateOnly.Parse(newStartingDate);
+            }
+        }
+
         public virtual void GetDetails()
         {
-            Console.WriteLine($"Título: {Title}");
             Console.WriteLine($"ID da tarefa: {Id}");
+            Console.WriteLine($"Título: {Title}");
+            Console.WriteLine($"Descrição: {Description}");
             Console.WriteLine($"Status: {TaskStatus}");
             Console.WriteLine($"Data de criação: {StartingDate}");
         }

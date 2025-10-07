@@ -27,10 +27,23 @@ namespace TaskMate.Core
             this.TaskStatus = statusOption.EM_PROGRESSO;
         }
 
+        public void UpdateDeadLineDate(DateOnly newDeadLineDate)
+        {
+            if(TaskStatus == statusOption.ATRASADA && newDeadLineDate > DateOnly.FromDateTime(DateTime.Now))
+            {
+                TaskStatus = statusOption.NAO_INICIADA;
+            }else if (TaskStatus == statusOption.EM_PROGRESSO && newDeadLineDate > DateOnly.FromDateTime(DateTime.Now))
+            {
+                TaskStatus = statusOption.EM_PROGRESSO;
+            }
+            this._deadLineDate = newDeadLineDate;
+        }
+
         public override void GetDetails()
         {
-            Console.WriteLine($"Título: {Title}");
             Console.WriteLine($"ID da tarefa: {Id}");
+            Console.WriteLine($"Título: {Title}");
+            Console.WriteLine($"Descrição: {Description}");
             Console.WriteLine($"Status do Prazo: {TaskStatus}");
             Console.WriteLine($"Data de criação: {StartingDate}");
             Console.WriteLine($"Data de entrega: {DeadLineDate}");
