@@ -22,6 +22,11 @@ namespace TaskMate.Core
             }
         }
 
+        public void SetStartTask()
+        {
+            this.TaskStatus = statusOption.EM_PROGRESSO;
+        }
+
         public override void GetDetails()
         {
             Console.WriteLine($"Título: {Title}");
