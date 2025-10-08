@@ -16,7 +16,7 @@ namespace TaskMate.Core
             _irepository = irepository != null ? irepository : throw new ArgumentNullException(nameof(irepository));
         }
 
-        public void ListAllTask(IRepository<BaseTask> irepository)
+        public static void ListAllTask(IRepository<BaseTask> irepository)
         {
             var taskList = irepository.GetAllTasks();
             foreach(var task in taskList)
@@ -68,43 +68,45 @@ namespace TaskMate.Core
             }
         }
 
-        public void ListSimpleTask(BaseTask simpleTask)
+        private static void ListSimpleTask(SimpleTask simpleTask)
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             if (simpleTask.TaskStatus != statusOption.CONCLUIDA)
             {
-                Console.WriteLine($"[ID: {simpleTask.Id} [⬜] {simpleTask.Title}\n\t- Descrição: {simpleTask.Description}");
+                Console.WriteLine($"[ID: {simpleTask.Id}]\n[ ] {simpleTask.Title}\n\t- Descrição: {simpleTask.Description}");
             }
             else
             {
-                Console.WriteLine($"[ID: {simpleTask.Id} [✅] {simpleTask.Title}\n\t- Descrição: {simpleTask.Description}");
+                Console.WriteLine($"[ID: {simpleTask.Id}]\n[X] {simpleTask.Title}\n\t- Descrição: {simpleTask.Description}");
             }
         }
 
-        public void ListDeadLineTask(BaseTask deadLineTask)
+        private static void ListDeadLineTask(DeadLineTask deadLineTask)
         {
-            if(deadLineTask.TaskStatus != statusOption.CONCLUIDA)
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            if (deadLineTask.TaskStatus != statusOption.CONCLUIDA)
             {
-                Console.WriteLine($"[ID: {deadLineTask.Id} [⬜] {deadLineTask.Title}\n\t- Descrição: {deadLineTask.Description}\n\t- (Prazo: {deadLineTask.DeadLineDate})");
+                Console.WriteLine($"[ID: {deadLineTask.Id}]\n[ ] {deadLineTask.Title}\n\t- Descrição: {deadLineTask.Description}\n\t- (Prazo: {deadLineTask.DeadLineDate})");
             }
             else
             {
-                Console.WriteLine($"[ID: {deadLineTask.Id} [✅] {deadLineTask.Title}\n\t- Descrição: {deadLineTask.Description}\n\t- (Prazo: {deadLineTask.DeadLineDate})");
+                Console.WriteLine($"[ID: {deadLineTask.Id}]\n[X] {deadLineTask.Title}\n\t- Descrição: {deadLineTask.Description}\n\t- (Prazo: {deadLineTask.DeadLineDate})");
             }
         }
 
-        public void ListRecurringTask(BaseTask recurringTask)
+        private static void ListRecurringTask(RecurringTask recurringTask)
         {
-            if(recurringTask.TaskStatus != statusOption.CONCLUIDA)
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            if (recurringTask.TaskStatus != statusOption.CONCLUIDA)
             {
-                Console.WriteLine($"[ID: {recurringTask.Id} [⬜] {recurringTask.Title}\n\t- Descrição: {recurringTask.Description}\n\t- (Recorrência: {recurringTask.SelectedRecurringDays}");
+                Console.WriteLine($"[ID: {recurringTask.Id}]\n[ ] {recurringTask.Title}\n\t- Descrição: {recurringTask.Description}\n\t- (Recorrência: {recurringTask.SelectedRecurringDays})");
             }
             else
             {
-                Console.WriteLine($"[ID: {recurringTask.Id} [✅] {recurringTask.Title}\n\t- Descrição: {recurringTask.Description}\n\t- (Recorrência: {recurringTask.SelectedRecurringDays}");
+                Console.WriteLine($"[ID: {recurringTask.Id}]\n[X] {recurringTask.Title}\n\t- Descrição: {recurringTask.Description}\n\t- (Recorrência: {recurringTask.SelectedRecurringDays})");
             }
         }
-
-        public void ListSubtask(BaseTask subtask)
+        private static void ListSubtask(BaseTask subtask)
         {
             if(subtask is SimpleTask simpleTaskSubtask)
             {
@@ -120,7 +122,7 @@ namespace TaskMate.Core
             }else if(subtask is RecurringTask recurringTaskSubtask)
             {
                 Console.Write("\t  - ");
-                ListDeadLineTask(recurringTaskSubtask);
+                ListRecurringTask(recurringTaskSubtask);
                 Console.WriteLine();
             }
         }

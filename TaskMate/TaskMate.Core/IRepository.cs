@@ -11,7 +11,7 @@ namespace TaskMate.Core
         T? GetTaskById(Guid id);
         List<T> GetAllTasks();
         void AddTask(T item);
-        void AddSubstask(T item);
+        void AddSubstask(Guid idTask, T item);
         void RemoveTask(Guid id);
         void CleanList();
         void CleanSubstaskList(Guid id);

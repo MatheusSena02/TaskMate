@@ -22,11 +22,12 @@ namespace TaskMate.Infrastructure
             _taskList.Add(item);
         }
 
-        public void AddSubstask(T item)
+        public void AddSubstask(Guid idTask, T item)
         {
-            if (_taskList is BaseTask taskList && item is BaseTask task)
+            var selectedTask = GetTaskById(idTask);
+            if(selectedTask is BaseTask task && item is BaseTask substask)
             {
-                taskList.Subtask.Add(task);
+                task.Subtask.Add(substask);
             }
         }
 
