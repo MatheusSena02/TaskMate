@@ -33,16 +33,21 @@ namespace TaskMate.Core
             this.TaskStatus = statusOption.EM_PROGRESSO;
         }
 
-        public void UpdateDeadLineDate(DateOnly newDeadLineDate)
+        public void UpdateDeadLineDate(string newDeadLineDate)
         {
-            if(TaskStatus == statusOption.ATRASADA && newDeadLineDate > DateOnly.FromDateTime(DateTime.Now))
+            var newDeadLineDateFormatted = DateOnly.Parse(newDeadLineDate);
+            if(!String.IsNullOrEmpty(newDeadLineDate))
+            {
+                this._deadLineDate = newDeadLineDateFormatted;
+            }
+            
+            if(TaskStatus == statusOption.ATRASADA && newDeadLineDateFormatted > DateOnly.FromDateTime(DateTime.Now))
             {
                 TaskStatus = statusOption.NAO_INICIADA;
-            }else if (TaskStatus == statusOption.EM_PROGRESSO && newDeadLineDate > DateOnly.FromDateTime(DateTime.Now))
+            }else if (TaskStatus == statusOption.EM_PROGRESSO && newDeadLineDateFormatted > DateOnly.FromDateTime(DateTime.Now))
             {
                 TaskStatus = statusOption.EM_PROGRESSO;
             }
-            this._deadLineDate = newDeadLineDate;
         }
 
         public override void GetDetails()
