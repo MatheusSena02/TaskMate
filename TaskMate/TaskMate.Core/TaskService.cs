@@ -16,9 +16,9 @@ namespace TaskMate.Core
             _irepository = irepository != null ? irepository : throw new ArgumentNullException(nameof(irepository));
         }
 
-        public static void ListAllTask(IRepository<BaseTask> irepository)
+        public void ListAllTask()
         {
-            var taskList = irepository.GetAllTasks();
+            var taskList = _irepository.GetAllTasks();
             foreach(var task in taskList)
             {
                 if(task is SimpleTask simpleTask)
@@ -68,7 +68,7 @@ namespace TaskMate.Core
             }
         }
 
-        private static void ListSimpleTask(SimpleTask simpleTask)
+        private void ListSimpleTask(SimpleTask simpleTask)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             if (simpleTask.TaskStatus != statusOption.CONCLUIDA)
@@ -81,7 +81,7 @@ namespace TaskMate.Core
             }
         }
 
-        private static void ListDeadLineTask(DeadLineTask deadLineTask)
+        private void ListDeadLineTask(DeadLineTask deadLineTask)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             if (deadLineTask.TaskStatus != statusOption.CONCLUIDA)
@@ -94,7 +94,7 @@ namespace TaskMate.Core
             }
         }
 
-        private static void ListRecurringTask(RecurringTask recurringTask)
+        private void ListRecurringTask(RecurringTask recurringTask)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             if (recurringTask.TaskStatus != statusOption.CONCLUIDA)
@@ -106,7 +106,8 @@ namespace TaskMate.Core
                 Console.WriteLine($"[ID: {recurringTask.Id}]\n[X] {recurringTask.Title}\n\t- Descrição: {recurringTask.Description}\n\t- (Recorrência: {recurringTask.SelectedRecurringDays})");
             }
         }
-        private static void ListSubtask(BaseTask subtask)
+
+        private void ListSubtask(BaseTask subtask)
         {
             if(subtask is SimpleTask simpleTaskSubtask)
             {
