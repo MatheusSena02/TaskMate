@@ -17,5 +17,25 @@ namespace TaskMate.Core
             string status = TaskStatus == statusOption.CONCLUIDA ? "[X]" : "[ ]";
             Console.WriteLine($"[ID: {Id}]\n[ ] {Title}\n\t- Descrição: {Description}");
         }
+
+        public override void GetDetails()
+        {
+            Console.WriteLine($"\n\n-------------------------------------------------\r");
+            Console.WriteLine($"            DETALHES DA TAREFA #{Id}");
+            Console.WriteLine($"\n-------------------------------------------------\r\n");
+            Console.WriteLine($"    Título:\t{Title}");
+            Console.WriteLine($"    Status:\t{TaskStatus}");
+            Console.WriteLine($"    Tipo:\tTarefa Simples");
+            Console.WriteLine($"    Descrição:");
+            Console.WriteLine($"      {Description}\n");
+
+            if(Subtask.Count > 0)
+            {
+                foreach(var subtask in Subtask)
+                {
+                    PrintTask();
+                }
+            }
+        }
     }
 }
