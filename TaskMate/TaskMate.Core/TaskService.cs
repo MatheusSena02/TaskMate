@@ -70,7 +70,6 @@ namespace TaskMate.Core
 
         private void ListSimpleTask(SimpleTask simpleTask)
         {
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
             if (simpleTask.TaskStatus != statusOption.CONCLUIDA)
             {
                 Console.WriteLine($"[ID: {simpleTask.Id}]\n[ ] {simpleTask.Title}\n\t- Descrição: {simpleTask.Description}");

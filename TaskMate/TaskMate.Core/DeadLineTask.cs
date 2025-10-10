@@ -50,14 +50,16 @@ namespace TaskMate.Core
             }
         }
 
-        public override void GetDetails()
+        public override void PrintTask()
         {
-            Console.WriteLine($"ID da tarefa: {Id}");
-            Console.WriteLine($"Título: {Title}");
-            Console.WriteLine($"Descrição: {Description}");
-            Console.WriteLine($"Status do Prazo: {TaskStatus}");
-            Console.WriteLine($"Data de criação: {StartingDate}");
-            Console.WriteLine($"Data de entrega: {DeadLineDate}");
+            if (TaskStatus != statusOption.CONCLUIDA)
+            {
+                Console.WriteLine($"[ID: {Id}]\n[ ] {Title}\n\t- Descrição: {Description}\n\t- (Prazo: {DeadLineDate})");
+            }
+            else
+            {
+                Console.WriteLine($"[ID: {Id}]\n[X] {Title}\n\t- Descrição: {Description}\n\t- (Prazo: {DeadLineDate})");
+            }
         }
     }
 }
