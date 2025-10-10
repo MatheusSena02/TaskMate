@@ -19,50 +19,14 @@ namespace TaskMate.Core
         public void ListAllTask()
         {
             var taskList = _irepository.GetAllTasks();
-            foreach(var task in taskList)
+            foreach (var task in taskList)
             {
-                if(task is SimpleTask simpleTask)
+                task.PrintTask();
+                if(task.Subtask.Count > 0)
                 {
-                    if(simpleTask.Subtask.Count == 0)
+                    foreach (var subtask in task.Subtask)
                     {
-                        ListSimpleTask(simpleTask);
-                    }
-                    else if(simpleTask.Subtask.Count > 0)
-                    {
-                        ListSimpleTask(simpleTask);
-                        Console.WriteLine("\t- Subtarefas:");
-                        foreach(var subtask in simpleTask.Subtask)
-                        {
-                            ListSubtask(subtask);
-                        }
-                    }
-                }else if(task is DeadLineTask deadLineTask)
-                {
-                    if(deadLineTask.Subtask.Count == 0)
-                    {
-                        ListDeadLineTask(deadLineTask);
-                    }else if(deadLineTask.Subtask.Count > 0)
-                    {
-                        ListDeadLineTask(deadLineTask);
-                        Console.WriteLine("\t- Subtarefas:");
-                        foreach(var subtask in deadLineTask.Subtask)
-                        {
-                            ListSubtask(subtask);
-                        }
-                    }
-                }else if(task is RecurringTask recurringTask)
-                {
-                    if(recurringTask.Subtask.Count == 0)
-                    {
-                        ListRecurringTask(recurringTask);
-                    }else if(recurringTask.Subtask.Count > 0)
-                    {
-                        ListRecurringTask(recurringTask);
-                        Console.WriteLine("\t- Subtarefas:");
-                        foreach (var subtask in recurringTask.Subtask)
-                        {
-                            ListSubtask(subtask);
-                        }
+                        subtask.PrintTask();
                     }
                 }
             }
