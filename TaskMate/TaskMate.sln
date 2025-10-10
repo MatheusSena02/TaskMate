@@ -7,7 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskMate.Core", "TaskMate.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskMate.Infrastructure", "TaskMate.Infrastructure\TaskMate.Infrastructure.csproj", "{A12ECBB9-5156-4472-A060-53BEA35727A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskMate.Console", "TaskMate.Console\TaskMate.Console.csproj", "{44A18394-7140-453F-B0BD-C3AA8420D2BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskMate.UI", "TaskMate.Console\TaskMate.UI.csproj", "{44A18394-7140-453F-B0BD-C3AA8420D2BD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CFA7DB82-9D74-4466-9D9C-5439DC597D1F} = {CFA7DB82-9D74-4466-9D9C-5439DC597D1F}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskMate.Exe", "TaskMate.Exe\TaskMate.Exe.csproj", "{C7DDC5A4-3CB0-4655-8F7E-02B8D0883979}"
 EndProject
