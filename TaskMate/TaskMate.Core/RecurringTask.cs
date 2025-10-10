@@ -23,5 +23,17 @@ namespace TaskMate.Core
         {
             this._selectedRecurringDays = (RecurringOptions)recurringDays;
         }
+
+        public override void PrintTask()
+        {
+            if (TaskStatus != statusOption.CONCLUIDA)
+            {
+                Console.WriteLine($"[ID: {Id}]\n[ ] {Title}\n\t- Descrição: {Description}\n\t- (Recorrência: {SelectedRecurringDays})");
+            }
+            else
+            {
+                Console.WriteLine($"[ID: {Id}]\n[X] {Title}\n\t- Descrição: {Description}\n\t- (Recorrência: {SelectedRecurringDays})");
+            }
+        }
     }
 }
