@@ -135,5 +135,13 @@ namespace TaskMate.Core
         public virtual void PrintTask()
         {
         }
+
+        public virtual void GetDetails()
+        {
+        }
+
+        public virtual void CreateTask()
+        {
+        }
     }
 }
