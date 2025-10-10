@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace TaskMate.Console
 {
-    internal class UserInterface
+    public class UserInterface
     {
+        public void ListDetailsOfTask()
+        {
+            var 
+        }
     }
 }
