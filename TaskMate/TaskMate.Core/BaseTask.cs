@@ -132,13 +132,8 @@ namespace TaskMate.Core
             }
         }
 
-        public virtual void GetDetails()
+        public virtual void PrintTask()
         {
-            Console.WriteLine($"ID da tarefa: {Id}");
-            Console.WriteLine($"Título: {Title}");
-            Console.WriteLine($"Descrição: {Description}");
-            Console.WriteLine($"Status: {TaskStatus}");
-            Console.WriteLine($"Data de criação: {StartingDate}");
         }
     }
 }

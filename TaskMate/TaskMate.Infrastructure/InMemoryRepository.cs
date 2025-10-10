@@ -9,7 +9,7 @@ namespace TaskMate.Infrastructure
 {
     public class InMemoryRepository<T> : IRepository<T>
     {
-        private List<T> _taskList;
+        private static List<T> _taskList;
         public List<T> TaskList { get { return _taskList; } }
 
         public InMemoryRepository()
@@ -31,7 +31,7 @@ namespace TaskMate.Infrastructure
             }
         }
 
-        public T GetTaskById(Guid id)
+        public T? GetTaskById(Guid id)
         {
             var requestTask = _taskList.FirstOrDefault(item => item is BaseTask task && task.Id == id);
             if (requestTask != null)
@@ -40,7 +40,7 @@ namespace TaskMate.Infrastructure
             }
             else
             {
-                return default(T);
+                return default;
             }
         }
 
