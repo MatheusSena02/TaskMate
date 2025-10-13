@@ -57,10 +57,8 @@ namespace TaskMate.Core
             }
         }
 
-        public void EditTask()
+        public void EditDescription(Guid selectedId)
         {
-            Console.Write("\nDigite o ID da tarefa que deseja editar: ");
-            var selectedId = Guid.Parse(Console.ReadLine());
             var selectedTask = _irepository.GetTaskById(selectedId);
             Console.WriteLine($"\nTítulo da Tarefa: {selectedTask.Title}");
             Console.WriteLine($"\nDescrição Atual: {selectedTask.Description}\n");
@@ -68,6 +66,39 @@ namespace TaskMate.Core
             string newDescription = Console.ReadLine();
             selectedTask.Description = newDescription;
             Console.WriteLine($"\nDescrição da tarefa #{selectedTask.Id} atualizada com sucesso!");
+        }
+        public void EditStartingDate(Guid selectedId)
+        {
+            var selectedTask = _irepository.GetTaskById(selectedId);
+            Console.WriteLine($"\nTítulo da Tarefa: {selectedTask.Title}");
+            Console.WriteLine($"\nData Atual: {selectedTask.StartingDate}\n");
+            Console.WriteLine("Digite a nova data (deixe em branco para não alterar):");
+            var newStartingDate = Console.ReadLine();
+            if(!String.IsNullOrEmpty(newStartingDate))
+            {
+                selectedTask.StartingDate = DateOnly.Parse(newStartingDate);
+            }
+            Console.WriteLine($"\nData da tarefa #{selectedTask.Id} atualizada com sucesso!");
+        }
+        public void EditEndDate(Guid selectedId)
+        {
+            var selectedTask = _irepository.GetTaskById(selectedId);
+            if(selectedTask is DeadLineTask selectedDeadLineTask)
+            {
+                Console.WriteLine($"\nTítulo da Tarefa: {selectedTask.Title}");
+                Console.WriteLine($"\nData de Término Atual: {selectedTask.}\n");
+                Console.WriteLine("Digite a nova data (deixe em branco para não alterar):");
+                var newStartingDate = Console.ReadLine();
+                if (!String.IsNullOrEmpty(newStartingDate))
+                {
+                    selectedTask.StartingDate = DateOnly.Parse(newStartingDate);
+                }
+                Console.WriteLine($"\nData da tarefa #{selectedTask.Id} atualizada com sucesso!");
+            }
+            else
+            {
+                Console.Write("\nO Id da tarefa informado não corresponde ao tipo de Tarefa com Prazo");
+            }
         }
 
     }
