@@ -12,6 +12,11 @@ namespace TaskMate.Core
         {
         }
 
+        public SimpleTask()
+        {
+
+        }
+
         public override void PrintTask()
         {
             string status = TaskStatus == statusOption.CONCLUIDA ? "[X]" : "[ ]";
