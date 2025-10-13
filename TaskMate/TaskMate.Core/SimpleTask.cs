@@ -38,7 +38,7 @@ namespace TaskMate.Core
             }
         }
 
-        public override BaseTask CreateTask()
+        public override SimpleTask CreateTask()
         {
             Console.WriteLine("\n>> Criando uma nova Tarefa Simples...\r\n");
             Console.Write("Digite o título da tarefa: ");
