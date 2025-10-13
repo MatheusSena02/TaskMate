@@ -50,5 +50,24 @@ namespace TaskMate.Core
                 }
             }
         }
+
+        public override BaseTask CreateTask()
+        {
+            Console.WriteLine("\n>> Criando uma nova Tarefa Recorrente...\r\n");
+            Console.Write("Digite o título da tarefa: ");
+            string titleRecurringTask = Console.ReadLine();
+            Console.Write("\nDigite a descrição (opcional): ");
+            string descriptionRecurringTask = Console.ReadLine();
+            Console.Write("\nDigite a data de início da tarefa: ");
+            var startingDateRecurringTask = DateOnly.Parse(Console.ReadLine());
+            Console.Write("\n\tSelecione as opções de recorrência da tarefa : \n");
+            Console.Write("----------------------------------------------------------------------------------");
+            Console.Write("\n  | 1 - Todos os dias | 2 - Apenas dias úteis | 3 - Apenas ao finais de semana |\n");
+            Console.Write("\t     | 4 - Segunda, Quarta e Sexta | 5 - Terça e Quinta |\n");
+            Console.Write("----------------------------------------------------------------------------------");
+            Console.Write("\n\t\t\tDigite a opção: ");
+            int selectedRecurringOption = Convert.ToInt16(Console.ReadLine());
+            return new RecurringTask(titleRecurringTask, startingDateRecurringTask, selectedRecurringOption, descriptionRecurringTask);
+        }
     }
 }
