@@ -139,9 +139,5 @@ namespace TaskMate.Core
         public virtual void GetDetails()
         {
         }
-
-        public virtual void CreateTask()
-        {
-        }
     }
 }

@@ -12,11 +12,6 @@ namespace TaskMate.Core
         {
         }
 
-        public SimpleTask()
-        {
-
-        }
-
         public override void PrintTask()
         {
             string status = TaskStatus == statusOption.CONCLUIDA ? "[X]" : "[ ]";
@@ -41,19 +36,6 @@ namespace TaskMate.Core
                     PrintTask();
                 }
             }
-        }
-
-        public override SimpleTask CreateTask()
-        {
-            Console.WriteLine("\n>> Criando uma nova Tarefa Simples...\r\n");
-            Console.Write("Digite o título da tarefa: ");
-            string selectedTitle = Console.ReadLine();
-            Console.Write("\nDigite a descrição (opcional): ");
-            string selectedDescription = Console.ReadLine();
-            Console.Write("\nDigite a data de início da tarefa: ");
-            var selectedStartingDate = DateOnly.Parse(Console.ReadLine());
-            return new SimpleTask(selectedTitle, selectedStartingDate, selectedDescription);
-
         }
     }
 }

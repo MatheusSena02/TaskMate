@@ -76,19 +76,5 @@ namespace TaskMate.Core
                 }
             }
         }
-
-        public override DeadLineTask CreateTask()
-        {
-            Console.WriteLine("\n>> Criando uma nova Tarefa com Prazo...\r\n");
-            Console.Write("Digite o título da tarefa: ");
-            string selectedTitle = Console.ReadLine();
-            Console.Write("\nDigite a descrição (opcional): ");
-            string selectedDescription = Console.ReadLine();
-            Console.Write("\nDigite a data de início da tarefa: ");
-            var selectedStartingDate = DateOnly.Parse(Console.ReadLine());
-            Console.Write("\nDigite a data de término da tarefa: ");
-            var selectedEndDate = DateOnly.Parse(Console.ReadLine());
-            return new DeadLineTask(selectedTitle, selectedStartingDate, selectedEndDate, selectedDescription);
-        }
     }
 }
