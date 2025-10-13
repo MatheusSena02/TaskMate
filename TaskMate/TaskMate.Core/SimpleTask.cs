@@ -37,5 +37,17 @@ namespace TaskMate.Core
                 }
             }
         }
+
+        public override BaseTask CreateTask()
+        {
+            Console.WriteLine("\n>> Criando uma nova Tarefa Simples...\r\n");
+            Console.Write("Digite o título da tarefa: ");
+            string titleSimpleTask = Console.ReadLine();
+            Console.Write("\nDigite a descrição (opcional): ");
+            string descriptionSimpleTask = Console.ReadLine();
+            Console.Write("\nDigite a data de início da tarefa: ");
+            var startingDateSimpleTask = DateOnly.Parse(Console.ReadLine());
+            return new SimpleTask(titleSimpleTask, startingDateSimpleTask, descriptionSimpleTask);
+        }
     }
 }
