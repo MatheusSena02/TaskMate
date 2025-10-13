@@ -13,6 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskMate.UI", "TaskMate.Con
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskMate.Exe", "TaskMate.Exe\TaskMate.Exe.csproj", "{C7DDC5A4-3CB0-4655-8F7E-02B8D0883979}"
+	ProjectSection(ProjectDependencies) = postProject
+		{44A18394-7140-453F-B0BD-C3AA8420D2BD} = {44A18394-7140-453F-B0BD-C3AA8420D2BD}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

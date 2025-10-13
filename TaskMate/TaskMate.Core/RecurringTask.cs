@@ -9,10 +9,10 @@ namespace TaskMate.Core
     public enum RecurringOptions
     {
         TODOS_OS_DIAS = 1,
-        APENAS_DIAS_UTEIS,
-        APENAS_FINAL_DE_SEMANA, 
-        SEGUNDA_QUARTA_SEXTA,
-        TERCA_QUINTA,
+        APENAS_DIAS_UTEIS = 2,
+        APENAS_FINAL_DE_SEMANA = 3, 
+        SEGUNDA_QUARTA_SEXTA = 4,
+        TERCA_QUINTA = 5,
     }
     public class RecurringTask : BaseTask
     {

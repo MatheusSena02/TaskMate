@@ -34,7 +34,6 @@ namespace TaskMate.Core
 
         public void CreateTask()
         {
-            
             Console.WriteLine("Qual tipo de tarefa você deseja criar?\r");
             Console.WriteLine("  [1] Tarefa Simples");
             Console.WriteLine("  [2] Tarefa com Prazo");
@@ -73,12 +72,14 @@ namespace TaskMate.Core
                     string descriptionRecurringTask = Console.ReadLine();
                     Console.Write("\nDigite a data de início da tarefa: ");
                     var startingDateRecurringTask = DateOnly.Parse(Console.ReadLine());
-                    Console.Write("\n\tSelecione as opções de recorrência da tarefa : ");
-                    Console.Write("\n| 1 - Todos os dias | 2 - Apenas dias úteis | 3 - Apenas ao finais de semana |\n");
-                    Console.Write("\t| 4 - Segunda, Quarta e Sexta | 5 - Terça e Quinta |\n");
-                    Console.Write("\tDigite a opção: ");
-                    int selectedRecurringOption = Convert.ToInt32(Console.ReadLine());
-                    _irepository.AddTask(new RecurringTask(titleRecurringTask, startingDateRecurringTask, selectedOption, descriptionRecurringTask));
+                    Console.Write("\n\tSelecione as opções de recorrência da tarefa : \n");
+                    Console.Write("----------------------------------------------------------------------------------");
+                    Console.Write("\n  | 1 - Todos os dias | 2 - Apenas dias úteis | 3 - Apenas ao finais de semana |\n");
+                    Console.Write("\t     | 4 - Segunda, Quarta e Sexta | 5 - Terça e Quinta |\n");
+                    Console.Write("----------------------------------------------------------------------------------");
+                    Console.Write("\n\t\t\tDigite a opção: ");
+                    int selectedRecurringOption = Convert.ToInt16(Console.ReadLine());
+                    _irepository.AddTask(new RecurringTask(titleRecurringTask, startingDateRecurringTask, selectedRecurringOption, descriptionRecurringTask));
                     break;
                 default:
                     Console.WriteLine("Não foi possível criar a tarefa...");
