@@ -9,7 +9,17 @@ namespace TaskMate.Core
     public class DeadLineTask : BaseTask
     {
         private DateOnly _deadLineDate;
-        public DateOnly DeadLineDate => _deadLineDate;
+        public DateOnly DeadLineDate
+        {
+            get
+            {
+                return _deadLineDate;
+            }
+            set
+            {
+                _deadLineDate = value;
+            }
+        }
 
         public DeadLineTask(string title, DateOnly startingDate, DateOnly deadLineDate, string description = "") : base(title, startingDate, description)
         {

@@ -17,7 +17,17 @@ namespace TaskMate.Core
     public class RecurringTask : BaseTask
     {
         private RecurringOptions _selectedRecurringDays;
-        public RecurringOptions SelectedRecurringDays => _selectedRecurringDays;
+        public RecurringOptions SelectedRecurringDays
+        {
+            get
+            {
+                return _selectedRecurringDays;
+            }
+            set
+            {
+                _selectedRecurringDays = value;
+            }
+        }
 
         public RecurringTask(string title, DateOnly startingDate, int recurringDays, string description = "") : base(title, startingDate, description)
         {

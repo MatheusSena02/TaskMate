@@ -85,21 +85,44 @@ namespace TaskMate.Core
             var selectedTask = _irepository.GetTaskById(selectedId);
             if(selectedTask is DeadLineTask selectedDeadLineTask)
             {
-                Console.WriteLine($"\nTítulo da Tarefa: {selectedTask.Title}");
-                Console.WriteLine($"\nData de Término Atual: {selectedTask.}\n");
+                Console.WriteLine($"\nTítulo da Tarefa: {selectedDeadLineTask.Title}");
+                Console.WriteLine($"\nData de Término Atual: {selectedDeadLineTask.DeadLineDate}\n");
                 Console.WriteLine("Digite a nova data (deixe em branco para não alterar):");
-                var newStartingDate = Console.ReadLine();
-                if (!String.IsNullOrEmpty(newStartingDate))
+                var newDeadLineDate = Console.ReadLine();
+                if (!String.IsNullOrEmpty(newDeadLineDate))
                 {
-                    selectedTask.StartingDate = DateOnly.Parse(newStartingDate);
+                    selectedDeadLineTask.DeadLineDate = DateOnly.Parse(newDeadLineDate);
                 }
-                Console.WriteLine($"\nData da tarefa #{selectedTask.Id} atualizada com sucesso!");
+                Console.WriteLine($"\nData de Término da tarefa #{selectedTask.Id} atualizada com sucesso!");
             }
             else
             {
                 Console.Write("\nO Id da tarefa informado não corresponde ao tipo de Tarefa com Prazo");
             }
         }
-
+        public void EditRecurringOption(Guid selectedId)
+        {
+            var selectedTask = _irepository.GetTaskById(selectedId);
+            if(selectedTask is RecurringTask selectedRecurringTask)
+            {
+                Console.WriteLine($"\nTítulo da Tarefa: {selectedRecurringTask.Title}");
+                Console.WriteLine($"\nRecorrência Atual: {selectedRecurringTask.SelectedRecurringDays}\n");
+                Console.Write("----------------------------------------------------------------------------------");
+                Console.Write("\n  | 1 - Todos os dias | 2 - Apenas dias úteis | 3 - Apenas ao finais de semana |\n");
+                Console.Write("\t     | 4 - Segunda, Quarta e Sexta | 5 - Terça e Quinta |\n");
+                Console.Write("----------------------------------------------------------------------------------");
+                Console.WriteLine("Digite a nova opção de recorrência (deixe em branco para não alterar):");
+                int newRecurringOption = Convert.ToInt32(Console.ReadLine());
+                if (newRecurringOption > 0 && newRecurringOption < 5)
+                {
+                    selectedRecurringTask.SelectedRecurringDays = (RecurringOptions)newRecurringOption;
+                }
+                Console.WriteLine($"\nData da tarefa #{selectedTask.Id} atualizada com sucesso!");
+            }
+            else
+            {
+                Console.Write("\nO Id da tarefa informado não corresponde ao tipo de Tarefa Recorrente");
+            }
+        }
     }
 }
