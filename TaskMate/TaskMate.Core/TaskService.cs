@@ -64,8 +64,11 @@ namespace TaskMate.Core
             Console.WriteLine($"\nDescrição Atual: {selectedTask.Description}\n");
             Console.WriteLine("Digite a nova descrição (deixe em branco para não alterar):");
             string newDescription = Console.ReadLine();
-            selectedTask.Description = newDescription;
-            Console.WriteLine($"\nDescrição da tarefa #{selectedTask.Id} atualizada com sucesso!");
+            if(!String.IsNullOrEmpty(newDescription))
+            {
+                selectedTask.Description = newDescription;
+                Console.WriteLine($"\nDescrição da tarefa #{selectedTask.Id} atualizada com sucesso!");
+            }
         }
         public void EditStartingDate(Guid selectedId)
         {
@@ -123,6 +126,20 @@ namespace TaskMate.Core
             {
                 Console.Write("\nO Id da tarefa informado não corresponde ao tipo de Tarefa Recorrente");
             }
+        }
+
+        public void EditTitle(Guid selectedId)
+        {
+            var selectedTask = _irepository.GetTaskById(selectedId);
+            Console.WriteLine($"\nTítulo Atual: {selectedTask.Title}");
+            Console.WriteLine("Digite o novo título (deixe em branco para não alterar):");
+            string newTitle = Console.ReadLine();
+            if(!String.IsNullOrEmpty(newTitle))
+            {
+                selectedTask.Description = newTitle;
+                Console.WriteLine($"\nDescrição da tarefa #{selectedTask.Id} atualizada com sucesso!");
+            }
+            
         }
     }
 }
