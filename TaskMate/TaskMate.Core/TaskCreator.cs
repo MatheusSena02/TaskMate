@@ -17,6 +17,7 @@ namespace TaskMate.Core
             string descriptionSimpleTask = Console.ReadLine();
             Console.Write("\nDigite a data de início da tarefa: ");
             var startingDateSimpleTask = DateOnly.Parse(Console.ReadLine());
+            Console.WriteLine($"\nTarefa Simples \"{titleSimpleTask}\" criada com sucesso!\r\n");
             return new SimpleTask(titleSimpleTask, startingDateSimpleTask, descriptionSimpleTask);
         }
 
@@ -31,6 +32,7 @@ namespace TaskMate.Core
             var startingDateDeadLineTask = DateOnly.Parse(Console.ReadLine());
             Console.Write("\nDigite a data de término da tarefa: ");
             var endDate = DateOnly.Parse(Console.ReadLine());
+            Console.WriteLine($"\nTarefa com Prazo \"{titleDeadLineTask}\" criada com sucesso!\r\n");
             return new DeadLineTask(titleDeadLineTask, startingDateDeadLineTask, endDate, descriptionDeadLineTask);
         }
 
@@ -50,6 +52,7 @@ namespace TaskMate.Core
             Console.Write("----------------------------------------------------------------------------------");
             Console.Write("\n\t\t\tDigite a opção: ");
             int selectedRecurringOption = Convert.ToInt16(Console.ReadLine());
+            Console.WriteLine($"\nTarefa Recorrente \"{titleRecurringTask}\" criada com sucesso!\r\n");
             return new RecurringTask(titleRecurringTask, startingDateRecurringTask, selectedRecurringOption, descriptionRecurringTask);
         }
     }

@@ -88,7 +88,7 @@ namespace TaskMate.Core
             var startingDateDeadLineTask = DateOnly.Parse(Console.ReadLine());
             Console.Write("\nDigite a data de término da tarefa: ");
             var endDate = DateOnly.Parse(Console.ReadLine());
-            return new DeadLineTask(titleDeadLineTask, startingDateDeadLineTask, endDate, descriptionDeadLineTask)
+            return new DeadLineTask(titleDeadLineTask, startingDateDeadLineTask, endDate, descriptionDeadLineTask);
         }
     }
 }

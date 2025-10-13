@@ -54,8 +54,20 @@ namespace TaskMate.Core
                 default:
                     Console.WriteLine("Não foi possível criar a tarefa...");
                     break;
-
             }
+        }
+
+        public void EditTask()
+        {
+            Console.Write("\nDigite o ID da tarefa que deseja editar: ");
+            var selectedId = Guid.Parse(Console.ReadLine());
+            var selectedTask = _irepository.GetTaskById(selectedId);
+            Console.WriteLine($"\nTítulo da Tarefa: {selectedTask.Title}");
+            Console.WriteLine($"\nDescrição Atual: {selectedTask.Description}\n");
+            Console.WriteLine("Digite a nova descrição (deixe em branco para não alterar):");
+            string newDescription = Console.ReadLine();
+            selectedTask.Description = newDescription;
+            Console.WriteLine($"\nDescrição da tarefa #{selectedTask.Id} atualizada com sucesso!");
         }
 
     }

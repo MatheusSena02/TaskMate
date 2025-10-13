@@ -8,3 +8,5 @@ TaskService taskControl = new TaskService(testList);
 taskControl.CreateTask();
 Console.ForegroundColor = ConsoleColor.Green;
 taskControl.ListAllTask();
+taskControl.EditTask();
+taskControl.ListAllTask();
