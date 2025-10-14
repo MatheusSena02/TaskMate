@@ -30,7 +30,7 @@ namespace TaskMate.Infrastructure
 
         public T? GetTaskById(Guid id)
         {
-            var requestTask = _taskList.FirstOrDefault(item => item is BaseTask task && task.Id == id);
+            var requestTask = _taskList.FirstOrDefault(x => x.Id == id);
             if (requestTask != null)
             {
                 return requestTask;
