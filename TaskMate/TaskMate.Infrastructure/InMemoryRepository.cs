@@ -25,10 +25,7 @@ namespace TaskMate.Infrastructure
         public void AddSubstask(Guid idTask, T item)
         {
             var selectedTask = GetTaskById(idTask);
-            if(selectedTask is BaseTask task && item is BaseTask substask)
-            {
-                task.Subtask.Add(substask);
-            }
+            selectedTask.Subtask.Add(item);
         }
 
         public T? GetTaskById(Guid id)
