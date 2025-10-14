@@ -33,7 +33,7 @@ namespace TaskMate.Core
             }
         }
 
-        private readonly Guid _id = Guid.Empty;
+        private readonly Guid _id;
         public Guid Id
         {
             get
@@ -68,16 +68,12 @@ namespace TaskMate.Core
             }
         }
 
-        private List<BaseTask> _substask = new List<BaseTask>();
+        private List<BaseTask> _substask;
         public List<BaseTask> Subtask
         {
             get
             {
                 return this._substask;
-            }
-            set
-            {
-                _substask = value;
             }
         }
 
@@ -128,21 +124,22 @@ namespace TaskMate.Core
         {
             if (!String.IsNullOrEmpty(newStartingDate))
             {
-                _startingDate = DateOnly.Parse(newStartingDate);
+                try
+                {
+                    if(DateOnly.TryParseExact(newStartingDate, "dd/MM/yyyy", out DateOnly resultDate))
+                    {
+                        _startingDate = resultDate;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Invalid date format. Please enter a valid date.");
+                    }
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
-        }
-
-        public virtual void PrintTask()
-        {
-        }
-
-        public virtual void GetDetails()
-        {
-        }
-
-        public virtual BaseTask CreateTask()
-        {
-            return this;
         }
     }
 }
