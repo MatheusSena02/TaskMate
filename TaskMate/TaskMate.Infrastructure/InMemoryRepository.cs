@@ -48,7 +48,7 @@ namespace TaskMate.Infrastructure
 
         public void RemoveTask(Guid id)
         {
-            var taskToRemove = _taskList.FirstOrDefault(item => item is BaseTask task && task.Id == id);
+            var taskToRemove = _taskList.FirstOrDefault(t => t.Id ==  id);
             if (taskToRemove != null)
             {
                 _taskList.Remove(taskToRemove);
