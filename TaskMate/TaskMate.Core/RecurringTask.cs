@@ -34,50 +34,58 @@ namespace TaskMate.Core
             this._selectedRecurringDays = (RecurringOptions)recurringDays;
         }
 
-        public override void PrintTask()
+        public void UpdateSelectedRecurringDays(int newSelectedRecurringDay) 
         {
-            string status = TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
-            Console.WriteLine($"[ID: {Id}]\n{status} {Title}\n\t- Descrição: {Description}\n\t- (Recorrência: {SelectedRecurringDays})");
-        }
-
-        public override void GetDetails()
-        {
-            Console.WriteLine($"\n\n-------------------------------------------------\r");
-            Console.WriteLine($"            DETALHES DA TAREFA #{Id}");
-            Console.WriteLine($"\n-------------------------------------------------\r\n");
-            Console.WriteLine($"    Título:\t{Title}");
-            Console.WriteLine($"    Status:\t{TaskStatus}");
-            Console.WriteLine($"    Tipo:\tTarefa Recorrente");
-            Console.WriteLine($"    Recorrência:\t{SelectedRecurringDays}");
-            Console.WriteLine($"    Descrição:");
-            Console.WriteLine($"      {Description}\n");
-
-            if (Subtask.Count > 0)
+            if(newSelectedRecurringDay > 0 && newSelectedRecurringDay < 5 && (RecurringOptions)newSelectedRecurringDay != this._selectedRecurringDays)
             {
-                foreach (var subtask in Subtask)
-                {
-                    PrintTask();
-                }
+                _selectedRecurringDays = newSelectedRecurringDay;
             }
         }
 
-        public override BaseTask CreateTask()
-        {
-            Console.WriteLine("\n>> Criando uma nova Tarefa Recorrente...\r\n");
-            Console.Write("Digite o título da tarefa: ");
-            string titleRecurringTask = Console.ReadLine();
-            Console.Write("\nDigite a descrição (opcional): ");
-            string descriptionRecurringTask = Console.ReadLine();
-            Console.Write("\nDigite a data de início da tarefa: ");
-            var startingDateRecurringTask = DateOnly.Parse(Console.ReadLine());
-            Console.Write("\n\tSelecione as opções de recorrência da tarefa : \n");
-            Console.Write("----------------------------------------------------------------------------------");
-            Console.Write("\n  | 1 - Todos os dias | 2 - Apenas dias úteis | 3 - Apenas ao finais de semana |\n");
-            Console.Write("\t     | 4 - Segunda, Quarta e Sexta | 5 - Terça e Quinta |\n");
-            Console.Write("----------------------------------------------------------------------------------");
-            Console.Write("\n\t\t\tDigite a opção: ");
-            int selectedRecurringOption = Convert.ToInt16(Console.ReadLine());
-            return new RecurringTask(titleRecurringTask, startingDateRecurringTask, selectedRecurringOption, descriptionRecurringTask);
-        }
+        //public override void PrintTask()
+        //{
+        //    string status = TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
+        //    Console.WriteLine($"[ID: {Id}]\n{status} {Title}\n\t- Descrição: {Description}\n\t- (Recorrência: {SelectedRecurringDays})");
+        //}
+
+        //public override void GetDetails()
+        //{
+        //    Console.WriteLine($"\n\n-------------------------------------------------\r");
+        //    Console.WriteLine($"            DETALHES DA TAREFA #{Id}");
+        //    Console.WriteLine($"\n-------------------------------------------------\r\n");
+        //    Console.WriteLine($"    Título:\t{Title}");
+        //    Console.WriteLine($"    Status:\t{TaskStatus}");
+        //    Console.WriteLine($"    Tipo:\tTarefa Recorrente");
+        //    Console.WriteLine($"    Recorrência:\t{SelectedRecurringDays}");
+        //    Console.WriteLine($"    Descrição:");
+        //    Console.WriteLine($"      {Description}\n");
+
+        //    if (Subtask.Count > 0)
+        //    {
+        //        foreach (var subtask in Subtask)
+        //        {
+        //            PrintTask();
+        //        }
+        //    }
+        //}
+
+        //public override BaseTask CreateTask()
+        //{
+        //    Console.WriteLine("\n>> Criando uma nova Tarefa Recorrente...\r\n");
+        //    Console.Write("Digite o título da tarefa: ");
+        //    string titleRecurringTask = Console.ReadLine();
+        //    Console.Write("\nDigite a descrição (opcional): ");
+        //    string descriptionRecurringTask = Console.ReadLine();
+        //    Console.Write("\nDigite a data de início da tarefa: ");
+        //    var startingDateRecurringTask = DateOnly.Parse(Console.ReadLine());
+        //    Console.Write("\n\tSelecione as opções de recorrência da tarefa : \n");
+        //    Console.Write("----------------------------------------------------------------------------------");
+        //    Console.Write("\n  | 1 - Todos os dias | 2 - Apenas dias úteis | 3 - Apenas ao finais de semana |\n");
+        //    Console.Write("\t     | 4 - Segunda, Quarta e Sexta | 5 - Terça e Quinta |\n");
+        //    Console.Write("----------------------------------------------------------------------------------");
+        //    Console.Write("\n\t\t\tDigite a opção: ");
+        //    int selectedRecurringOption = Convert.ToInt16(Console.ReadLine());
+        //    return new RecurringTask(titleRecurringTask, startingDateRecurringTask, selectedRecurringOption, descriptionRecurringTask);
+        //}
     }
 }
