@@ -38,7 +38,7 @@ namespace TaskMate.Core
         {
             if(newSelectedRecurringDay > 0 && newSelectedRecurringDay < 5 && (RecurringOptions)newSelectedRecurringDay != this._selectedRecurringDays)
             {
-                _selectedRecurringDays = newSelectedRecurringDay;
+                _selectedRecurringDays = (RecurringOptions)newSelectedRecurringDay;
             }
         }
 
