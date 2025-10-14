@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TaskMate.Core
 {
-    public interface IRepository<T>
+    public interface IRepository<T> where T : BaseTask
     {
         T? GetTaskById(Guid id);
         List<T> GetAllTasks();
