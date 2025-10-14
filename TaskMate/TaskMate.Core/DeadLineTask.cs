@@ -13,11 +13,11 @@ namespace TaskMate.Core
         {
             get
             {
-                return _deadLineDate;
+                return this._deadLineDate;
             }
             set
             {
-                _deadLineDate = value;
+                this._deadLineDate = value;
             }
         }
 
@@ -28,77 +28,89 @@ namespace TaskMate.Core
                 throw new ArgumentException("Invalid date range: End date precedes start date");
             }
             if(deadLineDate < DateOnly.FromDateTime(DateTime.Now)){
-                this.TaskStatus = statusOption.ATRASADA;
+                this.TaskStatus = StatusOption.ATRASADA;
             }
             else
             {
-                this.TaskStatus = statusOption.NAO_INICIADA;
+                this.TaskStatus = StatusOption.NAO_INICIADA;
             }
                 this._deadLineDate = deadLineDate;
-            
         }
 
         public void SetStartTask()
         {
-            this.TaskStatus = statusOption.EM_PROGRESSO;
+            this.TaskStatus = StatusOption.EM_PROGRESSO;
         }
 
         public void UpdateDeadLineDate(string newDeadLineDate)
         {
-            var newDeadLineDateFormatted = DateOnly.Parse(newDeadLineDate);
             if(!String.IsNullOrEmpty(newDeadLineDate))
             {
-                this._deadLineDate = newDeadLineDateFormatted;
-            }
-            
-            if(TaskStatus == statusOption.ATRASADA && newDeadLineDateFormatted > DateOnly.FromDateTime(DateTime.Now))
-            {
-                TaskStatus = statusOption.NAO_INICIADA;
-            }else if (TaskStatus == statusOption.EM_PROGRESSO && newDeadLineDateFormatted > DateOnly.FromDateTime(DateTime.Now))
-            {
-                TaskStatus = statusOption.EM_PROGRESSO;
-            }
-        }
-
-        public override void PrintTask()
-        {
-            string status = TaskStatus == statusOption.CONCLUIDA ? "[X]" : "[ ]";
-            Console.WriteLine($"[ID: {Id}]\n{status} {Title}\n\t- Descrição: {Description}\n\t- (Prazo: {DeadLineDate})");
-        }
-
-        public override void GetDetails()
-        {
-            Console.WriteLine($"\n\n-------------------------------------------------\r");
-            Console.WriteLine($"            DETALHES DA TAREFA #{Id}");
-            Console.WriteLine($"\n-------------------------------------------------\r\n");
-            Console.WriteLine($"    Título:\t{Title}");
-            Console.WriteLine($"    Status:\t{TaskStatus}");
-            Console.WriteLine($"    Tipo:\tTarefa com Prazo");
-            Console.WriteLine($"    Prazo final:\t{DeadLineDate}\n");
-            Console.WriteLine($"    Descrição:");
-            Console.WriteLine($"      {Description}\n");
-
-            if (Subtask.Count > 0)
-            {
-                foreach (var subtask in Subtask)
+                try
                 {
-                    PrintTask();
+                    if(DateOnly.TryParse(newDeadLineDate, "dd/MM/yyyy", out DateOnly resultDeadLineDate))
+                    {
+                        _deadLineDate = resultDeadLineDate;
+                        if (TaskStatus == StatusOption.ATRASADA && _deadLineDate > DateOnly.FromDateTime(DateTime.Now))
+                        {
+                            TaskStatus = StatusOption.NAO_INICIADA;
+                        }
+                        else if (TaskStatus == StatusOption.EM_PROGRESSO && _deadLineDate > DateOnly.FromDateTime(DateTime.Now))
+                        {
+                            TaskStatus = StatusOption.EM_PROGRESSO;
+                        }
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Invalid date format. Please enter a valid date.");
+                    }
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
                 }
             }
         }
 
-        public override BaseTask CreateTask()
-        {
-            Console.WriteLine("\n>> Criando uma nova Tarefa com Prazo...\r\n");
-            Console.Write("Digite o título da tarefa: ");
-            string titleDeadLineTask = Console.ReadLine();
-            Console.Write("\nDigite a descrição (opcional): ");
-            string descriptionDeadLineTask = Console.ReadLine();
-            Console.Write("\nDigite a data de início da tarefa: ");
-            var startingDateDeadLineTask = DateOnly.Parse(Console.ReadLine());
-            Console.Write("\nDigite a data de término da tarefa: ");
-            var endDate = DateOnly.Parse(Console.ReadLine());
-            return new DeadLineTask(titleDeadLineTask, startingDateDeadLineTask, endDate, descriptionDeadLineTask);
-        }
+        //public override void PrintTask()
+        //{
+        //    string status = TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
+        //    Console.WriteLine($"[ID: {Id}]\n{status} {Title}\n\t- Descrição: {Description}\n\t- (Prazo: {DeadLineDate})");
+        //}
+
+        //public override void GetDetails()
+        //{
+        //    Console.WriteLine($"\n\n-------------------------------------------------\r");
+        //    Console.WriteLine($"            DETALHES DA TAREFA #{Id}");
+        //    Console.WriteLine($"\n-------------------------------------------------\r\n");
+        //    Console.WriteLine($"    Título:\t{Title}");
+        //    Console.WriteLine($"    Status:\t{TaskStatus}");
+        //    Console.WriteLine($"    Tipo:\tTarefa com Prazo");
+        //    Console.WriteLine($"    Prazo final:\t{DeadLineDate}\n");
+        //    Console.WriteLine($"    Descrição:");
+        //    Console.WriteLine($"      {Description}\n");
+
+        //    if (Subtask.Count > 0)
+        //    {
+        //        foreach (var subtask in Subtask)
+        //        {
+        //            PrintTask();
+        //        }
+        //    }
+        //}
+
+        //public override BaseTask CreateTask()
+        //{
+        //    Console.WriteLine("\n>> Criando uma nova Tarefa com Prazo...\r\n");
+        //    Console.Write("Digite o título da tarefa: ");
+        //    string titleDeadLineTask = Console.ReadLine();
+        //    Console.Write("\nDigite a descrição (opcional): ");
+        //    string descriptionDeadLineTask = Console.ReadLine();
+        //    Console.Write("\nDigite a data de início da tarefa: ");
+        //    var startingDateDeadLineTask = DateOnly.Parse(Console.ReadLine());
+        //    Console.Write("\nDigite a data de término da tarefa: ");
+        //    var endDate = DateOnly.Parse(Console.ReadLine());
+        //    return new DeadLineTask(titleDeadLineTask, startingDateDeadLineTask, endDate, descriptionDeadLineTask);
+        //}
     }
 }

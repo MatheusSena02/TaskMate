@@ -36,7 +36,7 @@ namespace TaskMate.Core
 
         public override void PrintTask()
         {
-            string status = TaskStatus == statusOption.CONCLUIDA ? "[X]" : "[ ]";
+            string status = TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
             Console.WriteLine($"[ID: {Id}]\n{status} {Title}\n\t- Descrição: {Description}\n\t- (Recorrência: {SelectedRecurringDays})");
         }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TaskMate.Core
 {
-    public enum statusOption
+    public enum StatusOption
     {
         NAO_INICIADA,
         EM_PROGRESSO,
@@ -42,8 +42,8 @@ namespace TaskMate.Core
             }
         }
 
-        private statusOption _taskStatus; 
-        public statusOption TaskStatus
+        private StatusOption _taskStatus; 
+        public StatusOption TaskStatus
         {
             get
             {
@@ -95,13 +95,13 @@ namespace TaskMate.Core
             this._title = title;
             this._startingDate = startingDate;
             this._description = description;
-            this._taskStatus = statusOption.NAO_INICIADA;
+            this._taskStatus = StatusOption.NAO_INICIADA;
             this._id = Guid.NewGuid();
         }
 
         public void MarkAsComplete()
         {
-            this._taskStatus = statusOption.CONCLUIDA;
+            this._taskStatus = StatusOption.CONCLUIDA;
         }
 
         public void UpdateTitle(string title)

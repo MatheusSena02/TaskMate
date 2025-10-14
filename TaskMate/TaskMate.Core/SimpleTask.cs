@@ -14,7 +14,7 @@ namespace TaskMate.Core
 
         public override void PrintTask()
         {
-            string status = TaskStatus == statusOption.CONCLUIDA ? "[X]" : "[ ]";
+            string status = TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
             Console.WriteLine($"[ID: {Id}]\n[ ] {Title}\n\t- Descrição: {Description}");
         }
 
