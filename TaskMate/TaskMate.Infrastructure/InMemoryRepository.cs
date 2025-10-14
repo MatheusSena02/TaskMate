@@ -62,11 +62,8 @@ namespace TaskMate.Infrastructure
 
         public void CleanSubstaskList(Guid id) 
         {
-            var SearchTask = _taskList.FirstOrDefault(item => item is BaseTask task && task.Id == id);
-            if(SearchTask is BaseTask task)
-            {
-                task.Subtask.Clear();
-            }
+            var searchTask = _taskList.FirstOrDefault(a => a.Id == id);
+            searchTask.Subtask.Clear();
         }
     }
 }
