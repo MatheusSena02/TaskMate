@@ -7,7 +7,7 @@ using TaskMate.Core;
 
 namespace TaskMate.Infrastructure
 {
-    public class InMemoryRepository<T> : IRepository<T>
+    public class InMemoryRepository<T> : IRepository<T> where T : BaseTask
     {
         private static List<T> _taskList;
         public List<T> TaskList { get { return _taskList; } }
