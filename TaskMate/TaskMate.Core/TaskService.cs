@@ -16,21 +16,37 @@ namespace TaskMate.Core
             _irepository = irepository != null ? irepository : throw new ArgumentNullException(nameof(irepository));
         }
 
-        public void ListAllTask()
+        public static SimpleTask CreateTask(CreateSimpleTaskDto SimpleDto)
         {
-            var taskList = _irepository.GetAllTasks();
-            foreach (var task in taskList)
-            {
-                task.PrintTask();
-                if(task.Subtask.Count > 0)
-                {
-                    foreach (var subtask in task.Subtask)
-                    {
-                        subtask.PrintTask();
-                    }
-                }
-            }
+            return new SimpleTask(SimpleDto.title, SimpleDto.startingDate, SimpleDto.description);
         }
+
+        public static DeadLineTask CreateTask(CreateDeadLineTaskDto DeadLineDto)
+        {
+            return new DeadLineTask(DeadLineDto.title, DeadLineDto.startingDate, DeadLineDto.deadLineDate, DeadLineDto.description);
+        }
+
+        public static RecurringTask CreateTask(CreateRecurringTaskDto RecurringDto)
+        {
+            return new RecurringTask(RecurringDto.title, RecurringDto.startingDate, RecurringDto.recurringDays, RecurringDto.description);
+        }
+
+
+        //public void ListAllTask()
+        //{
+        //    var taskList = _irepository.GetAllTasks();
+        //    foreach (var task in taskList)
+        //    {
+        //        task.PrintTask();
+        //        if(task.Subtask.Count > 0)
+        //        {
+        //            foreach (var subtask in task.Subtask)
+        //            {
+        //                subtask.PrintTask();
+        //            }
+        //        }
+        //    }
+        //}
 
         public void CreateTask()
         {
