@@ -31,38 +31,6 @@ namespace TaskMate.Core
             return new RecurringTask(RecurringDto.title, RecurringDto.startingDate, RecurringDto.recurringDays, RecurringDto.description);
         }
 
-        public void ListAllTask()
-        {
-            var allTaskList = _irepository.GetAllTasks();
-            foreach (var task in allTaskList)
-            {
-                task.PrintTask();
-                if(task.Subtask.Count > 0)
-                {
-                    foreach(var subtask in task.Subtask)
-                    {
-                        subtask.PrintTask();
-                    }
-                }
-            }
-        }
-
-        //public void ListAllTask()
-        //{
-        //    var taskList = _irepository.GetAllTasks();
-        //    foreach (var task in taskList)
-        //    {
-        //        task.PrintTask();
-        //        if(task.Subtask.Count > 0)
-        //        {
-        //            foreach (var subtask in task.Subtask)
-        //            {
-        //                subtask.PrintTask();
-        //            }
-        //        }
-        //    }
-        //}
-
         //public void CreateTask()
         //{
         //    Console.WriteLine("Qual tipo de tarefa você deseja criar?\r");
