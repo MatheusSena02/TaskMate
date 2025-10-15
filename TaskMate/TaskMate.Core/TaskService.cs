@@ -31,6 +31,21 @@ namespace TaskMate.Core
             return new RecurringTask(RecurringDto.title, RecurringDto.startingDate, RecurringDto.recurringDays, RecurringDto.description);
         }
 
+        public void ListAllTask()
+        {
+            var allTaskList = _irepository.GetAllTasks();
+            foreach (var task in allTaskList)
+            {
+                task.PrintTask();
+                if(task.Subtask.Count > 0)
+                {
+                    foreach(var subtask in task.Subtask)
+                    {
+                        subtask.PrintTask();
+                    }
+                }
+            }
+        }
 
         //public void ListAllTask()
         //{
@@ -48,30 +63,30 @@ namespace TaskMate.Core
         //    }
         //}
 
-        public void CreateTask()
-        {
-            Console.WriteLine("Qual tipo de tarefa você deseja criar?\r");
-            Console.WriteLine("  [1] Tarefa Simples");
-            Console.WriteLine("  [2] Tarefa com Prazo");
-            Console.WriteLine("  [3] Tarefa Recorrente\n");
-            Console.Write("Digite a sua opção: ");
-            int selectedOption = Convert.ToInt32(Console.ReadLine());
-            switch(selectedOption)
-            {
-                case 1:
-                    _irepository.AddTask(TaskCreator.CreateSimpleTask());
-                    break;
-                case 2:
-                    _irepository.AddTask(TaskCreator.CreateDeadLineTask()); 
-                    break;
-                case 3:
-                    _irepository.AddTask(TaskCreator.CreateRecurringTask());
-                    break;
-                default:
-                    Console.WriteLine("Não foi possível criar a tarefa...");
-                    break;
-            }
-        }
+        //public void CreateTask()
+        //{
+        //    Console.WriteLine("Qual tipo de tarefa você deseja criar?\r");
+        //    Console.WriteLine("  [1] Tarefa Simples");
+        //    Console.WriteLine("  [2] Tarefa com Prazo");
+        //    Console.WriteLine("  [3] Tarefa Recorrente\n");
+        //    Console.Write("Digite a sua opção: ");
+        //    int selectedOption = Convert.ToInt32(Console.ReadLine());
+        //    switch(selectedOption)
+        //    {
+        //        case 1:
+        //            _irepository.AddTask(TaskCreator.CreateSimpleTask());
+        //            break;
+        //        case 2:
+        //            _irepository.AddTask(TaskCreator.CreateDeadLineTask()); 
+        //            break;
+        //        case 3:
+        //            _irepository.AddTask(TaskCreator.CreateRecurringTask());
+        //            break;
+        //        default:
+        //            Console.WriteLine("Não foi possível criar a tarefa...");
+        //            break;
+        //    }
+        //}
 
         public void EditDescription(Guid selectedId)
         {

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskMate.Core;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TaskMate.UI
 {
@@ -35,5 +37,40 @@ namespace TaskMate.UI
             }
         }
 
+        public void GetDetails()
+        {
+            Console.Write("\nDigite o ID da tarefa para ver os detalhes: ");
+            try
+            {
+                var searchId = Guid.TryParse(Console.ReadLine(), out var isValidID);
+                if (searchId == true)
+                {
+                    var selectedTask = _inMemoryRepository.GetTaskById(isValidID);
+                    if (selectedTask != null)
+                    {
+                        Console.WriteLine(selectedTask.GetDetails());
+                        if (selectedTask.Subtask.Any() && selectedTask.Subtask != null)
+                        {
+                            foreach (var subtask in selectedTask.Subtask)
+                            {
+                                Console.WriteLine(subtask.PrintTask());
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Task not found");
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid Id format.Please enter a valid Id.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.Message}");
+            }
+        }
     }
 }

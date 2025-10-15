@@ -48,7 +48,7 @@ namespace TaskMate.Core
             {
                 try
                 {
-                    if(DateOnly.TryParse(newDeadLineDate, "dd/MM/yyyy", out DateOnly resultDeadLineDate))
+                    if(DateOnly.TryParseExact(newDeadLineDate, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateOnly resultDeadLineDate))
                     {
                         _deadLineDate = resultDeadLineDate;
                         if (TaskStatus == StatusOption.ATRASADA && _deadLineDate > DateOnly.FromDateTime(DateTime.Now))
@@ -62,7 +62,7 @@ namespace TaskMate.Core
                     }
                     else
                     {
-                        throw new ArgumentException("Invalid date format. Please enter a valid date.");
+                        throw new ArgumentException("");
                     }
                 }
                 catch(Exception e)
