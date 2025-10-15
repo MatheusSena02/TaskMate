@@ -48,26 +48,18 @@ namespace TaskMate.Core
             return $"[ID: {Id}]\n{status} {Title}\n\t- Descrição: {Description}\n\t- (Recorrência: {SelectedRecurringDays}";
         }
 
-        //public override void GetDetails()
-        //{
-        //    Console.WriteLine($"\n\n-------------------------------------------------\r");
-        //    Console.WriteLine($"            DETALHES DA TAREFA #{Id}");
-        //    Console.WriteLine($"\n-------------------------------------------------\r\n");
-        //    Console.WriteLine($"    Título:\t{Title}");
-        //    Console.WriteLine($"    Status:\t{TaskStatus}");
-        //    Console.WriteLine($"    Tipo:\tTarefa Recorrente");
-        //    Console.WriteLine($"    Recorrência:\t{SelectedRecurringDays}");
-        //    Console.WriteLine($"    Descrição:");
-        //    Console.WriteLine($"      {Description}\n");
-
-        //    if (Subtask.Count > 0)
-        //    {
-        //        foreach (var subtask in Subtask)
-        //        {
-        //            PrintTask();
-        //        }
-        //    }
-        //}
+        public override string GetDetails()
+        {
+            return $"\n\n-------------------------------------------------\r\n" +
+                   $"            DETALHES DA TAREFA #{Id}" +
+                   $"\n-------------------------------------------------\r\n" +
+                   $"    Título:\t{Title}\n" +
+                   $"    Status:\t{TaskStatus}\n" +
+                   $"    Tipo:\tTarefa Recorrente\n" +
+                   $"    Recorrência:\t{SelectedRecurringDays}\n\n" +
+                   $"    Descrição:\n" +
+                   $"      {Description}\n";
+        }
 
         //public override BaseTask CreateTask()
         //{
