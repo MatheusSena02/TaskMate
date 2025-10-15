@@ -29,5 +29,9 @@ namespace TaskMate.Core
                     $"      {Description}\n";
         }
 
+        public override SimpleTask CreateTask(DateOfTask dto)
+        {
+            return new SimpleTask(dto.title, dto.startingDate, dto.description);
+        }
     }
 }
