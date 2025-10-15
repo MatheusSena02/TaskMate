@@ -157,5 +157,10 @@ namespace TaskMate.Core
                    $"    Descrição:\n" +
                    $"      {Description}\n";
         }
+
+        public virtual BaseTask CreateTask(DateOfTask dto)
+        {
+            return new SimpleTask(dto.title, dto.startingDate, dto.description);
+        }
     }
 }

@@ -7,15 +7,10 @@ using TaskMate.Core;
 
 namespace TaskMate.UI
 {
-    internal interface ITaskManager <T>
+    internal interface ITaskCreator
     {
-        SimpleTask CreateSimpleTask();
-        DeadLineTask CreateDeadLineTask();
-        RecurringTask CreateRecurringTask();
-
-        void EditTitle(T Id);
-        void EditDescription(T Id); 
-        void EditStartingDate(T Id);
-
+        SimpleTask GetInfoOAboutSimpleTask();
+        DeadLineTask GetInfoAboutDeadLineTask();
+        RecurringTask GetInfoAboutRecurringTask();
     }
 }
