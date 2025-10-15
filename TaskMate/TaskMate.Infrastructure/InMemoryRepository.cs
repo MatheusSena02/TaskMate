@@ -7,7 +7,7 @@ using TaskMate.Core;
 
 namespace TaskMate.Infrastructure
 {
-    public class InMemoryRepository<T> : IRepository<T> where T : BaseTask
+    public class InMemoryRepository<T> : ITaskOperations, IRepository<T> where T : BaseTask
     {
         private static List<T> _taskList;
         public List<T> TaskList { get { return _taskList; } }
@@ -64,6 +64,20 @@ namespace TaskMate.Infrastructure
         {
             var searchTask = _taskList.FirstOrDefault(a => a.Id == id);
             searchTask.Subtask.Clear();
+        }
+
+        public void EditTitle(Guid id, string newTitle)
+        {
+            var selectedTask = GetTaskById(id);
+            if(selectedTask == null)
+            {
+                throw new ArgumentException("Não foi impossível encontrar a tarefa. Verifique o Id e digite novamente");
+            }
+            else
+            {
+                selectedTask.Title = newTitle;
+            }
+                
         }
     }
 }
