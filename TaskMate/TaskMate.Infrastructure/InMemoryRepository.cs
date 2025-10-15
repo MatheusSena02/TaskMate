@@ -79,5 +79,20 @@ namespace TaskMate.Infrastructure
             }
                 
         }
+
+        public void EditDescription(Guid id, string newDescription)
+        {
+            if (!String.IsNullOrEmpty(newDescription))
+            {
+                var selectedTask = GetTaskById(id);
+                if(selectedTask == null)
+                {
+                    throw new ArgumentException("Não foi impossível encontrar a tarefa. Verifique o Id e digite novamente");
+                }else
+                {
+                    selectedTask.Description = newDescription;
+                }
+            }
+        }
     }
 }
