@@ -68,16 +68,18 @@ namespace TaskMate.Infrastructure
 
         public void EditTitle(Guid id, string newTitle)
         {
-            var selectedTask = GetTaskById(id);
-            if(selectedTask == null)
+            if (!String.IsNullOrEmpty(newTitle))
             {
-                throw new ArgumentException("Não foi impossível encontrar a tarefa. Verifique o Id e digite novamente");
+                var selectedTask = GetTaskById(id);
+                if(selectedTask == null)
+                {
+                    throw new ArgumentException("Não foi impossível encontrar a tarefa. Verifique o Id e digite novamente");
+                }
+                else
+                {
+                    selectedTask.Title = newTitle;
+                }
             }
-            else
-            {
-                selectedTask.Title = newTitle;
-            }
-                
         }
 
         public void EditDescription(Guid id, string newDescription)
@@ -91,6 +93,39 @@ namespace TaskMate.Infrastructure
                 }else
                 {
                     selectedTask.Description = newDescription;
+                }
+            }
+        }
+
+        public void EditStartingDate(Guid id, string newStartingDate)
+        {
+            if (!String.IsNullOrEmpty(newStartingDate))
+            {
+                var selectedTask = GetTaskById(id);
+                if(selectedTask == null)
+                {
+                    throw new ArgumentException("Não foi impossível encontrar a tarefa. Verifique o Id e digite novamente");
+                }
+                else
+                {
+                    try
+                    {
+                        var formattedDate = DateOnly.TryParseExact(Console.ReadLine(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateOnly isValidStartingDate);
+                        if(formattedDate == true)
+                        {
+                            selectedTask.StartingDate = isValidStartingDate;
+                        }
+                        else
+                        {
+                            throw new ArgumentException("Invalid date range: End date precedes start date");
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    
+                    
                 }
             }
         }
