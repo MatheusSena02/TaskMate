@@ -141,5 +141,10 @@ namespace TaskMate.Core
                 }
             }
         }
+
+        public virtual string PrintTask()
+        {
+            return $"[ID: {Id}]\n[ ] {Title}\n\t- Descrição: {Description}";
+        }
     }
 }

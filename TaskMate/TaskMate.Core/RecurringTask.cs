@@ -42,11 +42,11 @@ namespace TaskMate.Core
             }
         }
 
-        //public override void PrintTask()
-        //{
-        //    string status = TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
-        //    Console.WriteLine($"[ID: {Id}]\n{status} {Title}\n\t- Descrição: {Description}\n\t- (Recorrência: {SelectedRecurringDays})");
-        //}
+        public override string PrintTask()
+        {
+            string status = TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
+            return $"[ID: {Id}]\n{status} {Title}\n\t- Descrição: {Description}\n\t- (Recorrência: {SelectedRecurringDays}";
+        }
 
         //public override void GetDetails()
         //{
