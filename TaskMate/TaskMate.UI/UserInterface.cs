@@ -10,12 +10,12 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TaskMate.UI
 {
-    public class UserInterface <BaseTask> 
+    public class UserInterface
     {
-        private InMemoryRepository<T> _inMemoryRepository;
-        public UserInterface(IRepository<T> inMemoryRepository)
+        private IRepository<BaseTask> _inMemoryRepository;
+        public UserInterface(IRepository<BaseTask> inMemoryRepository)
         {
-            _inMemoryRepository = (InMemoryRepository<T>)inMemoryRepository;
+            _inMemoryRepository = inMemoryRepository;
         }
 
         public void CreateTask()
@@ -29,28 +29,7 @@ namespace TaskMate.UI
             switch(selectedOption)
             {
                 case 1:
-                    Console.Write(">> Criando uma nova Tarefa com Prazo...\r\n");
-                    Console.Write("Digite o título da tarefa: ");
-                    string simpleTitle = Console.ReadLine();
-                    Console.Write("Digite a descrição (opcional): ");
-                    string simpleDescription = Console.ReadLine();
-                    Console.Write("Digite a data de vencimento (dd/mm/aaaa): ");
-                    try
-                    {
-                        var simpleDate = DateOnly.TryParseExact(Console.ReadLine(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateOnly isValidDate);
-                        if(simpleDate == true)
-                        {
-                            _inMemoryRepository.AddTask(TaskManager.CreateSimpleTask());
-                        }
-                        else
-                        {
-                            throw new ArgumentException("Invalid date range: End date precedes start date");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
+                    _inMemoryRepository.AddTask(TaskManager.CreateSimpleTask());
                     break;
                 case 2:
                     break;
