@@ -16,17 +16,17 @@ namespace TaskMate.Core
             _irepository = irepository != null ? irepository : throw new ArgumentNullException(nameof(irepository));
         }
 
-        public static SimpleTask CreateTask(CreateSimpleTaskDto SimpleDto)
+        public static SimpleTask CreateSimpleTask(CreateSimpleTaskDto SimpleDto)
         {
             return new SimpleTask(SimpleDto.title, SimpleDto.startingDate, SimpleDto.description);
         }
 
-        public static DeadLineTask CreateTask(CreateDeadLineTaskDto DeadLineDto)
+        public static DeadLineTask CreateDeadLineTask(CreateDeadLineTaskDto DeadLineDto)
         {
             return new DeadLineTask(DeadLineDto.title, DeadLineDto.startingDate, DeadLineDto.deadLineDate, DeadLineDto.description);
         }
 
-        public static RecurringTask CreateTask(CreateRecurringTaskDto RecurringDto)
+        public static RecurringTask CreateRecurringTask(CreateRecurringTaskDto RecurringDto)
         {
             return new RecurringTask(RecurringDto.title, RecurringDto.startingDate, RecurringDto.recurringDays, RecurringDto.description);
         }
