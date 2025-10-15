@@ -146,5 +146,16 @@ namespace TaskMate.Core
         {
             return $"[ID: {Id}]\n[ ] {Title}\n\t- Descrição: {Description}";
         }
+
+        public virtual string GetDetails()
+        {
+            return $"\n\n-------------------------------------------------\r\n" +
+                   $"            DETALHES DA TAREFA #{Id}" +
+                   $"\n-------------------------------------------------\r\n" +
+                   $"    Título:\t{Title}\n" +
+                   $"    Status:\t{TaskStatus}\n" +
+                   $"    Descrição:\n" +
+                   $"      {Description}\n";
+        }
     }
 }
