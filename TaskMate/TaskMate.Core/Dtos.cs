@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TaskMate.Core
 {
+    public sealed record DateOfTask(string title, DateOnly startingDate, DateOnly? deadLineDate, int? recurringDay, string description = "");
     public sealed record CreateBaseTaskDto(string title, DateOnly startingDate, string description = "");
     public sealed record CreateSimpleTaskDto(string title, DateOnly startingDate, string description = "");
     public sealed record CreateDeadLineTaskDto(string title, DateOnly startingDate, DateOnly deadLineDate, string description = "");
