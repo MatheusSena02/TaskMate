@@ -7,19 +7,13 @@ using TaskMate.Core;
 
 namespace TaskMate.Infrastructure
 {
-    public class InMemoryRepository<T> : ITaskOperations, IRepository<T> where T : BaseTask
+    public class InMemoryRepository<T> : IRepository<T> where T : BaseTask
     {
-        private static List<T> _taskList;
-        public List<T> TaskList { get { return _taskList; } }
-
-        public InMemoryRepository()
-        {
-            _taskList = new List<T>();
-        }
-
+        public List<T> TaskList { get; set; } = new();
+         
         public void AddTask(T item)
         {
-            _taskList.Add(item);
+            TaskList.Add(item);
         }
 
         public void AddSubstask(Guid idTask, T item)
