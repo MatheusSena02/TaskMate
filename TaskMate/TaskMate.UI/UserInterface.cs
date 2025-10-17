@@ -25,7 +25,45 @@ namespace TaskMate.UI
             Console.WriteLine("  [0] Sair\n");
             Console.WriteLine("Digite a sua opção: ");
             int selectedOption = Convert.ToInt32(Console.ReadLine());
+            if(selectedOption < 0 || selectedOption > 7)
+            {
+                throw new ArgumentException("Opção inválida: A opção selecionada se encontra fora do escopo aceitável");
+            }
             return selectedOption;
+        }
+
+        public void DisplayController()
+        {
+            int userOption = DisplayMenu();
+            switch (userOption)
+            {
+                case 0:
+                    Environment.Exit(0);
+                    break;
+                case 1:
+                    //Método para listar todas as tarefas
+                    break;
+                case 2:
+                    //Método para ver detalhes da tarefa
+                    break;
+                case 3:
+                    //Método para criar um nova tarefa
+                    break;
+                case 4:
+                    //Método para editar uma tarefa
+                    break;
+                case 5:
+                    //Método para excluir uma tarefa
+                    break;
+                case 6:
+                    //Método para gerenciar tarefas
+                    break;
+                case 7:
+                    //Método para ver histórico de notificações
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
