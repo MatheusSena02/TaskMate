@@ -16,151 +16,59 @@ namespace TaskMate.Core
 
     public abstract class BaseTask
     {
-        private string _title = String.Empty;
-        public string Title
-        {
-            get
-            {
-                return _title;
-            }
-            set
-            {
-                if (String.IsNullOrEmpty(value))
-                {
-                    throw new ArgumentException("The 'title' field cannot be null or empty");
-                } 
-                this._title = value;
-            }
-        }
+        public string Title { get; set; } = String.Empty;
 
-        private readonly Guid _id;
-        public Guid Id
-        {
-            get
-            {
-                return this._id;
-            }
-        }
+        public Guid Id { get; } = Guid.NewGuid();
 
-        private StatusOption _taskStatus; 
-        public StatusOption TaskStatus
-        {
-            get
-            {
-                return this._taskStatus;
-            }
-            set
-            {
-                this._taskStatus = value;
-            }
-        }
+        public StatusOption TaskStatus { get; set; } 
+     
+        public string Description { get; set; } = String.Empty;
 
-        private string _description = String.Empty;
-        public string Description
-        {
-            get
-            {
-                return this._description;
-            }
-            set
-            {
-                this._description = value;
-            }
-        }
+        public List<BaseTask> SubtasksList { get; set; } = new();
 
-        private List<BaseTask> _substask;
-        public List<BaseTask> Subtask
-        {
-            get
-            {
-                return this._substask;
-            }
-        }
-
-        private DateOnly _startingDate; 
-        public DateOnly StartingDate
-        {
-            get
-            {
-                return _startingDate;
-            }
-            set
-            {
-                this._startingDate = value;
-            }
-        }
+        public DateOnly StartingDate { get; set; }
 
         public BaseTask(string title, DateOnly startingDate, string description = "")
         {
-            this._title = title;
-            this._startingDate = startingDate;
-            this._description = description;
-            this._taskStatus = StatusOption.NAO_INICIADA;
-            this._id = Guid.NewGuid();
+            this.Title = title;
+            this.StartingDate = startingDate;
+            this.Description = description;
         }
 
         public void MarkAsComplete()
         {
-            this._taskStatus = StatusOption.CONCLUIDA;
+            this.TaskStatus = StatusOption.CONCLUIDA;
         }
 
-        public void UpdateTitle(string title)
+        public void UpdateTitle(string newTitle)
         {
-            if (!String.IsNullOrEmpty(title))
-            {
-                this._title = title;
-            }
+            Title = ValidateAndSet(newTitle, nameof(Title));
         }
 
         public void UpdateDescription(string newDescription)
         {
-            if (!String.IsNullOrEmpty(newDescription))
+            Description = ValidateAndSet(newDescription, nameof(Description));
+        }
+
+        public static string ValidateAndSet(string value, string fieldName)
+        {
+            if (String.IsNullOrEmpty(value))
             {
-                this._description = newDescription;
+                throw new ArgumentNullException($"O campo {fieldName} não pode ser vazio ou nulo");
             }
+            return value.Trim();
         }
 
         public void UpdateStartingDate(string newStartingDate)
         {
-            if (!String.IsNullOrEmpty(newStartingDate))
+            var validateStartingDate = DateOnly.TryParseExact(ValidateAndSet(newStartingDate, nameof(StartingDate)), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateOnly isValidStartingDate);
+            if(validateStartingDate == true)
             {
-                try
-                {
-                    if(DateOnly.TryParseExact(newStartingDate, "dd/MM/yyyy", out DateOnly resultDate))
-                    {
-                        _startingDate = resultDate;
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Invalid date format. Please enter a valid date.");
-                    }
-                }
-                catch(Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+                StartingDate = isValidStartingDate;
+            }else
+            {
+                throw new ArgumentException($"Formato inserido é inválido para o campo {nameof(StartingDate)}");
             }
-        }
-
-        public virtual string PrintTask()
-        {
-            return $"[ID: {Id}]\n[ ] {Title}\n\t- Descrição: {Description}";
-        }
-
-        public virtual string GetDetails()
-        {
-            return $"\n\n-------------------------------------------------\r\n" +
-                   $"            DETALHES DA TAREFA #{Id}" +
-                   $"\n-------------------------------------------------\r\n" +
-                   $"    Título:\t{Title}\n" +
-                   $"    Status:\t{TaskStatus}\n" +
-                   $"    Descrição:\n" +
-                   $"      {Description}\n";
-        }
-
-        public virtual BaseTask CreateTask(DateOfTask dto)
-        {
-            return new SimpleTask(dto.title, dto.startingDate, dto.description);
         }
     }
 }
