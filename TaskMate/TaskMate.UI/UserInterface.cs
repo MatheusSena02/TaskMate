@@ -65,5 +65,10 @@ namespace TaskMate.UI
                     break;
             }
         }
+
+        public void DisplayAllTask()
+        {
+
+        }
     }
 }

@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskMate.Core;
 
 namespace TaskMate.UI
 {
-    internal interface IInterfaceUser
+    internal class DeadLineTaskRenderer : ITaskRender
     {
-        int DisplayMenu();
-        void DisplayController();
-        void DisplayAllTask();
+        public void Render(DatesOfTask dto)
+        {
+
+        }
     }
 }

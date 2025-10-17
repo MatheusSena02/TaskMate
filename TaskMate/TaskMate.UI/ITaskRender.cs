@@ -9,6 +9,6 @@ namespace TaskMate.UI
 {
     internal interface ITaskRender
     {
-        void Render(BaseTask task);
+        void Render(DatesOfTask dto);
     }
 }
