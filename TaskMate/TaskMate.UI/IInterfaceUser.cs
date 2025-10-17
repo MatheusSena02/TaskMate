@@ -9,5 +9,6 @@ namespace TaskMate.UI
     internal interface IInterfaceUser
     {
         int DisplayMenu();
+        void DisplayController();
     }
 }
