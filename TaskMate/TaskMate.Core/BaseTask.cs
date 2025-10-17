@@ -50,15 +50,6 @@ namespace TaskMate.Core
             Description = ValidateAndSet(newDescription, nameof(Description));
         }
 
-        public static string ValidateAndSet(string value, string fieldName)
-        {
-            if (String.IsNullOrEmpty(value))
-            {
-                throw new ArgumentNullException($"O campo {fieldName} não pode ser vazio ou nulo");
-            }
-            return value.Trim();
-        }
-
         public void UpdateStartingDate(string newStartingDate)
         {
             var validateStartingDate = DateOnly.TryParseExact(ValidateAndSet(newStartingDate, nameof(StartingDate)), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateOnly isValidStartingDate);
@@ -69,6 +60,15 @@ namespace TaskMate.Core
             {
                 throw new ArgumentException($"Formato inserido é inválido para o campo {nameof(StartingDate)}");
             }
+        }
+
+        public static string ValidateAndSet(string value, string fieldName)
+        {
+            if (String.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException($"O campo {fieldName} não pode ser vazio ou nulo");
+            }
+            return value.Trim();
         }
     }
 }

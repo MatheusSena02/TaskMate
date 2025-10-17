@@ -8,93 +8,46 @@ namespace TaskMate.Core
 {
     public class DeadLineTask : BaseTask
     {
-        private DateOnly _deadLineDate;
-        public DateOnly DeadLineDate
-        {
-            get
-            {
-                return this._deadLineDate;
-            }
-            set
-            {
-                this._deadLineDate = value;
-            }
-        }
+        public DateOnly DeadLineDate { get; set; }
 
         public DeadLineTask(string title, DateOnly startingDate, DateOnly deadLineDate, string description = "") : base(title, startingDate, description)
         {
             if(deadLineDate < startingDate)
             {
-                throw new ArgumentException("Invalid date range: End date precedes start date");
+                throw new ArgumentException("Valor de data inválida : A data de término não pode preceder a data de ínicio da tarefa");
             }
-            if(deadLineDate < DateOnly.FromDateTime(DateTime.Now)){
+            else
+            {
+                this.DeadLineDate = deadLineDate;
+            }
+
+            if(DeadLineDate < DateOnly.FromDateTime(DateTime.Now))
+            {
                 this.TaskStatus = StatusOption.ATRASADA;
             }
             else
             {
                 this.TaskStatus = StatusOption.NAO_INICIADA;
             }
-                this._deadLineDate = deadLineDate;
+
         }
 
         public void SetStartTask()
         {
             this.TaskStatus = StatusOption.EM_PROGRESSO;
         }
-
+        
         public void UpdateDeadLineDate(string newDeadLineDate)
         {
-            if(!String.IsNullOrEmpty(newDeadLineDate))
+            var validateDeadLineDate = DateOnly.TryParseExact(ValidateAndSet(newDeadLineDate, nameof(DeadLineDate)), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateOnly isValidDeadLineDate);
+            if (validateDeadLineDate == true)
             {
-                try
-                {
-                    if(DateOnly.TryParseExact(newDeadLineDate, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateOnly resultDeadLineDate))
-                    {
-                        _deadLineDate = resultDeadLineDate;
-                        if (TaskStatus == StatusOption.ATRASADA && _deadLineDate > DateOnly.FromDateTime(DateTime.Now))
-                        {
-                            TaskStatus = StatusOption.NAO_INICIADA;
-                        }
-                        else if (TaskStatus == StatusOption.EM_PROGRESSO && _deadLineDate > DateOnly.FromDateTime(DateTime.Now))
-                        {
-                            TaskStatus = StatusOption.EM_PROGRESSO;
-                        }
-                    }
-                    else
-                    {
-                        throw new ArgumentException("");
-                    }
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
+                DeadLineDate = isValidDeadLineDate;
             }
-        }
-
-        public override string PrintTask()
-        {
-            string status = TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
-           return $"[ID: {Id}]\n{status} {Title}\n\t- Descrição: {Description}\n\t- (Prazo: {DeadLineDate})";
-        }
-
-        public override string GetDetails()
-        {
-            return $"\n\n-------------------------------------------------\r\n" +
-                   $"            DETALHES DA TAREFA #{Id}" +
-                   $"\n-------------------------------------------------\r\n" +
-                   $"    Título:\t{Title}\n" +
-                   $"    Status:\t{TaskStatus}\n" +
-                   $"    Tipo:\tTarefa com Prazo\n" +
-                   $"    Prazo final:\t{DeadLineDate}\n\n" +
-                   $"    Descrição:\n" +
-                   $"      {Description}\n";
-
-        }
-
-        public override DeadLineTask CreateTask(DateOfTask dto)
-        {
-            return new DeadLineTask(dto.title, dto.startingDate, dto.deadLineDate, dto.description);
+            else
+            {
+                throw new ArgumentException($"Formato inserido é inválido para o campo {nameof(DeadLineDate)}");
+            }
         }
     }
 }
