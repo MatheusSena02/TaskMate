@@ -23,7 +23,7 @@ namespace TaskMate.UI
             Console.WriteLine("  [6] Gerenciar Subtarefas");
             Console.WriteLine("  [7] Ver Histórico de Notificações\n");
             Console.WriteLine("  [0] Sair\n");
-            Console.WriteLine("Digite a sua opção: ");
+            Console.Write("Digite a sua opção: ");
             int selectedOption = Convert.ToInt32(Console.ReadLine());
             if(selectedOption < 0 || selectedOption > 7)
             {
