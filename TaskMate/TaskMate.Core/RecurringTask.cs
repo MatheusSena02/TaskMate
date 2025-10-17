@@ -16,68 +16,46 @@ namespace TaskMate.Core
     }
     public class RecurringTask : BaseTask
     {
-        private RecurringOptions _selectedRecurringDays;
-        public RecurringOptions SelectedRecurringDays
-        {
-            get
-            {
-                return _selectedRecurringDays;
-            }
-            set
-            {
-                _selectedRecurringDays = value;
-            }
-        }
+        public RecurringOptions SelectedRecurringDays { get; set; }
 
         public RecurringTask(string title, DateOnly startingDate, int recurringDays, string description = "") : base(title, startingDate, description)
         {
-            this._selectedRecurringDays = (RecurringOptions)recurringDays;
-        }
-
-        public void UpdateSelectedRecurringDays(int newSelectedRecurringDay) 
-        {
-            if(newSelectedRecurringDay > 0 && newSelectedRecurringDay < 5 && (RecurringOptions)newSelectedRecurringDay != this._selectedRecurringDays)
+            if(recurringDays > 5 || recurringDays < 0)
             {
-                _selectedRecurringDays = (RecurringOptions)newSelectedRecurringDay;
+                throw new ArgumentException("O valor informado para seleção da recorrência da tarefa está fora do escopo possível");
+            }
+            else
+            {
+                this.SelectedRecurringDays = (RecurringOptions)recurringDays;
             }
         }
-
-        public override string PrintTask()
+        public void UpdateSelectedRecurringDays(int newSelectedRecurringDay) 
         {
-            string status = TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
-            return $"[ID: {Id}]\n{status} {Title}\n\t- Descrição: {Description}\n\t- (Recorrência: {SelectedRecurringDays}";
-        }
+            if((RecurringOptions)newSelectedRecurringDay != this.SelectedRecurringDays)
+            {
+                SelectedRecurringDays = (RecurringOptions)ValidateOptionAndSet(newSelectedRecurringDay);
+            }
+            else
+            {
+                Console.WriteLine("A opção selecionada já está selecionada nessa tarefa");
+            }
 
-        public override string GetDetails()
+            if (newSelectedRecurringDay > 0 && newSelectedRecurringDay < 5 && (RecurringOptions)newSelectedRecurringDay != this.SelectedRecurringDays)
+            {
+                SelectedRecurringDays = (RecurringOptions)newSelectedRecurringDay;
+            }
+            else
+            {
+
+            }
+        }
+        public static int ValidateOptionAndSet(int option)
         {
-            return $"\n\n-------------------------------------------------\r\n" +
-                   $"            DETALHES DA TAREFA #{Id}" +
-                   $"\n-------------------------------------------------\r\n" +
-                   $"    Título:\t{Title}\n" +
-                   $"    Status:\t{TaskStatus}\n" +
-                   $"    Tipo:\tTarefa Recorrente\n" +
-                   $"    Recorrência:\t{SelectedRecurringDays}\n\n" +
-                   $"    Descrição:\n" +
-                   $"      {Description}\n";
+            if (option > 5 || option < 0)
+            {
+                throw new ArgumentException("O valor informado para seleção da recorrência da tarefa está fora do escopo possível");
+            }
+            return option;
         }
-
-        //public override BaseTask CreateTask()
-        //{
-        //    Console.WriteLine("\n>> Criando uma nova Tarefa Recorrente...\r\n");
-        //    Console.Write("Digite o título da tarefa: ");
-        //    string titleRecurringTask = Console.ReadLine();
-        //    Console.Write("\nDigite a descrição (opcional): ");
-        //    string descriptionRecurringTask = Console.ReadLine();
-        //    Console.Write("\nDigite a data de início da tarefa: ");
-        //    var startingDateRecurringTask = DateOnly.Parse(Console.ReadLine());
-        //    Console.Write("\n\tSelecione as opções de recorrência da tarefa : \n");
-        //    Console.Write("----------------------------------------------------------------------------------");
-        //    Console.Write("\n  | 1 - Todos os dias | 2 - Apenas dias úteis | 3 - Apenas ao finais de semana |\n");
-        //    Console.Write("\t     | 4 - Segunda, Quarta e Sexta | 5 - Terça e Quinta |\n");
-        //    Console.Write("----------------------------------------------------------------------------------");
-        //    Console.Write("\n\t\t\tDigite a opção: ");
-        //    int selectedRecurringOption = Convert.ToInt16(Console.ReadLine());
-        //    return new RecurringTask(titleRecurringTask, startingDateRecurringTask, selectedRecurringOption, descriptionRecurringTask);
-        //}
     }
 }
