@@ -15,5 +15,7 @@ namespace TaskMate.Core
         void RemoveTask(Guid id);
         void CleanList();
         void CleanSubstaskList(Guid id);
+
+
     }
 }
