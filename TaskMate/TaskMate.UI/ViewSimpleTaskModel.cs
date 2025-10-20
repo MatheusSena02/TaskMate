@@ -9,6 +9,6 @@ namespace TaskMate.UI
 {
     internal class ViewSimpleTaskModel : ViewModel
     {
-        public ViewSimpleTaskModel(SimpleTask Task) : base(Task) { }
+        public ViewSimpleTaskModel(SimpleTask task) : base(task) { }
     }
 }

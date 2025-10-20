@@ -7,19 +7,19 @@ using TaskMate.Core;
 
 namespace TaskMate.UI
 {
-    internal abstract class ViewModel
+    public abstract class ViewModel
     {
-        private readonly string Title = String.Empty;
+        protected string Title = String.Empty;
 
-        private readonly Guid Id;
+        protected Guid Id;
 
-        private readonly StatusOption TaskStatus;
+        protected StatusOption TaskStatus;
 
-        private readonly string Description = String.Empty;
+        protected string Description = String.Empty;
 
-        private readonly DateOnly StartingDate;
+        protected DateOnly StartingDate;
 
-        private readonly List<BaseTask> Substasks = new();
+        protected List<BaseTask> Substasks = new();
 
         public ViewModel(BaseTask task)
         {
@@ -35,6 +35,15 @@ namespace TaskMate.UI
         {
             string taskVerification = TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
             Console.WriteLine($"\n\t[ID: {Id}\n{taskVerification} {Title}\n - Descrição: {Description}");
+            if(Substasks.Count > 0 )
+            {
+                Console.WriteLine("- Subtarefas:");
+                foreach(var subtask in Substasks)
+                {
+                    taskVerification = subtask.TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
+                    Console.WriteLine($"{taskVerification} {Title}");
+                }
+            }
         }
 
         public virtual void GetDetails()
@@ -47,9 +56,10 @@ namespace TaskMate.UI
             Console.WriteLine($"   Status:\t{TaskStatus} {taskVerification}");
             Console.WriteLine($"   Tipo:\tTarefa Simples\n");
             Console.WriteLine($"   Descrição:\n   {Description}.\n");
-            Console.WriteLine($"   Subtarefas:");
+            
             if(Substasks.Count > 0)
             {
+                Console.WriteLine($"   Subtarefas:");
                 for(int i = 0; i < Substasks.Count; i++)
                 {
                     Console.WriteLine($"{i + 1}. {Substasks[i]}");
