@@ -62,7 +62,7 @@ namespace TaskMate.UI
                     //Método para editar uma tarefa
                     break;
                 case 5:
-                    //Método para excluir uma tarefa
+                    DisplayRemoveTask();
                     break;
                 case 6:
                     //Método para gerenciar tarefas
