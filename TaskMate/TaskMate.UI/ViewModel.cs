@@ -7,7 +7,7 @@ using TaskMate.Core;
 
 namespace TaskMate.UI
 {
-    internal class ViewModel
+    internal abstract class ViewModel
     {
         private readonly string Title = String.Empty;
 
