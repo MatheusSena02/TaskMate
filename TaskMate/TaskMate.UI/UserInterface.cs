@@ -77,7 +77,23 @@ namespace TaskMate.UI
 
         public void DisplayAllTask()
         {
-
+            var allTaskList = _repository.GetAllTasks();
+            foreach (var task in allTaskList)
+            {
+                if(task is SimpleTask simpleTask)
+                {
+                    var viewTask = new ViewSimpleTaskModel(simpleTask);
+                    viewTask.PrintTask();
+                }else if(task is DeadLineTask deadLineTask)
+                {
+                    var viewTask = new ViewDeadLineTaskModel(deadLineTask);
+                    viewTask.PrintTask();
+                }else if(task is RecurringTask recurringTask)
+                {
+                    var viewTask = new ViewRecurringTaskModel(recurringTask);
+                    viewTask.PrintTask();
+                }
+            }
         }
     }
 }
