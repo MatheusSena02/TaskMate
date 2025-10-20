@@ -7,7 +7,7 @@ using TaskMate.Core;
 
 namespace TaskMate.UI
 {
-    public class UserInterface : IInterfaceUser, IRepository<BaseTask>
+    public class UserInterface : IInterfaceUser
     {
         private IRepository<BaseTask> _repository;
 
@@ -15,6 +15,7 @@ namespace TaskMate.UI
         {
             _repository = repository;
         }
+
 
         public int DisplayMenu()
         {
@@ -76,6 +77,7 @@ namespace TaskMate.UI
 
         public void DisplayAllTask()
         {
+
         }
     }
 }
