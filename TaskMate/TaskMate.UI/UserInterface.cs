@@ -50,10 +50,10 @@ namespace TaskMate.UI
                     Environment.Exit(0);
                     break;
                 case 1:
-                    //Método para listar todas as tarefas
+                    DisplayAllTask();
                     break;
                 case 2:
-                    //Método para ver detalhes da tarefa
+                    
                     break;
                 case 3:
                     //Método para criar um nova tarefa
@@ -93,6 +93,33 @@ namespace TaskMate.UI
                     var viewTask = new ViewRecurringTaskModel(recurringTask);
                     viewTask.PrintTask();
                 }
+            }
+        }
+
+        public void DisplayGetDetails()
+        {
+            Console.Write("Digite o ID da tarefa para ver os detalhes: ");
+            string searchId = Console.ReadLine();
+            var searchTask = _repository.GetTaskById(Guid.Parse(searchId));
+            if(searchTask != null)
+            {
+                if (searchTask is SimpleTask simpleTask)
+                {
+                    var viewTask = new ViewSimpleTaskModel(simpleTask);
+                    viewTask.GetDetails();
+                }else if(searchTask is DeadLineTask deadLineTask)
+                {
+                    var viewTask = new ViewDeadLineTaskModel(deadLineTask);
+                    viewTask.GetDetails();
+                }else if(searchTask is RecurringTask recurringTask)
+                {
+                    var viewTask = new ViewRecurringTaskModel(recurringTask);
+                    viewTask.GetDetails();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Id inválido : O id digitado não corresponde a uma tarefa existente");
             }
         }
     }

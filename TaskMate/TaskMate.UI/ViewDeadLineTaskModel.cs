@@ -19,7 +19,7 @@ namespace TaskMate.UI
         public override void PrintTask()
         {
             string taskVerification = TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
-            Console.WriteLine($"\n\t[ID: {Id}\n{taskVerification} {Title}\n - Descrição: {Description}\n - (Prazo: {DeadLineDate})");
+            Console.WriteLine($"\n  [ID: {Id}]\n{taskVerification} {Title}\n    - Descrição: {Description}\n    - (Prazo: {DeadLineDate})");
             if (Substasks.Count > 0)
             {
                 Console.WriteLine("- Subtarefas:");
