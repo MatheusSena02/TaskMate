@@ -45,12 +45,12 @@ namespace TaskMate.UI
         {
             string taskVerification = TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
             string convertedSelectedOption = convertedOptions[SelectedRecurringDay];
-            Console.WriteLine("-------------------------------------------------\r");
-            Console.WriteLine($"            DETALHES DA TAREFA #{Id}");
-            Console.WriteLine("-------------------------------------------------\r");
+            Console.WriteLine("\n--------------------------------------------------------\r");
+            Console.WriteLine($"DETALHES DA TAREFA #{Id}");
+            Console.WriteLine("--------------------------------------------------------\r");
             Console.WriteLine($"   Título:\t{Title}");
             Console.WriteLine($"   Status:\t{TaskStatus} {taskVerification}");
-            Console.WriteLine($"   Tipo:\tTarefa Simples\n");
+            Console.WriteLine($"   Tipo:\tTarefa Recorrente\n");
             Console.WriteLine($"   Recorrência:\t{convertedSelectedOption}\n");
             Console.WriteLine($"   Descrição:\n   {Description}.\n");
 

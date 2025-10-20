@@ -34,12 +34,12 @@ namespace TaskMate.UI
         public override void GetDetails()
         {
             string taskVerification = TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
-            Console.WriteLine("-------------------------------------------------\r");
-            Console.WriteLine($"            DETALHES DA TAREFA #{Id}");
-            Console.WriteLine("-------------------------------------------------\r");
+            Console.WriteLine("\n--------------------------------------------------------\r");
+            Console.WriteLine($"DETALHES DA TAREFA #{Id}");
+            Console.WriteLine("--------------------------------------------------------\r");
             Console.WriteLine($"   Título:\t{Title}");
             Console.WriteLine($"   Status:\t{TaskStatus} {taskVerification}");
-            Console.WriteLine($"   Tipo:\tTarefa Simples\n");
+            Console.WriteLine($"   Tipo:\tTarefa com Prazo\n");
             Console.WriteLine($"   Prazo:\t{DeadLineDate}\n");
             Console.WriteLine($"   Descrição:\n   {Description}.\n");
 

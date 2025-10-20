@@ -53,7 +53,7 @@ namespace TaskMate.UI
                     DisplayAllTask();
                     break;
                 case 2:
-                    
+                    DisplayGetDetails();
                     break;
                 case 3:
                     //Método para criar um nova tarefa
@@ -77,6 +77,7 @@ namespace TaskMate.UI
 
         public void DisplayAllTask()
         {
+            Console.WriteLine("\n------------------------------------------------------------------");
             var allTaskList = _repository.GetAllTasks();
             foreach (var task in allTaskList)
             {
@@ -94,11 +95,12 @@ namespace TaskMate.UI
                     viewTask.PrintTask();
                 }
             }
+            Console.WriteLine("\n------------------------------------------------------------------\n");
         }
 
         public void DisplayGetDetails()
         {
-            Console.Write("Digite o ID da tarefa para ver os detalhes: ");
+            Console.Write("\nDigite o ID da tarefa para ver os detalhes: ");
             string searchId = Console.ReadLine();
             var searchTask = _repository.GetTaskById(Guid.Parse(searchId));
             if(searchTask != null)
@@ -118,6 +120,22 @@ namespace TaskMate.UI
                 }
             }
             else
+            {
+                Console.WriteLine("Id inválido : O id digitado não corresponde a uma tarefa existente");
+            }
+        }
+
+        public void DisplayRemoveTask()
+        {
+            Console.Write("Digite o ID da tarefa que deseja excluir: ");
+            var searchId = Console.ReadLine();
+            var searchTask = _repository.GetTaskById(Guid.Parse(searchId));
+            if(searchTask != null)
+            {
+                Console.Write($"Você tem certeza que deseja excluir a tarefa {searchTask.Title}? (S/N): ");
+                char selectedOption = Convert.ToChar(Console.ReadLine());  
+                _repository.RemoveTask(Guid.Parse(searchId));
+            }else
             {
                 Console.WriteLine("Id inválido : O id digitado não corresponde a uma tarefa existente");
             }
