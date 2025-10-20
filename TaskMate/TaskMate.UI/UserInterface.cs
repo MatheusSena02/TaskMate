@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskMate.Core;
 
 namespace TaskMate.UI
 {
-    public class UserInterface : IInterfaceUser
+    public class UserInterface : IInterfaceUser, IRepository<BaseTask>
     {
+        private IRepository<BaseTask> _repository;
+
+        public UserInterface(IRepository<BaseTask> repository)
+        {
+            _repository = repository;
+        }
+
         public int DisplayMenu()
         {
             Console.WriteLine("\t   Tela Principal");
@@ -68,7 +76,6 @@ namespace TaskMate.UI
 
         public void DisplayAllTask()
         {
-
         }
     }
 }
