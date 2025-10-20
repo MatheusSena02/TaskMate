@@ -7,38 +7,33 @@ using TaskMate.Core;
 
 namespace TaskMate.UI
 {
-    internal abstract class ViewModel
+    internal class ViewRecurringTaskModel : ViewModel
     {
-        protected string Title = String.Empty;
+        private RecurringOptions SelectedRecurringDay;
 
-        protected Guid Id;
-
-        protected StatusOption TaskStatus;
-
-        protected string Description = String.Empty;
-
-        protected DateOnly StartingDate;
-
-        protected List<BaseTask> Substasks = new();
-
-        public ViewModel(BaseTask task)
+        private Dictionary<RecurringOptions, string> convertedOptions = new()
         {
-            this.Title = task.Title; 
-            this.Id = task.Id;
-            this.TaskStatus = task.TaskStatus; 
-            this.Description = task.Description; 
-            this.StartingDate = task.StartingDate;
-            Substasks.AddRange(task.SubtasksList);
+            {RecurringOptions.SEGUNDA_QUARTA_SEXTA, "Apenas Segunda, Quarta e Sexta" },
+            {RecurringOptions.APENAS_DIAS_UTEIS, "Apenas dias úteis" },
+            {RecurringOptions.TODOS_OS_DIAS, "Todos os dias" },
+            {RecurringOptions.TERCA_QUINTA, "Apenas Terça e Quinta" },
+            {RecurringOptions.APENAS_FINAL_DE_SEMANA, "Apenas aos finais de semana" }
+        };
+
+        public ViewRecurringTaskModel(RecurringTask task) : base(task)
+        {
+            this.SelectedRecurringDay = task.SelectedRecurringDays;
         }
 
-        public virtual void PrintTask()
+        public override void PrintTask()
         {
             string taskVerification = TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
-            Console.WriteLine($"\n\t[ID: {Id}\n{taskVerification} {Title}\n - Descrição: {Description}");
-            if(Substasks.Count > 0 )
+            string convertedSelectedOption = convertedOptions[SelectedRecurringDay];
+            Console.WriteLine($"\n\t[ID: {Id}\n{taskVerification} {Title}\n - Descrição: {Description}\n - Recorrência: {convertedSelectedOption})");
+            if (Substasks.Count > 0)
             {
                 Console.WriteLine("- Subtarefas:");
-                foreach(var subtask in Substasks)
+                foreach (var subtask in Substasks)
                 {
                     taskVerification = subtask.TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
                     Console.WriteLine($"{taskVerification} {Title}");
@@ -46,21 +41,23 @@ namespace TaskMate.UI
             }
         }
 
-        public virtual void GetDetails()
+        public override void GetDetails()
         {
             string taskVerification = TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
+            string convertedSelectedOption = convertedOptions[SelectedRecurringDay];
             Console.WriteLine("-------------------------------------------------\r");
             Console.WriteLine($"            DETALHES DA TAREFA #{Id}");
             Console.WriteLine("-------------------------------------------------\r");
             Console.WriteLine($"   Título:\t{Title}");
             Console.WriteLine($"   Status:\t{TaskStatus} {taskVerification}");
             Console.WriteLine($"   Tipo:\tTarefa Simples\n");
+            Console.WriteLine($"   Recorrência:\t{convertedSelectedOption}\n");
             Console.WriteLine($"   Descrição:\n   {Description}.\n");
-            
-            if(Substasks.Count > 0)
+
+            if (Substasks.Count > 0)
             {
                 Console.WriteLine($"   Subtarefas:");
-                for(int i = 0; i < Substasks.Count; i++)
+                for (int i = 0; i < Substasks.Count; i++)
                 {
                     Console.WriteLine($"{i + 1}. {Substasks[i]}");
                 }

@@ -13,13 +13,22 @@ namespace TaskMate.UI
 
         public ViewDeadLineTaskModel(DeadLineTask task) :base(task)
         {
-            DeadLineDate = task.DeadLineDate;
+            this.DeadLineDate = task.DeadLineDate;
         }
 
         public override void PrintTask()
         {
             string taskVerification = TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
-            Console.WriteLine($"\n\t[ID: {Id}\n{taskVerification} {Title}\n - Descrição: {Description}\n - (Prazo: {DeadLineDate}");
+            Console.WriteLine($"\n\t[ID: {Id}\n{taskVerification} {Title}\n - Descrição: {Description}\n - (Prazo: {DeadLineDate})");
+            if (Substasks.Count > 0)
+            {
+                Console.WriteLine("- Subtarefas:");
+                foreach (var subtask in Substasks)
+                {
+                    taskVerification = subtask.TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
+                    Console.WriteLine($"{taskVerification} {Title}");
+                }
+            }
         }
 
         public override void GetDetails()
