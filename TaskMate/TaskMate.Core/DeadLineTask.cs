@@ -12,26 +12,14 @@ namespace TaskMate.Core
 
         public DeadLineTask(string title, string startingDate, string deadLineDate, string description = "") : base(title, startingDate, description)
         {
-            if (String.IsNullOrEmpty(deadLineDate))
+            if(ValidateDate(deadLineDate) < ValidateDate(startingDate))
             {
-                throw new ArgumentNullException(nameof(deadLineDate), "O campo 'deadLineDate' não pode ser nulo ou vazio");
+                throw new ArgumentException("Lógica inválida: A data de término não pode ser anterior a data de início");
             }
 
-            var validationDate = DateOnly.TryParseExact(deadLineDate, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateOnly isValidDeadLineDate);
-            if(validationDate != true)
-            {
-                throw new ArgumentException("´Formato de data inválido : Digite novamente para um valor de data que corresponda à formatação adequada");
-            }
-            if (deadLineDate < startingDate)
-            {
-                throw new ArgumentException("Valor de data inválida : A data de término não pode preceder a data de ínicio da tarefa");
-            }
-            else
-            {
-                this.DeadLineDate = deadLineDate;
-            }
+            this.DeadLineDate = ValidateDate(ValidateAndSet(deadLineDate);
 
-            if(DeadLineDate < DateOnly.FromDateTime(DateTime.Now))
+            if (DeadLineDate < DateOnly.FromDateTime(DateTime.Now))
             {
                 this.TaskStatus = StatusOption.ATRASADA;
             }
@@ -49,14 +37,9 @@ namespace TaskMate.Core
         
         public void UpdateDeadLineDate(string newDeadLineDate)
         {
-            var validateDeadLineDate = DateOnly.TryParseExact(ValidateAndSet(newDeadLineDate, nameof(DeadLineDate)), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateOnly isValidDeadLineDate);
-            if (validateDeadLineDate == true)
+            if(!String.IsNullOrEmpty(newDeadLineDate))
             {
-                DeadLineDate = isValidDeadLineDate;
-            }
-            else
-            {
-                throw new ArgumentException($"Formato inserido é inválido para o campo {nameof(DeadLineDate)}");
+                this.DeadLineDate = ValidateDate(newDeadLineDate);
             }
         }
     }

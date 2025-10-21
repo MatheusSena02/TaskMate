@@ -20,42 +20,20 @@ namespace TaskMate.Core
 
         public RecurringTask(string title, DateOnly startingDate, int recurringDays, string description = "") : base(title, startingDate, description)
         {
-            if(recurringDays > 5 || recurringDays < 0)
-            {
-                throw new ArgumentException("O valor informado para seleção da recorrência da tarefa está fora do escopo possível");
-            }
-            else
-            {
-                this.SelectedRecurringDays = (RecurringOptions)recurringDays;
-            }
+            this.SelectedRecurringDays = (RecurringOptions)ValidateOptionAndSet(recurringDays);
         }
         public void UpdateSelectedRecurringDays(int newSelectedRecurringDay) 
         {
-            if((RecurringOptions)newSelectedRecurringDay != this.SelectedRecurringDays)
+            if(newSelectedRecurringDay < 0 || newSelectedRecurringDay > 5)
             {
-                SelectedRecurringDays = (RecurringOptions)ValidateOptionAndSet(newSelectedRecurringDay);
-            }
-            else
+                throw new ArgumentException("Valor inválido : O valor inserido está fora do escopo de opções possíveis");
+            }else if((RecurringOptions)newSelectedRecurringDay == SelectedRecurringDays)
             {
-                Console.WriteLine("A opção selecionada já está selecionada nessa tarefa");
-            }
-
-            if (newSelectedRecurringDay > 0 && newSelectedRecurringDay < 5 && (RecurringOptions)newSelectedRecurringDay != this.SelectedRecurringDays)
+                Console.WriteLine("\nA opção selecionada já está habilitada na tarefa");
+            }else
             {
                 SelectedRecurringDays = (RecurringOptions)newSelectedRecurringDay;
             }
-            else
-            {
-
-            }
-        }
-        public static int ValidateOptionAndSet(int option)
-        {
-            if (option > 5 || option < 0)
-            {
-                throw new ArgumentException("O valor informado para seleção da recorrência da tarefa está fora do escopo possível");
-            }
-            return option;
         }
     }
 }

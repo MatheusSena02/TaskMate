@@ -30,21 +30,8 @@ namespace TaskMate.Core
 
         public BaseTask(string title, string startingDate, string description = "")
         {
-            if (String.IsNullOrEmpty(title))
-            {
-                throw new ArgumentException("O campo 'title' não pode ter valor nulo ou vazio");
-            }
-            if(String.IsNullOrEmpty(startingDate))
-            {
-                throw new ArgumentException("O campo 'starting date' não pode ser vazio ou nulo");
-            }
-            var validationDate = DateOnly.TryParseExact(startingDate, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateOnly isValidDate);
-            if (validationDate != true)
-            {
-                throw new ArgumentException("´Formato de data inválido : Digite novamente para um valor de data que corresponda à formatação adequada");
-            }
-            this.Title = title;
-            this.StartingDate = isValidDate;
+            this.Title = ValidateAndSet(title);
+            this.StartingDate = ValidateDate(ValidateAndSet(startingDate));
             this.Description = description;
         }
 
@@ -55,31 +42,42 @@ namespace TaskMate.Core
 
         public void UpdateTitle(string newTitle)
         {
-            Title = ValidateAndSet(newTitle, nameof(Title));
+           if(!String.IsNullOrEmpty(newTitle))
+            {
+                this.Title = newTitle;
+            }
         }
 
         public void UpdateDescription(string newDescription)
         {
-            Description = ValidateAndSet(newDescription, nameof(Description));
+            if(!String.IsNullOrEmpty(newDescription))
+            {
+                this.Description = newDescription;
+            }
         }
 
         public void UpdateStartingDate(string newStartingDate)
         {
-            var validateStartingDate = DateOnly.TryParseExact(ValidateAndSet(newStartingDate, nameof(StartingDate)), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateOnly isValidStartingDate);
-            if(validateStartingDate == true)
+            if (!String.IsNullOrEmpty(newStartingDate))
             {
-                StartingDate = isValidStartingDate;
-            }else
-            {
-                throw new ArgumentException($"Formato inserido é inválido para o campo {nameof(StartingDate)}");
+                var validateStartingDate = DateOnly.TryParseExact(ValidateAndSet(newStartingDate), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateOnly isValidStartingDate);
+                if (validateStartingDate == true)
+                {
+                    this.StartingDate = isValidStartingDate;
+                }
+                else
+                {
+                    throw new ArgumentException($"Formato inserido é inválido para o campo {nameof(StartingDate)}");
+
+                }
             }
         }
 
-        public static string ValidateAndSet(string value, string fieldName)
+        public static string ValidateAndSet(string value)
         {
             if (String.IsNullOrEmpty(value))
             {
-                throw new ArgumentNullException($"O campo {fieldName} não pode ser vazio ou nulo");
+                throw new ArgumentNullException($"O campo {nameof(value)} não pode ser vazio ou nulo");
             }
             return value.Trim();
         }
@@ -87,20 +85,13 @@ namespace TaskMate.Core
         public static DateOnly ValidateDate(string date)
         {
             var validationDate = DateOnly.TryParseExact(date, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateOnly isValidDate);
+            
             if(validationDate != true)
             {
                 throw new ArgumentNullException($"Formato de data inválido: O campo {nameof(date)} não pode ser criado");
             }
             return isValidDate;
         }
-
-        public static string IsNullOrEmpty(string value)
-        {
-            if (String.IsNullOrEmpty(value))
-            {
-                throw new ArgumentException($"O campo {nameof(value)} não pode ser vazio ou nulo");
-            }
-            return value;
         }
     }
 }
