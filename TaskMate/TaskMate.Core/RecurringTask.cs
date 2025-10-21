@@ -18,22 +18,29 @@ namespace TaskMate.Core
     {
         public RecurringOptions SelectedRecurringDays { get; set; }
 
-        public RecurringTask(string title, DateOnly startingDate, int recurringDays, string description = "") : base(title, startingDate, description)
+        public RecurringTask(string title, string startingDate, int recurringDays, string description = "") : base(title, startingDate, description)
         {
             this.SelectedRecurringDays = (RecurringOptions)ValidateOptionAndSet(recurringDays);
         }
         public void UpdateSelectedRecurringDays(int newSelectedRecurringDay) 
         {
-            if(newSelectedRecurringDay < 0 || newSelectedRecurringDay > 5)
-            {
-                throw new ArgumentException("Valor inválido : O valor inserido está fora do escopo de opções possíveis");
-            }else if((RecurringOptions)newSelectedRecurringDay == SelectedRecurringDays)
+            if((RecurringOptions)newSelectedRecurringDay == SelectedRecurringDays)
             {
                 Console.WriteLine("\nA opção selecionada já está habilitada na tarefa");
-            }else
-            {
-                SelectedRecurringDays = (RecurringOptions)newSelectedRecurringDay;
             }
+            else
+            {
+                this.SelectedRecurringDays = (RecurringOptions)ValidateOptionAndSet(newSelectedRecurringDay);
+            }
+        }
+
+        public int ValidateOptionAndSet(int option)
+        {
+            if(option < 0 || option > 5)
+            {
+                throw new ArgumentException("Valor inválido : O valor inserido está fora do escopo de opções possíveis");
+            }
+            return option;
         }
     }
 }
