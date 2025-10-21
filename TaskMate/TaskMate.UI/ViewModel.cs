@@ -66,18 +66,5 @@ namespace TaskMate.UI
                 }
             }
         }
-
-        public virtual BaseTask CreateTask()
-        {
-            Console.WriteLine("\n>> Criando uma nova Tarefa Simples...\n");
-            Console.Write("Digite o título da tarefa: ");
-            string taskTitle = BaseTask.ValidateAndSet(Console.ReadLine());
-            Console.Write("\nDigite a descrição (opcional): ");
-            string taskDescription = Console.ReadLine();
-            Console.Write("Digite a data de início (dd/mm/aaaa): ");
-            var taskStartingDate = BaseTask.ValidateAndSet(Console.ReadLine());
-            Console.WriteLine($"\nTarefa Simples \"{taskTitle}\" criada com sucesso!");
-            return new SimpleTask(taskTitle, taskStartingDate, taskDescription);
-        }
     }
 }

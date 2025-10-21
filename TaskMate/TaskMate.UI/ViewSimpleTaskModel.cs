@@ -11,7 +11,7 @@ namespace TaskMate.UI
     {
         public ViewSimpleTaskModel(SimpleTask task) : base(task) { }
 
-        public override SimpleTask CreateTask()
+        public static SimpleTask CreateTask()
         {
             Console.WriteLine("\n>> Criando uma nova Tarefa Simples...\n");
             Console.Write("Digite o título da tarefa: ");

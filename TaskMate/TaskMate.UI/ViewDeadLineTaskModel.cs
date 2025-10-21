@@ -53,7 +53,7 @@ namespace TaskMate.UI
             }
         }
 
-        public override DeadLineTask CreateTask()
+        public static DeadLineTask CreateTask()
         {
             Console.WriteLine("\n>> Criando uma nova Tarefa com Prazo...\n");
             Console.Write("Digite o título da tarefa: ");

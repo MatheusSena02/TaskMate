@@ -17,7 +17,7 @@ namespace TaskMate.Core
                 throw new ArgumentException("Lógica inválida: A data de término não pode ser anterior a data de início");
             }
 
-            this.DeadLineDate = ValidateDate(ValidateAndSet(deadLineDate);
+            this.DeadLineDate = ValidateDate(ValidateAndSet(deadLineDate));
 
             if (DeadLineDate < DateOnly.FromDateTime(DateTime.Now))
             {

@@ -56,7 +56,7 @@ namespace TaskMate.UI
                     DisplayGetDetails();
                     break;
                 case 3:
-                    //Método para criar um nova tarefa
+                    DisplayCreateTask();
                     break;
                 case 4:
                     //Método para editar uma tarefa
@@ -125,6 +125,30 @@ namespace TaskMate.UI
             }
         }
 
+        public void DisplayCreateTask()
+        {
+            Console.WriteLine("Qual tipo de tarefa você deseja criar?");
+            Console.WriteLine("  [1] Tarefa Simples");
+            Console.WriteLine("  [2] Tarefa com Prazo");
+            Console.WriteLine("  [3] Tarefa Recorrente\n");
+            Console.Write("Digite a sua opção : ");
+            int selectedOption = Convert.ToInt32(Console.ReadLine());  
+            switch(selectedOption)
+            {
+                case 1:
+                    _repository.AddTask(ViewSimpleTaskModel.CreateTask());
+                    break;
+                case 2:
+                    _repository.AddTask(ViewDeadLineTaskModel.CreateTask());
+                    break;
+                case 3:
+                    _repository.AddTask(ViewRecurringTaskModel.CreateTask());
+                    break;
+                default:
+                    throw new ArgumentException("Valor inválido: O valor inserido está fora do escopo possível");
+            }
+        }
+
         public void DisplayRemoveTask()
         {
             Console.Write("Digite o ID da tarefa que deseja excluir: ");
@@ -134,7 +158,11 @@ namespace TaskMate.UI
             {
                 Console.Write($"Você tem certeza que deseja excluir a tarefa {searchTask.Title}? (S/N): ");
                 char selectedOption = Convert.ToChar(Console.ReadLine());  
-                _repository.RemoveTask(Guid.Parse(searchId));
+                if(Char.ToUpper(selectedOption) == 'S')
+                {
+                    _repository.RemoveTask(Guid.Parse(searchId));
+                    Console.WriteLine($"\nTarefa \"{searchTask.Title}\" removida com sucesso!");
+                }
             }else
             {
                 Console.WriteLine("Id inválido : O id digitado não corresponde a uma tarefa existente");
