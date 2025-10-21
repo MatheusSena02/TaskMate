@@ -8,7 +8,7 @@ namespace TaskMate.Core
 {
     public class SimpleTask : BaseTask
     {
-        public SimpleTask(string title, DateOnly startingDate, string description = "") : base(title, startingDate, description)
+        public SimpleTask(string title, string startingDate, string description = "") : base(title, startingDate, description)
         {
         }
     }

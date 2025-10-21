@@ -28,10 +28,23 @@ namespace TaskMate.Core
 
         public DateOnly StartingDate { get; set; }
 
-        public BaseTask(string title, DateOnly startingDate, string description = "")
+        public BaseTask(string title, string startingDate, string description = "")
         {
+            if (String.IsNullOrEmpty(title))
+            {
+                throw new ArgumentException("O campo 'title' não pode ter valor nulo ou vazio");
+            }
+            if(String.IsNullOrEmpty(startingDate))
+            {
+                throw new ArgumentException("O campo 'starting date' não pode ser vazio ou nulo");
+            }
+            var validationDate = DateOnly.TryParseExact(startingDate, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateOnly isValidDate);
+            if (validationDate != true)
+            {
+                throw new ArgumentException("´Formato de data inválido : Digite novamente para um valor de data que corresponda à formatação adequada");
+            }
             this.Title = title;
-            this.StartingDate = startingDate;
+            this.StartingDate = isValidDate;
             this.Description = description;
         }
 
@@ -69,6 +82,16 @@ namespace TaskMate.Core
                 throw new ArgumentNullException($"O campo {fieldName} não pode ser vazio ou nulo");
             }
             return value.Trim();
+        }
+
+        public static DateOnly ValidateDate(string date, string fieldName)
+        {
+            var validationDate = DateOnly.TryParseExact(date, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateOnly isValidDate);
+            if(validationDate != true)
+            {
+                throw new ArgumentNullException($"Formato de data inválido: O campo {nameof(date)} não pode ser criado");
+            }
+            return isValidDate;
         }
     }
 }

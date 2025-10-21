@@ -76,11 +76,12 @@ namespace TaskMate.UI
             string taskDescription = Console.ReadLine();
             Console.Write("Digite a data de vencimento (dd/mm/aaaa): ");
             var taskStartingDate = DateOnly.TryParseExact(Console.ReadLine(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateOnly isValidStartingDate);
-            if(taskStartingDate == true)
+            if(taskStartingDate != true)
             {
-                Console.WriteLine($"\nTarefa Simples \"{taskTitle}\" criada com sucesso!");
-                return new SimpleTask(taskTitle, isValidStartingDate, taskDescription);
+                throw new ArgumentException("´Formato de data inválido : Digite novamente para um valor de data que corresponda à formatação adequada");
             }
+            Console.WriteLine($"\nTarefa Simples \"{taskTitle}\" criada com sucesso!");
+            return new SimpleTask(taskTitle, isValidStartingDate, taskDescription);
         }
     }
 }

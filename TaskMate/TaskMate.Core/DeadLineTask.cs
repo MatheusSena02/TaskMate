@@ -10,9 +10,19 @@ namespace TaskMate.Core
     {
         public DateOnly DeadLineDate { get; set; }
 
-        public DeadLineTask(string title, DateOnly startingDate, DateOnly deadLineDate, string description = "") : base(title, startingDate, description)
+        public DeadLineTask(string title, string startingDate, string deadLineDate, string description = "") : base(title, startingDate, description)
         {
-            if(deadLineDate < startingDate)
+            if (String.IsNullOrEmpty(deadLineDate))
+            {
+                throw new ArgumentNullException(nameof(deadLineDate), "O campo 'deadLineDate' não pode ser nulo ou vazio");
+            }
+
+            var validationDate = DateOnly.TryParseExact(deadLineDate, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateOnly isValidDeadLineDate);
+            if(validationDate != true)
+            {
+                throw new ArgumentException("´Formato de data inválido : Digite novamente para um valor de data que corresponda à formatação adequada");
+            }
+            if (deadLineDate < startingDate)
             {
                 throw new ArgumentException("Valor de data inválida : A data de término não pode preceder a data de ínicio da tarefa");
             }
