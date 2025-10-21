@@ -84,7 +84,7 @@ namespace TaskMate.Core
             return value.Trim();
         }
 
-        public static DateOnly ValidateDate(string date, string fieldName)
+        public static DateOnly ValidateDate(string date)
         {
             var validationDate = DateOnly.TryParseExact(date, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateOnly isValidDate);
             if(validationDate != true)
@@ -92,6 +92,15 @@ namespace TaskMate.Core
                 throw new ArgumentNullException($"Formato de data inválido: O campo {nameof(date)} não pode ser criado");
             }
             return isValidDate;
+        }
+
+        public static string IsNullOrEmpty(string value)
+        {
+            if (String.IsNullOrEmpty(value))
+            {
+                throw new ArgumentException($"O campo {nameof(value)} não pode ser vazio ou nulo");
+            }
+            return value;
         }
     }
 }
