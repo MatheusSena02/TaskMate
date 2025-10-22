@@ -13,5 +13,7 @@ namespace TaskMate.Core
         void AddTask(T item);
         void RemoveTask(Guid id);
         void CleanList();
+
+        void UpdateTask(T task);
     }
 }

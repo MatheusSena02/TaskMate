@@ -57,7 +57,7 @@ namespace TaskMate.UI
                     DisplayCreateTask();
                     break;
                 case 4:
-                    //Método para editar uma tarefa
+                    DisplayUpdateTask();
                     break;
                 case 5:
                     DisplayRemoveTask();
@@ -171,7 +171,7 @@ namespace TaskMate.UI
             }
         }
 
-        public void UpdateTask()
+        public void DisplayUpdateTask()
         {
             Console.Write("\nDigite o Id da tarefa que deseja editar : ");
             var searchTask = _repository.GetTaskById(Guid.Parse(Console.ReadLine()));
@@ -181,6 +181,7 @@ namespace TaskMate.UI
                 Console.WriteLine("  [1] Título");
                 Console.WriteLine("  [2] Descrição");
                 Console.WriteLine("  [3] Data de Início");
+                Console.WriteLine("  [4] Marcar tarefa como \"Concluída\"\n");
                 int selectedOption = Convert.ToInt32(Console.ReadLine()); 
                 switch(selectedOption)
                 {
@@ -210,6 +211,9 @@ namespace TaskMate.UI
                         {
                             searchTask.UpdateStartingDate(newStartingdate);
                         }
+                        break;
+                    case 4:
+                        TaskCompleted.MarkTaskAsCompleted(searchTask);
                         break;
                     default:
                         throw new ArgumentException("Valor inválido: O valor inserido está fora do escopo possível");
