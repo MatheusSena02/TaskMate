@@ -13,6 +13,16 @@ namespace TaskMate.UI
         public UserInterface(IRepository<BaseTask> repository)
         {
             _repository = repository;
+            TaskCompleted.OnCompleted += (task) =>
+            {
+                task.MarkAsComplete();
+                _repository.UpdateTask(task);
+            };
+        }
+
+        private void TaskCompleted_OnCompleted()
+        {
+            throw new NotImplementedException();
         }
 
         public int DisplayMenu()
@@ -189,7 +199,7 @@ namespace TaskMate.UI
                         Console.WriteLine($"\nTítulo atual da tarefa : {searchTask.Title}");
                         Console.Write("Novo Título da tarefa (deixe em branco para não alterar) : ");
                         string? newTitle = Console.ReadLine();
-                        if (string.IsNullOrEmpty(newTitle))
+                        if (!string.IsNullOrEmpty(newTitle))
                         {
                             searchTask.UpdateTitle(newTitle);
                         }
@@ -198,16 +208,16 @@ namespace TaskMate.UI
                         Console.WriteLine($"\nDescrição atual da tarefa : {searchTask.Description}");
                         Console.Write("Nova Descrição da tarefa (deixe em branco para não alterar) : ");
                         string? newDescription = Console.ReadLine();
-                        if (string.IsNullOrEmpty(newDescription))
+                        if (!string.IsNullOrEmpty(newDescription))
                         {
-                            searchTask.UpdateTitle(newDescription);
+                            searchTask.UpdateDescription(newDescription);
                         }
                         break;
                     case 3:
                         Console.WriteLine($"\nData de Início atual da tarefa : {searchTask.StartingDate}");
                         Console.Write("Nova Data de Início da tarefa (deixe em branco para não alterar) : ");
                         string? newStartingdate = Console.ReadLine();
-                        if (string.IsNullOrEmpty(newStartingdate))
+                        if (!string.IsNullOrEmpty(newStartingdate))
                         {
                             searchTask.UpdateStartingDate(newStartingdate);
                         }
@@ -218,7 +228,7 @@ namespace TaskMate.UI
                     default:
                         throw new ArgumentException("Valor inválido: O valor inserido está fora do escopo possível");
                 }
-
+                _repository.UpdateTask(searchTask);
             }
         }
 

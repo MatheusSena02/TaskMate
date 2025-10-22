@@ -49,13 +49,15 @@ namespace TaskMate.Infrastructure
             TaskList.Clear();
         }
 
-        public void UpdateTask(T task, Guid id)
+        public void UpdateTask(T task)
         {
-            var searchTask = TaskList.FirstOrDefault(task => task.Id == id);
-            var indexSarchTask = TaskList.IndexOf(searchTask);
-            if(indexSarchTask == -1)
+            for(int i = 0; i < TaskList.Count; i++)
             {
-                TaskList[indexSarchTask] = task;
+                if (TaskList[i].Id == task.Id)
+                {
+                    TaskList[i] = task;
+                    break;
+                }
             }
         }
     }
