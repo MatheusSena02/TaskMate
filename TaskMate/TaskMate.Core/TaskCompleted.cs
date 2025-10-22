@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace TaskMate.Core
 {
     public delegate void CmopletedTask();
-    public class TaskCompleted
+    internal class TaskCompleted
     {
-        public static event CmopletedTask? OnCompleted;
+        public event CmopletedTask? OnCompleted;
 
-        public static void MarkTaskAsCompleted(BaseTask task)
+        public void MarkTaskAsCompleted(BaseTask task)
         {
             Console.WriteLine($"Tarefa \"{task.Title}\" marcada como concluída!");
             if( OnCompleted != null )

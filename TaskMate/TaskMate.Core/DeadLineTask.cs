@@ -37,10 +37,7 @@ namespace TaskMate.Core
         
         public void UpdateDeadLineDate(string newDeadLineDate)
         {
-            if(!String.IsNullOrEmpty(newDeadLineDate))
-            {
-                this.DeadLineDate = ValidateDate(newDeadLineDate);
-            }
+            this.DeadLineDate = ValidateDate(ValidateAndSet(newDeadLineDate));
         }
     }
 }
