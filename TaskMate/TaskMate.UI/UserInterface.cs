@@ -10,7 +10,6 @@ namespace TaskMate.UI
     public class UserInterface : IInterfaceUser
     {
         private IRepository<BaseTask> _repository;
-
         public UserInterface(IRepository<BaseTask> repository)
         {
             _repository = repository;
