@@ -16,7 +16,6 @@ namespace TaskMate.UI
             _repository = repository;
         }
 
-
         public int DisplayMenu()
         {
             Console.WriteLine("\t   Tela Principal");
@@ -71,7 +70,7 @@ namespace TaskMate.UI
                     //Método para ver histórico de notificações
                     break;
                 default:
-                    break;
+                    throw new ArgumentException("Valor inválido: O valor inserido está fora do escopo possível");
             }
         }
 

@@ -11,5 +11,9 @@ namespace TaskMate.UI
         int DisplayMenu();
         void DisplayController();
         void DisplayAllTask();
+        void DisplayCreateTask();
+        void DisplayRemoveTask();
+
+
     }
 }
