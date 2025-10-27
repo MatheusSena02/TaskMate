@@ -19,10 +19,6 @@ namespace TaskMate.Infrastructure
         public T GetTaskById(Guid id)
         {
             var requestTask = TaskList.FirstOrDefault(x => x.Id == id);
-            if(requestTask == null)
-            {
-                throw new ArgumentException("Não foi possível encontrar uma tarefa correspondente ao ID informado");
-            }
             return requestTask;
         }
 

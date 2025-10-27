@@ -27,11 +27,12 @@ namespace TaskMate.UI
 
         public int DisplayMenu()
         {
-            Console.WriteLine("\t   Tela Principal");
-            Console.WriteLine("========================================");
-            Console.WriteLine("      BEM-VINDO(A) AO TASKMATE  ");
-            Console.WriteLine("========================================\n");
-            Console.WriteLine("O que você gostaria de fazer?\r\n");
+            Console.WriteLine("\n============================================");
+            Console.WriteLine("|               TELA PRINCIPAL             |");
+            Console.WriteLine("============================================");
+            Console.WriteLine("|          BEM-VINDO(A) AO TASKMATE        |");
+            Console.WriteLine("============================================\n");
+            Console.WriteLine("  O que você gostaria de fazer?\r\n");
             Console.WriteLine("  [1] Listar Todas as Tarefas");
             Console.WriteLine("  [2] Ver Detalhes de uma Tarefa");
             Console.WriteLine("  [3] Criar Nova Tarefa");
@@ -85,60 +86,77 @@ namespace TaskMate.UI
 
         public void DisplayAllTask()
         {
-            Console.WriteLine("\n------------------------------------------------------------------");
+            Console.WriteLine("\n===========================================\r");
+            Console.WriteLine("|          SUA LISTA DE TAREFAS           |");
+            Console.WriteLine("===========================================\r");
             var allTaskList = _repository.GetAllTasks();
-            foreach (var task in allTaskList)
+            if(allTaskList.Count > 0)
             {
-                if (task is SimpleTask simpleTask)
+                foreach (var task in allTaskList)
                 {
-                    var viewTask = new ViewSimpleTaskModel(simpleTask);
-                    viewTask.PrintTask();
+                    if (task is SimpleTask simpleTask)
+                    {
+                        var viewTask = new ViewSimpleTaskModel(simpleTask);
+                        viewTask.PrintTask();
+                    }
+                    else if (task is DeadLineTask deadLineTask)
+                    {
+                        var viewTask = new ViewDeadLineTaskModel(deadLineTask);
+                        viewTask.PrintTask();
+                    }
+                    else if (task is RecurringTask recurringTask)
+                    {
+                        var viewTask = new ViewRecurringTaskModel(recurringTask);
+                        viewTask.PrintTask();
+                    }
                 }
-                else if (task is DeadLineTask deadLineTask)
-                {
-                    var viewTask = new ViewDeadLineTaskModel(deadLineTask);
-                    viewTask.PrintTask();
-                }
-                else if (task is RecurringTask recurringTask)
-                {
-                    var viewTask = new ViewRecurringTaskModel(recurringTask);
-                    viewTask.PrintTask();
-                }
+            }else
+            {
+                Console.WriteLine("     Nenhuma tarefa registrada ainda.\r\n Adicione uma tarefa para ver o histórico!");
+                Console.WriteLine("===========================================\r\n");
             }
-            Console.WriteLine("\n------------------------------------------------------------------\n");
         }
 
         public void DisplayGetDetails()
         {
+            Console.WriteLine("\n>> Opção selecionada: [2] Ver Detalhes de uma Tarefa\r");
             Console.Write("\nDigite o ID da tarefa para ver os detalhes: ");
-            var searchTask = _repository.GetTaskById(Guid.Parse(Console.ReadLine()));
-            if (searchTask != null)
+            string? seletectedId = Console.ReadLine();
+            if (!string.IsNullOrEmpty(seletectedId))
             {
-                if (searchTask is SimpleTask simpleTask)
+                if (Guid.TryParse(seletectedId, out Guid taskId))
                 {
-                    var viewTask = new ViewSimpleTaskModel(simpleTask);
-                    viewTask.GetDetails();
+                    var searchTask = _repository.GetTaskById(taskId);
+                    if (searchTask != null)
+                    {
+                        if (searchTask is SimpleTask simpleTask)
+                        {
+                            var viewTask = new ViewSimpleTaskModel(simpleTask);
+                            viewTask.GetDetails();
+                        }
+                        else if (searchTask is DeadLineTask deadLineTask)
+                        {
+                            var viewTask = new ViewDeadLineTaskModel(deadLineTask);
+                            viewTask.GetDetails();
+                        }
+                        else if (searchTask is RecurringTask recurringTask)
+                        {
+                            var viewTask = new ViewRecurringTaskModel(recurringTask);
+                            viewTask.GetDetails();
+                        }
+                    }else
+                    {
+                        Console.WriteLine($"\nErro : Tarefa com ID \"{seletectedId}\" não foi encontrada.");
+                        Console.WriteLine("Por favor, verifique o ID e tente novamente.");
+                    }
                 }
-                else if (searchTask is DeadLineTask deadLineTask)
-                {
-                    var viewTask = new ViewDeadLineTaskModel(deadLineTask);
-                    viewTask.GetDetails();
-                }
-                else if (searchTask is RecurringTask recurringTask)
-                {
-                    var viewTask = new ViewRecurringTaskModel(recurringTask);
-                    viewTask.GetDetails();
-                }
-            }
-            else
-            {
-                Console.WriteLine("Id inválido : O id digitado não corresponde a uma tarefa existente");
             }
         }
 
         public void DisplayCreateTask()
         {
-            Console.WriteLine("Qual tipo de tarefa você deseja criar?");
+            Console.WriteLine("\n>> Opção selecionada: [3] Criar Nova Tarefa\r");
+            Console.WriteLine("\nQual tipo de tarefa você deseja criar?");
             Console.WriteLine("  [1] Tarefa Simples");
             Console.WriteLine("  [2] Tarefa com Prazo");
             Console.WriteLine("  [3] Tarefa Recorrente\n");
@@ -162,73 +180,91 @@ namespace TaskMate.UI
 
         public void DisplayRemoveTask()
         {
-            Console.Write("Digite o ID da tarefa que deseja excluir: ");
-            var searchId = Console.ReadLine();
-            var searchTask = _repository.GetTaskById(Guid.Parse(searchId));
-            if (searchTask != null)
+            Console.Write("\nDigite o ID da tarefa que deseja excluir: ");
+            string? searchId = Console.ReadLine();
+            if (!string.IsNullOrEmpty(searchId))
             {
-                Console.Write($"Você tem certeza que deseja excluir a tarefa {searchTask.Title}? (S/N): ");
-                char selectedOption = Convert.ToChar(Console.ReadLine());
-                if (Char.ToUpper(selectedOption) == 'S')
+                if (Guid.TryParse(searchId, out Guid isValidId))
                 {
-                    _repository.RemoveTask(Guid.Parse(searchId));
-                    Console.WriteLine($"\nTarefa \"{searchTask.Title}\" removida com sucesso!");
+                    var searchTask = _repository.GetTaskById(isValidId);
+                    if (searchTask != null)
+                    {
+                        Console.Write($"\nVocê tem certeza que deseja excluir a tarefa \"{searchTask.Title}\"? (S/N): ");
+                        string? input = Console.ReadLine();
+                        if (!string.IsNullOrEmpty(input))
+                        {
+                            char selectedOption = Convert.ToChar(input);
+                            if (Char.ToUpper(selectedOption) == 'S')
+                            {
+                                _repository.RemoveTask(isValidId);
+                                Console.WriteLine($"\nTarefa \"{searchTask.Title}\" removida com sucesso!");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"\nErro : Tarefa com ID \"{searchId}\" não foi encontrada.");
+                        Console.WriteLine("Por favor, verifique o ID e tente novamente.");
+                    }
                 }
-            }
-            else
-            {
-                Console.WriteLine("Id inválido : O id digitado não corresponde a uma tarefa existente");
             }
         }
 
         public void DisplayUpdateTask()
         {
             Console.Write("\nDigite o Id da tarefa que deseja editar : ");
-            var searchTask = _repository.GetTaskById(Guid.Parse(Console.ReadLine()));
-            if(searchTask != null)
+            string? input = Console.ReadLine();
+            if(!string.IsNullOrEmpty(input))
             {
-                Console.WriteLine("O que gostaria de alterar na tarefa? ");
-                Console.WriteLine("  [1] Título");
-                Console.WriteLine("  [2] Descrição");
-                Console.WriteLine("  [3] Data de Início");
-                Console.WriteLine("  [4] Marcar tarefa como \"Concluída\"\n");
-                int selectedOption = Convert.ToInt32(Console.ReadLine()); 
-                switch(selectedOption)
+                if (Guid.TryParse(input, out Guid isValidId))
                 {
-                    case 1:
-                        Console.WriteLine($"\nTítulo atual da tarefa : {searchTask.Title}");
-                        Console.Write("Novo Título da tarefa (deixe em branco para não alterar) : ");
-                        string? newTitle = Console.ReadLine();
-                        if (!string.IsNullOrEmpty(newTitle))
+                    var searchTask = _repository.GetTaskById(isValidId);
+                    if (searchTask != null)
+                    {
+                        Console.WriteLine("\nO que gostaria de alterar na tarefa? ");
+                        Console.WriteLine("  [1] Título");
+                        Console.WriteLine("  [2] Descrição");
+                        Console.WriteLine("  [3] Data de Início");
+                        Console.WriteLine("  [4] Marcar tarefa como \"Concluída\"\n");
+                        int selectedOption = Convert.ToInt32(Console.ReadLine());
+                        switch (selectedOption)
                         {
-                            searchTask.UpdateTitle(newTitle);
+                            case 1:
+                                Console.WriteLine($"\nTítulo atual da tarefa : {searchTask.Title}");
+                                Console.Write("Novo Título da tarefa (deixe em branco para não alterar) : ");
+                                string? newTitle = Console.ReadLine();
+                                if (!string.IsNullOrEmpty(newTitle))
+                                {
+                                    searchTask.UpdateTitle(newTitle);
+                                }
+                                break;
+                            case 2:
+                                Console.WriteLine($"\nDescrição atual da tarefa : {searchTask.Description}");
+                                Console.Write("Nova Descrição da tarefa (deixe em branco para não alterar) : ");
+                                string? newDescription = Console.ReadLine();
+                                if (!string.IsNullOrEmpty(newDescription))
+                                {
+                                    searchTask.UpdateDescription(newDescription);
+                                }
+                                break;
+                            case 3:
+                                Console.WriteLine($"\nData de Início atual da tarefa : {searchTask.StartingDate}");
+                                Console.Write("Nova Data de Início da tarefa (deixe em branco para não alterar) : ");
+                                string? newStartingdate = Console.ReadLine();
+                                if (!string.IsNullOrEmpty(newStartingdate))
+                                {
+                                    searchTask.UpdateStartingDate(newStartingdate);
+                                }
+                                break;
+                            case 4:
+                                TaskCompleted.MarkTaskAsCompleted(searchTask);
+                                break;
+                            default:
+                                throw new ArgumentException("Valor inválido: O valor inserido está fora do escopo possível");
                         }
-                        break;
-                    case 2:
-                        Console.WriteLine($"\nDescrição atual da tarefa : {searchTask.Description}");
-                        Console.Write("Nova Descrição da tarefa (deixe em branco para não alterar) : ");
-                        string? newDescription = Console.ReadLine();
-                        if (!string.IsNullOrEmpty(newDescription))
-                        {
-                            searchTask.UpdateDescription(newDescription);
-                        }
-                        break;
-                    case 3:
-                        Console.WriteLine($"\nData de Início atual da tarefa : {searchTask.StartingDate}");
-                        Console.Write("Nova Data de Início da tarefa (deixe em branco para não alterar) : ");
-                        string? newStartingdate = Console.ReadLine();
-                        if (!string.IsNullOrEmpty(newStartingdate))
-                        {
-                            searchTask.UpdateStartingDate(newStartingdate);
-                        }
-                        break;
-                    case 4:
-                        TaskCompleted.MarkTaskAsCompleted(searchTask);
-                        break;
-                    default:
-                        throw new ArgumentException("Valor inválido: O valor inserido está fora do escopo possível");
+                        _repository.UpdateTask(searchTask);
+                    }
                 }
-                _repository.UpdateTask(searchTask);
             }
         }
 

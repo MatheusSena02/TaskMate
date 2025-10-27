@@ -29,7 +29,7 @@ namespace TaskMate.UI
         {
             string taskVerification = TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
             string convertedSelectedOption = convertedOptions[SelectedRecurringDay];
-            Console.WriteLine($"\n  [ID: {Id}]\n{taskVerification} {Title}\n    - Descrição: {Description}\n    - Recorrência: {convertedSelectedOption})");
+            Console.WriteLine($"\n[ID: {Id}]\n{taskVerification} {Title}\n    - Descrição: {Description}\n    - Recorrência: {convertedSelectedOption})");
             if (Substasks.Count > 0)
             {
                 Console.WriteLine("- Subtarefas:");
