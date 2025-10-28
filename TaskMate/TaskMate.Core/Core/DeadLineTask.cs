@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskMate.Core
+namespace TaskMate.Core.Core
 {
     public class DeadLineTask : BaseTask
     {
@@ -17,27 +17,27 @@ namespace TaskMate.Core
                 throw new ArgumentException("Lógica inválida: A data de término não pode ser anterior a data de início");
             }
 
-            this.DeadLineDate = ValidateDate(ValidateAndSet(deadLineDate));
+            DeadLineDate = ValidateDate(ValidateAndSet(deadLineDate));
 
             if (DeadLineDate < DateOnly.FromDateTime(DateTime.Now))
             {
-                this.TaskStatus = StatusOption.ATRASADA;
+                TaskStatus = StatusOption.ATRASADA;
             }
             else
             {
-                this.TaskStatus = StatusOption.NAO_INICIADA;
+                TaskStatus = StatusOption.NAO_INICIADA;
             }
 
         }
 
         public void SetStartTask()
         {
-            this.TaskStatus = StatusOption.EM_PROGRESSO;
+            TaskStatus = StatusOption.EM_PROGRESSO;
         }
         
         public void UpdateDeadLineDate(string newDeadLineDate)
         {
-            this.DeadLineDate = ValidateDate(ValidateAndSet(newDeadLineDate));
+            DeadLineDate = ValidateDate(ValidateAndSet(newDeadLineDate));
         }
     }
 }

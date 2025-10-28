@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TaskMate.Core;
+using TaskMate.Core.Core;
+using TaskMate.Core.Event;
+using TaskMate.Core.Interfaces;
+using TaskMate.UI.Interfaces;
+using TaskMate.UI.ViewModels;
 
 namespace TaskMate.UI
 {

@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TaskMate.Core;
+using TaskMate.Core.Core;
 
-namespace TaskMate.UI
+namespace TaskMate.UI.ViewModels
 {
     internal abstract class ViewModel
     {
-        protected string Title = String.Empty;
+        protected string Title = string.Empty;
 
         protected Guid Id;
 
         protected StatusOption TaskStatus;
 
-        protected string Description = String.Empty;
+        protected string Description = string.Empty;
 
         protected DateOnly StartingDate;
 
@@ -23,11 +23,11 @@ namespace TaskMate.UI
 
         public ViewModel(BaseTask task)
         {
-            this.Title = task.Title; 
-            this.Id = task.Id;
-            this.TaskStatus = task.TaskStatus; 
-            this.Description = task.Description; 
-            this.StartingDate = task.StartingDate;
+            Title = task.Title; 
+            Id = task.Id;
+            TaskStatus = task.TaskStatus; 
+            Description = task.Description; 
+            StartingDate = task.StartingDate;
             Substasks.AddRange(task.SubtasksList);
         }
 

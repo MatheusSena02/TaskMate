@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskMate.Core.Core;
 
-namespace TaskMate.Core
+namespace TaskMate.Core.Event
 {
     public delegate void CmopletedTask(BaseTask task);
     public class TaskCompleted

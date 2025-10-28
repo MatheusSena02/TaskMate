@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskMate.Core.Core;
 
-namespace TaskMate.Core
+namespace TaskMate.Core.Interfaces
 {
     public interface IRepository<T> where T : BaseTask
     {

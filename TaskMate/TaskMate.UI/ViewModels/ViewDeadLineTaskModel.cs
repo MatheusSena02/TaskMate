@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TaskMate.Core;
+using TaskMate.Core.Core;
 
-namespace TaskMate.UI
+namespace TaskMate.UI.ViewModels
 {
     internal class ViewDeadLineTaskModel : ViewModel
     {
@@ -13,7 +13,7 @@ namespace TaskMate.UI
 
         public ViewDeadLineTaskModel(DeadLineTask task) :base(task)
         {
-            this.DeadLineDate = task.DeadLineDate;
+            DeadLineDate = task.DeadLineDate;
         }
 
         public override void PrintTask()

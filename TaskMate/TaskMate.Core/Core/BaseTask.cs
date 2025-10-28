@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskMate.Core
+namespace TaskMate.Core.Core
 {
     public enum StatusOption
     {
@@ -16,13 +16,13 @@ namespace TaskMate.Core
 
     public abstract class BaseTask
     {
-        public string Title { get; set; } = String.Empty;
+        public string Title { get; set; } = string.Empty;
 
         public Guid Id { get; } = Guid.NewGuid();
 
         public StatusOption TaskStatus { get; set; } 
      
-        public string Description { get; set; } = String.Empty;
+        public string Description { get; set; } = string.Empty;
 
         public List<BaseTask> SubtasksList { get; set; } = new();
 
@@ -30,40 +30,40 @@ namespace TaskMate.Core
 
         public BaseTask(string title, string startingDate, string description = "")
         {
-            this.Title = ValidateAndSet(title);
-            this.StartingDate = ValidateDate(ValidateAndSet(startingDate));
-            this.Description = description;
+            Title = ValidateAndSet(title);
+            StartingDate = ValidateDate(ValidateAndSet(startingDate));
+            Description = description;
         }
 
         public void MarkAsComplete()
         {
-            this.TaskStatus = StatusOption.CONCLUIDA;
+            TaskStatus = StatusOption.CONCLUIDA;
         }
 
         public void UpdateTitle(string newTitle)
         {
-           if(!String.IsNullOrEmpty(newTitle))
+           if(!string.IsNullOrEmpty(newTitle))
             {
-                this.Title = newTitle;
+                Title = newTitle;
             }
         }
 
         public void UpdateDescription(string newDescription)
         {
-            if(!String.IsNullOrEmpty(newDescription))
+            if(!string.IsNullOrEmpty(newDescription))
             {
-                this.Description = newDescription;
+                Description = newDescription;
             }
         }
 
         public void UpdateStartingDate(string newStartingDate)
         {
-            if (!String.IsNullOrEmpty(newStartingDate))
+            if (!string.IsNullOrEmpty(newStartingDate))
             {
                 var validateStartingDate = DateOnly.TryParseExact(ValidateAndSet(newStartingDate), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateOnly isValidStartingDate);
                 if (validateStartingDate == true)
                 {
-                    this.StartingDate = isValidStartingDate;
+                    StartingDate = isValidStartingDate;
                 }
                 else
                 {
@@ -75,7 +75,7 @@ namespace TaskMate.Core
 
         public static string ValidateAndSet(string value)
         {
-            if (String.IsNullOrEmpty(value))
+            if (string.IsNullOrEmpty(value))
             {
                 throw new ArgumentNullException($"O campo {nameof(value)} não pode ser vazio ou nulo");
             }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskMate.Core
+namespace TaskMate.Core.Core
 {
     public class SimpleTask : BaseTask
     {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TaskMate.Core;
+using TaskMate.Core.Core;
 
-namespace TaskMate.UI
+namespace TaskMate.UI.ViewModels
 {
     internal class ViewRecurringTaskModel : ViewModel
     {
@@ -22,7 +22,7 @@ namespace TaskMate.UI
 
         public ViewRecurringTaskModel(RecurringTask task) : base(task)
         {
-            this.SelectedRecurringDay = task.SelectedRecurringDays;
+            SelectedRecurringDay = task.SelectedRecurringDays;
         }
 
         public override void PrintTask()

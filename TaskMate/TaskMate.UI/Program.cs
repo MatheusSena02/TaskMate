@@ -1,4 +1,4 @@
-﻿using TaskMate.Core;
+﻿using TaskMate.Core.Core;
 using TaskMate.Infrastructure;
 using TaskMate.UI;
 

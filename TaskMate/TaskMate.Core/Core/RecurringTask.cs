@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskMate.Core
+namespace TaskMate.Core.Core
 {
     public enum RecurringOptions
     {
@@ -20,7 +20,7 @@ namespace TaskMate.Core
 
         public RecurringTask(string title, string startingDate, int recurringDays, string description = "") : base(title, startingDate, description)
         {
-            this.SelectedRecurringDays = (RecurringOptions)ValidateOptionAndSet(recurringDays);
+            SelectedRecurringDays = (RecurringOptions)ValidateOptionAndSet(recurringDays);
         }
         public void UpdateSelectedRecurringDays(int newSelectedRecurringDay) 
         {
@@ -30,7 +30,7 @@ namespace TaskMate.Core
             }
             else
             {
-                this.SelectedRecurringDays = (RecurringOptions)ValidateOptionAndSet(newSelectedRecurringDay);
+                SelectedRecurringDays = (RecurringOptions)ValidateOptionAndSet(newSelectedRecurringDay);
             }
         }
 
