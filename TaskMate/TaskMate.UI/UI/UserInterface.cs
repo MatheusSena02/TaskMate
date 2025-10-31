@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TaskMate.Core.Core;
 using TaskMate.Core.Event;
 using TaskMate.Core.Interfaces;
+using TaskMate.Core.Operation;
 using TaskMate.UI.Interfaces;
 using TaskMate.UI.ViewModels;
 
@@ -231,6 +232,7 @@ namespace TaskMate.UI
                         Console.WriteLine("  [3] Data de Início");
                         Console.WriteLine("  [4] Marcar tarefa como \"Concluída\"\n");
                         int selectedOption = Convert.ToInt32(Console.ReadLine());
+                        var controllService = new TaskService(_repository);
                         switch (selectedOption)
                         {
                             case 1:
@@ -239,7 +241,7 @@ namespace TaskMate.UI
                                 string? newTitle = Console.ReadLine();
                                 if (!string.IsNullOrEmpty(newTitle))
                                 {
-                                    searchTask.UpdateTitle(newTitle);
+                                    controllService.UpdateTitle(isValidId, newTitle);
                                 }
                                 break;
                             case 2:
@@ -248,7 +250,7 @@ namespace TaskMate.UI
                                 string? newDescription = Console.ReadLine();
                                 if (!string.IsNullOrEmpty(newDescription))
                                 {
-                                    searchTask.UpdateDescription(newDescription);
+                                    controllService.UpdateDescription(isValidId, newDescription);
                                 }
                                 break;
                             case 3:
@@ -257,7 +259,7 @@ namespace TaskMate.UI
                                 string? newStartingdate = Console.ReadLine();
                                 if (!string.IsNullOrEmpty(newStartingdate))
                                 {
-                                    searchTask.UpdateStartingDate(newStartingdate);
+                                    controllService.UpdateStartingDate(isValidId, newStartingdate);
                                 }
                                 break;
                             case 4:
@@ -266,7 +268,6 @@ namespace TaskMate.UI
                             default:
                                 throw new ArgumentException("Valor inválido: O valor inserido está fora do escopo possível");
                         }
-                        _repository.UpdateTask(searchTask);
                     }
                 }
             }

@@ -39,13 +39,6 @@ namespace TaskMate.Core.Core
         {
             TaskStatus = StatusOption.CONCLUIDA;
         }
-        public void UpdateDescription(string newDescription)
-        {
-            if(!string.IsNullOrEmpty(newDescription))
-            {
-                Description = newDescription;
-            }
-        }
         public static string ValidateAndSet(string value)
         {
             if (string.IsNullOrEmpty(value))
