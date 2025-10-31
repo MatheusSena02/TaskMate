@@ -14,7 +14,6 @@ namespace TaskMate.Core.Interfaces
         void AddTask(T item);
         void RemoveTask(Guid id);
         void CleanList();
-
         void UpdateTask(T task);
     }
 }
