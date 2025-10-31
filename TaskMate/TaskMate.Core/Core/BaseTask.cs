@@ -24,7 +24,7 @@ namespace TaskMate.Core.Core
      
         public string Description { get; set; } = string.Empty;
 
-        public List<BaseTask> SubtasksList { get; set; } = new();
+        public List<Subtask> SubtasksList { get; set; } = new();
 
         public DateOnly StartingDate { get; set; }
 
