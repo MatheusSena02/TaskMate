@@ -25,6 +25,7 @@ namespace TaskMate.Core.Operation
                 if (!string.IsNullOrEmpty(newTitle))
                 {
                     searchTask.Title = newTitle;
+                    _repository.UpdateTask(searchTask);
                 }
             }
         }
@@ -37,6 +38,7 @@ namespace TaskMate.Core.Operation
                 if (!string.IsNullOrEmpty(newDescription))
                 {
                     searchTask.Description = newDescription;
+                    _repository.UpdateTask(searchTask);
                 }
             }
         }
@@ -52,6 +54,7 @@ namespace TaskMate.Core.Operation
                     if (validateStartingDate == true)
                     {
                         searchTask.StartingDate = isValidStartingDate;
+                        _repository.UpdateTask(searchTask);
                     }
                     else
                     {
@@ -76,6 +79,7 @@ namespace TaskMate.Core.Operation
             }
 
             mainTask.SubtasksList.Add(newSubstask);
+            _repository.UpdateTask(mainTask);
         }
 
         public void RemoveSubstask(string IdMain, string substaskToRemove)
@@ -92,6 +96,7 @@ namespace TaskMate.Core.Operation
             }
 
             mainTask.SubtasksList.RemoveAll(x => x.Id == isValidSubstaskId);
+            _repository.UpdateTask(mainTask);
         }
 
         public Subtask? GetSubtaskById(string IdMain, string IdSubtask)
