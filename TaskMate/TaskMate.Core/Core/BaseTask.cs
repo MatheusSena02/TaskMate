@@ -39,15 +39,6 @@ namespace TaskMate.Core.Core
         {
             TaskStatus = StatusOption.CONCLUIDA;
         }
-
-        public void UpdateTitle(string newTitle)
-        {
-           if(!string.IsNullOrEmpty(newTitle))
-            {
-                Title = newTitle;
-            }
-        }
-
         public void UpdateDescription(string newDescription)
         {
             if(!string.IsNullOrEmpty(newDescription))
@@ -55,24 +46,6 @@ namespace TaskMate.Core.Core
                 Description = newDescription;
             }
         }
-
-        public void UpdateStartingDate(string newStartingDate)
-        {
-            if (!string.IsNullOrEmpty(newStartingDate))
-            {
-                var validateStartingDate = DateOnly.TryParseExact(ValidateAndSet(newStartingDate), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateOnly isValidStartingDate);
-                if (validateStartingDate == true)
-                {
-                    StartingDate = isValidStartingDate;
-                }
-                else
-                {
-                    throw new ArgumentException($"Formato inserido é inválido para o campo {nameof(StartingDate)}");
-
-                }
-            }
-        }
-
         public static string ValidateAndSet(string value)
         {
             if (string.IsNullOrEmpty(value))
