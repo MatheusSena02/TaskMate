@@ -47,7 +47,7 @@ namespace TaskMate.UI
             Console.WriteLine("  [7] Ver Histórico de Notificações\n");
             Console.WriteLine("  [0] Sair\n");
             Console.Write("Digite a sua opção: ");
-            int selectedOption = Convert.ToInt32(Console.ReadLine());
+           int selectedOption = Convert.ToInt32(Console.ReadLine());
             if (selectedOption < 0 || selectedOption > 7)
             {
                 throw new ArgumentException("Opção inválida: A opção selecionada se encontra fora do escopo aceitável");
@@ -58,34 +58,38 @@ namespace TaskMate.UI
         public void DisplayController()
         {
             int userOption = DisplayMenu();
-            switch (userOption)
+            while(userOption > 0)
             {
-                case 0:
-                    Environment.Exit(0);
-                    break;
-                case 1:
-                    DisplayAllTask();
-                    break;
-                case 2:
-                    DisplayGetDetails();
-                    break;
-                case 3:
-                    DisplayCreateTask();
-                    break;
-                case 4:
-                    DisplayUpdateTask();
-                    break;
-                case 5:
-                    DisplayRemoveTask();
-                    break;
-                case 6:
-                    //Método para gerenciar tarefas
-                    break;
-                case 7:
-                    //Método para ver histórico de notificações
-                    break;
-                default:
-                    throw new ArgumentException("Valor inválido: O valor inserido está fora do escopo possível");
+                userOption = DisplayMenu();
+                switch (userOption)
+                {
+                    case 0:
+                        Environment.Exit(0);
+                        break;
+                    case 1:
+                        DisplayAllTask();
+                        break;
+                    case 2:
+                        DisplayGetDetails();
+                        break;
+                    case 3:
+                        DisplayCreateTask();
+                        break;
+                    case 4:
+                        DisplayUpdateTask();
+                        break;
+                    case 5:
+                        DisplayRemoveTask();
+                        break;
+                    case 6:
+                        //Método para gerenciar tarefas
+                        break;
+                    case 7:
+                        //Método para ver histórico de notificações
+                        break;
+                    default:
+                        throw new ArgumentException("Valor inválido: O valor inserido está fora do escopo possível");
+                }
             }
         }
 

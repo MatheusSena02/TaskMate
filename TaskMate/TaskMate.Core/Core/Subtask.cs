@@ -12,19 +12,19 @@ namespace TaskMate.Core.Core
         public string Title { get; set; } = String.Empty;
         public string Description { get; set; } = String.Empty;
         public DateOnly StartingDate { get; set; }
-        public StatusOption Status { get; set; } 
+        public StatusOption TaskStatus { get; set; } 
 
         public Subtask(string title, string startingDate, string description = "")
         {
             this.Title = BaseTask.ValidateAndSet(title);
             this.StartingDate = BaseTask.ValidateDate(BaseTask.ValidateAndSet(startingDate));
             this.Description = description;
-            this.Status = StatusOption.NAO_INICIADA;
+            this.TaskStatus = StatusOption.NAO_INICIADA;
         }
 
         public void MarkAsCompleted()
         {
-            this.Status = StatusOption.CONCLUIDA;
+            this.TaskStatus = StatusOption.CONCLUIDA;
         }
 
     }

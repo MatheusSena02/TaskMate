@@ -19,7 +19,7 @@ namespace TaskMate.UI.ViewModels
 
         protected DateOnly StartingDate;
 
-        protected List<BaseTask> Substasks = new();
+        protected List<Subtask> Substasks = new();
 
         public ViewModel(BaseTask task)
         {

@@ -101,7 +101,7 @@ namespace TaskMate.Core.Operation
 
         public Subtask? GetSubtaskById(string IdMain, string IdSubtask)
         {
-            if(!Guid.TryParse(IdSubtask, out Guid isValidTaskId) || string.IsNullOrEmpty(IdSubtask) || !Guid.TryParse(IdSubtask, out Guid isValidSubtaskId)
+            if(!Guid.TryParse(IdSubtask, out Guid isValidTaskId) || string.IsNullOrEmpty(IdSubtask) || !Guid.TryParse(IdSubtask, out Guid isValidSubtaskId))
             {
                 return null;
             }
