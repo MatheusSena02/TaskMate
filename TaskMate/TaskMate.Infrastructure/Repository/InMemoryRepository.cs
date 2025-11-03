@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TaskMate.Core.Core;
 using TaskMate.Core.Interfaces;
 
-namespace TaskMate.Infrastructure
+namespace TaskMate.Infrastructure.Repository
 {
     public class InMemoryRepository<T> : IRepository<T> where T : BaseTask
     {

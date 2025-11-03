@@ -7,8 +7,9 @@ using TaskMate.Core.Core;
 
 namespace TaskMate.Core.Interfaces
 {
-    public interface INotificationChannel
+    public interface INotificationRepository
     {
-        void SendCompletedTask(string title);
+        void AddNotification(BaseTask task);
+        List<string> GetAllNotifications();
     }
 }

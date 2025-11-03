@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskMate.Core.Core;
 using TaskMate.Core.Interfaces;
 
 namespace TaskMate.Infrastructure.Notifications
 {
     public class ConsoleNotificationChannel : INotificationChannel
     {
-        public string Send(string message)
+        public void SendCompletedTask(string title)
         {
-            return message;
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Tarefa \"{title}\" marcada como concluída!");
+            Console.ResetColor();
         }
     }
 }

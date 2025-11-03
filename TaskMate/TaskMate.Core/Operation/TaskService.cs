@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskMate.Core.Core;
+using TaskMate.Core.Event;
 using TaskMate.Core.Interfaces;
 
 namespace TaskMate.Core.Operation
@@ -12,9 +13,22 @@ namespace TaskMate.Core.Operation
     public class TaskService
     {
         private readonly IRepository<BaseTask> _repository;
-        public TaskService(IRepository<BaseTask> repository)
+        private readonly INotificationChannel _notificationChannel;
+        private readonly INotificationRepository _notificationRepository;
+        private static bool _eventRegistered = false;
+        public TaskService(IRepository<BaseTask> repository, INotificationChannel notificationChannel, INotificationRepository notificationRepository)
         {
             _repository = repository;
+            _notificationChannel = notificationChannel;
+            _notificationRepository = notificationRepository;
+            if(!_eventRegistered)
+            {
+                TaskCompleted.OnCompleted += (task) =>
+                {
+                    MarkAsCompleted(task);
+                };
+                _eventRegistered = true;
+            }
         }
 
         public void UpdateTitle(Guid IdTask, string newTitle)
@@ -108,6 +122,18 @@ namespace TaskMate.Core.Operation
             }
 
             return mainTask.SubtasksList.FirstOrDefault(s => s.Id == isValidSubtaskId);
+        }
+
+        public void MarkAsCompleted(BaseTask task)
+        {
+            if(task.TaskStatus == StatusOption.CONCLUIDA)
+            {
+                return;
+            }
+            task.MarkAsComplete();
+            _repository.UpdateTask(task);
+            _notificationChannel.SendCompletedTask(task.Title);
+            _notificationRepository.AddNotification(task);
         }
     }
 }

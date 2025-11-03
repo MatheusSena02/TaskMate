@@ -7,6 +7,8 @@ using TaskMate.Core.Core;
 using TaskMate.Core.Event;
 using TaskMate.Core.Interfaces;
 using TaskMate.Core.Operation;
+using TaskMate.Infrastructure.Notifications;
+using TaskMate.Infrastructure.Repository;
 using TaskMate.UI.Interfaces;
 using TaskMate.UI.ViewModels;
 
@@ -15,14 +17,11 @@ namespace TaskMate.UI
     public class UserInterface : IInterfaceUser
     {
         private IRepository<BaseTask> _repository;
-        public UserInterface(IRepository<BaseTask> repository)
+        private INotificationRepository _notificationRepository;
+        public UserInterface(IRepository<BaseTask> repository, INotificationRepository notificationRepository)
         {
             _repository = repository;
-            TaskCompleted.OnCompleted += (task) =>
-            {
-                task.MarkAsComplete();
-                _repository.UpdateTask(task);
-            };
+            _notificationRepository = notificationRepository;
         }
 
         public int DisplayMenu()
@@ -79,7 +78,7 @@ namespace TaskMate.UI
                         DisplaySubtask();
                         break;
                     case 7:
-                        //Método para ver histórico de notificações
+                        DisplayNotification();
                         break;
                     default:
                         throw new ArgumentException("Valor inválido: O valor inserido está fora do escopo possível");
@@ -231,7 +230,9 @@ namespace TaskMate.UI
                         Console.WriteLine("  [3] Data de Início");
                         Console.WriteLine("  [4] Marcar tarefa como \"Concluída\"\n");
                         int selectedOption = Convert.ToInt32(Console.ReadLine());
-                        var controllService = new TaskService(_repository);
+                        var repositoryNotification = new InMemoryRepositoryNotification();
+                        var channelNotification = new ConsoleNotificationChannel();
+                        var controllService = new TaskService(_repository, channelNotification, repositoryNotification);
                         switch (selectedOption)
                         {
                             case 1:
@@ -324,7 +325,7 @@ namespace TaskMate.UI
                     DisplayMenu();
                     break;
                 case 1:
-                    var controllAddSubstask = new TaskService(_repository);
+                    var controllAddSubstask = new TaskService(_repository, );
                     Console.Write("\nDigite o título da subtarefa: ");
                     string? titleSubtask = Console.ReadLine();
                     if (string.IsNullOrWhiteSpace(titleSubtask))
@@ -401,6 +402,26 @@ namespace TaskMate.UI
             }
         }
 
+        public void DisplayNotification()
+        {
+            Console.WriteLine("\n>> Opção selecionada: [7] Ver Histórico de Notificações\r\n");
+            Console.WriteLine("=========================================================\r");
+            Console.WriteLine("                 HISTÓRICO DE NOTIFICAÇÕES");
+            Console.WriteLine("=========================================================\r\n");
+            var notificationList = _notificationRepository.GetAllNotifications();
+            if(notificationList.Count == 0)
+            {
+                Console.WriteLine("     Nenhuma notificação registrada ainda.\r\n Conclua uma tarefa para ver o histórico!\n");
+                Console.WriteLine("===========================================\r\n");
+            }
+            else
+            {
+                foreach (var notification in notificationList)
+                {
+                    Console.WriteLine(notification);
+                }
+            }
+        }
 
     }
 }
