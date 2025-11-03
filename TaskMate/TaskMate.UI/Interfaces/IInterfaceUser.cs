@@ -13,7 +13,6 @@ namespace TaskMate.UI.Interfaces
         void DisplayAllTask();
         void DisplayCreateTask();
         void DisplayRemoveTask();
-
-
+        void DisplaySubtask();
     }
 }

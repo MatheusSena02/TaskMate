@@ -277,5 +277,49 @@ namespace TaskMate.UI
             }
         }
 
+        public void DisplaySubtask()
+        {
+            Console.WriteLine(">> Opção selecionada: [6] Gerenciar Subtarefas\n");
+            Console.Write("Digite o ID da tarefa principal: ");
+
+            if(!Guid.TryParse(Console.ReadLine(), out Guid isValidMainId))
+            {
+                return;
+            }
+            var mainTask = _repository.GetTaskById(isValidMainId);
+
+            if(mainTask == null)
+            {
+                return;
+            } 
+
+            Console.WriteLine($"\nGerenciando subtarefas de \"{mainTask.Title}\" :");
+            for(int i = 0; i < mainTask.SubtasksList.Count; i++)
+            {
+                string statusTask = mainTask.SubtasksList[i].TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
+                Console.WriteLine($"{i + 1}. {statusTask} {mainTask.SubtasksList[i]}");
+            }
+
+            Console.WriteLine("\nO que desejar fazer ?");
+            Console.WriteLine("  [1] Adicionar nova subtarefa");
+            Console.WriteLine("  [2] Marcar subtarefa como concluída/pendente");
+            Console.WriteLine("  [3] Remover subtarefa");
+            Console.WriteLine("  [0] Voltar ao menu principal\n");
+
+            Console.Write("Digite sua opção: ");
+            int selectedOption = Convert.ToInt32(Console.ReadLine());
+
+            switch (selectedOption)
+            {
+                case 0:
+                    DisplayMenu();
+                    break;
+                case 1:
+                    var controllAddSubstask = new TaskService(_repository);
+                    controllAddSubstask.AddSubstask
+            }
+        }
+
+
     }
 }
