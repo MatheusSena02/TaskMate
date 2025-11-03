@@ -25,11 +25,6 @@ namespace TaskMate.UI
             };
         }
 
-        private void TaskCompleted_OnCompleted()
-        {
-            throw new NotImplementedException();
-        }
-
         public int DisplayMenu()
         {
             Console.WriteLine("\n============================================");
@@ -60,7 +55,6 @@ namespace TaskMate.UI
             int userOption = DisplayMenu();
             while(userOption > 0)
             {
-                userOption = DisplayMenu();
                 switch (userOption)
                 {
                     case 0:
@@ -82,7 +76,7 @@ namespace TaskMate.UI
                         DisplayRemoveTask();
                         break;
                     case 6:
-                        //Método para gerenciar tarefas
+                        DisplaySubtask();
                         break;
                     case 7:
                         //Método para ver histórico de notificações
@@ -90,6 +84,7 @@ namespace TaskMate.UI
                     default:
                         throw new ArgumentException("Valor inválido: O valor inserido está fora do escopo possível");
                 }
+                userOption = DisplayMenu();
             }
         }
 
@@ -291,13 +286,27 @@ namespace TaskMate.UI
             if(mainTask == null)
             {
                 return;
-            } 
+            }
 
-            Console.WriteLine($"\nGerenciando subtarefas de \"{mainTask.Title}\" :");
+            Console.WriteLine("\n=====================================================\r");
+            Console.WriteLine($"SUA LISTA DE SUBTAREFAS DE {mainTask.Title.ToUpper()}");
+            Console.WriteLine("=====================================================\r");
+            if (mainTask.SubtasksList.Count == 0)
+            {
+                Console.WriteLine("     Nenhuma subtarefa registrada ainda.\r\n Adicione uma tarefa para ver o histórico!");
+                Console.WriteLine("=====================================================\r\n");
+            }
+            else
+            {
+                Console.WriteLine($"\nGerenciando subtarefas de \"{mainTask.Title}\" :");
+
+            }
+                
             for(int i = 0; i < mainTask.SubtasksList.Count; i++)
             {
-                string statusTask = mainTask.SubtasksList[i].TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
-                Console.WriteLine($"{i + 1}. {statusTask} {mainTask.SubtasksList[i]}");
+                var subtaskAtual = mainTask.SubtasksList[i];
+                string statusTask = subtaskAtual.TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
+                Console.WriteLine($"{i + 1}. {statusTask} {subtaskAtual.Title}\n[ID : {subtaskAtual.Id}]");
             }
 
             Console.WriteLine("\nO que desejar fazer ?");
@@ -316,7 +325,79 @@ namespace TaskMate.UI
                     break;
                 case 1:
                     var controllAddSubstask = new TaskService(_repository);
-                    controllAddSubstask.AddSubstask
+                    Console.Write("\nDigite o título da subtarefa: ");
+                    string? titleSubtask = Console.ReadLine();
+                    if (string.IsNullOrWhiteSpace(titleSubtask))
+                    {
+                        throw new ArgumentException($"O campo {nameof(titleSubtask)} não pode ser nulo ou vazio");
+                    }
+                    Console.Write("\nDigite a descrição (opcional): ");
+                    string? descriptionSubtask = Console.ReadLine();
+                    Console.Write("\nDigite a data de início (dd/mm/aaaa): ");
+                    string? startingDateSubtask = Console.ReadLine();
+                    if(string.IsNullOrWhiteSpace(startingDateSubtask))
+                    {
+                        throw new ArgumentException($"O campo {nameof(titleSubtask)} não pode ser nulo ou vazio");
+                    }
+                    controllAddSubstask.AddSubstask(mainTask.Id, new Subtask(titleSubtask, startingDateSubtask, descriptionSubtask));
+                    for (int i = 0; i < mainTask.SubtasksList.Count; i++)
+                    {
+                        var subtaskAtual = mainTask.SubtasksList[i];
+                        string statusTask = subtaskAtual.TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
+                        Console.WriteLine($"{i + 1}. {statusTask} {subtaskAtual.Title}\n[ID : {subtaskAtual.Id}]");
+                    }
+                    break;
+                case 2: 
+                    var controllStatusSubtask = new TaskService(_repository);
+                    Console.Write("\nDigite o Id da subtarefa que deseja concluir : ");
+                    if (!Guid.TryParse(Console.ReadLine(), out Guid isValidIdSubtask))
+                    {
+                        throw new ArgumentException("ID Inválido : Formato de ID inserido inválido");
+                    }
+                    var subtaskToComplete = isValidIdSubtask;
+                    foreach(var subtaskCompleted in mainTask.SubtasksList)
+                    {
+                        if(subtaskCompleted.Id == isValidIdSubtask)
+                        {
+                            subtaskCompleted.MarkAsCompleted();
+                            Console.WriteLine($"\nSubtarefa \"{subtaskCompleted.Title}\" marcada como concluída!\r\n");
+                            _repository.UpdateTask(mainTask);
+                            for (int i = 0; i < mainTask.SubtasksList.Count; i++)
+                            {
+                                var subtaskAtual = mainTask.SubtasksList[i];
+                                string statusTask = subtaskAtual.TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
+                                Console.WriteLine($"{i + 1}. {statusTask} {subtaskAtual.Title}\n[ID : {subtaskAtual.Id}]");
+                            }
+                        }
+                    }
+                    break;
+                case 3:
+                    var subtaskControll = new TaskService(_repository);
+                    Console.Write("\nDigite o Id da subtarefa que deseja excluir : ");
+                    if (!Guid.TryParse(Console.ReadLine(), out Guid isValidId))
+                    {
+                        throw new ArgumentException("ID Inválido : Formato de ID inserido inválido");
+                    }
+
+                    var subtaskToRemove = mainTask.SubtasksList.FirstOrDefault(s => s.Id == isValidId);
+                    if (subtaskToRemove != null)
+                    {
+                        subtaskControll.RemoveSubstask(mainTask.Id, isValidId);
+                        Console.WriteLine($"\nSubtarefa \"{subtaskToRemove.Title}\" removida com sucesso!\n");
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nSubtarefa não encontrada.");
+                    }
+                    for (int i = 0; i < mainTask.SubtasksList.Count; i++)
+                    {
+                        var subtaskAtual = mainTask.SubtasksList[i];
+                        string statusTask = subtaskAtual.TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
+                        Console.WriteLine($"{i + 1}. {statusTask} {subtaskAtual.Title}\n[ID : {subtaskAtual.Id}]");
+                    }
+                    break;
+                default:
+                    throw new ArgumentException("Valor inválido: O valor inserido está fora do escopo possível");
             }
         }
 

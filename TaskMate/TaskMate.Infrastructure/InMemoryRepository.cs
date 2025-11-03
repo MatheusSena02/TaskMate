@@ -17,7 +17,7 @@ namespace TaskMate.Infrastructure
             TaskList.Add(task);
         }
 
-        public T GetTaskById(Guid id)
+        public T? GetTaskById(Guid id)
         {
             var requestTask = TaskList.FirstOrDefault(x => x.Id == id);
             return requestTask;

@@ -59,7 +59,8 @@ namespace TaskMate.UI.ViewModels
                 Console.WriteLine($"   Subtarefas:");
                 for (int i = 0; i < Substasks.Count; i++)
                 {
-                    Console.WriteLine($"{i + 1}. {Substasks[i]}");
+                    string subtaskVerification = Substasks[i].TaskStatus == StatusOption.CONCLUIDA ? "[X]" : "[ ]";
+                    Console.WriteLine($"{i + 1}. {subtaskVerification} {Substasks[i].Title}");
                 }
             }
         }

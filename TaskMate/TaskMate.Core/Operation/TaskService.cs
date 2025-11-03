@@ -29,7 +29,7 @@ namespace TaskMate.Core.Operation
                 }
             }
         }
-
+       
         public void UpdateDescription(Guid IdTask, string newDescription)
         {
             var searchTask = _repository.GetTaskById(IdTask);
@@ -65,14 +65,14 @@ namespace TaskMate.Core.Operation
             }
         }
 
-        public void AddSubstask(string IdMain, Subtask newSubstask)
+        public void AddSubstask(Guid IdMain, Subtask newSubstask)
         {
-            if(!Guid.TryParse(IdMain, out Guid isValidId) || newSubstask == null)
+            if(newSubstask == null)
             {
                 return;
             }
 
-            var mainTask = _repository.GetTaskById(isValidId);
+            var mainTask = _repository.GetTaskById(IdMain);
             if(mainTask == null)
             {
                 return;
@@ -82,20 +82,15 @@ namespace TaskMate.Core.Operation
             _repository.UpdateTask(mainTask);
         }
 
-        public void RemoveSubstask(string IdMain, string substaskToRemove)
+        public void RemoveSubstask(Guid IdMain, Guid substaskToRemove)
         {
-            if(!Guid.TryParse(IdMain, out Guid isValidTaskId) || !Guid.TryParse(substaskToRemove, out Guid isValidSubstaskId))
-            {
-                throw new ArgumentException("Falha na formatação : Os campos de Id não podem ser convertidos para Id válidos");
-            }
-
-            var mainTask = _repository.GetTaskById(isValidTaskId);
+            var mainTask = _repository.GetTaskById(IdMain);
             if(mainTask == null)
             {
                 return;
             }
 
-            mainTask.SubtasksList.RemoveAll(x => x.Id == isValidSubstaskId);
+            mainTask.SubtasksList.RemoveAll(x => x.Id == substaskToRemove);
             _repository.UpdateTask(mainTask);
         }
 
